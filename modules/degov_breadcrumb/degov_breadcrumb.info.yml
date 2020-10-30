@@ -1,0 +1,8 @@
+name: 'deGov - Breadcrumb'
+description: 'Contains default settings for the breadcrumb.'
+package: deGov
+type: module
+core: 8.x
+dependencies:
+  - easy_breadcrumb
+  - config_replace

@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * @file
+ * Contains youtube_feed_block.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function degov_social_media_youtube_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the degov_social_media_youtube module.
+    case 'help.page.degov_social_media_youtube':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('This module allows you to show you the newest videos of one youtube channel') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_preprocess_block().
+ */
+function degov_social_media_youtube_preprocess_block(&$variables) {
+  if (isset($variables['elements']['#base_plugin_id']) && $variables['elements']['#base_plugin_id'] == 'degov_social_media_youtube') {
+    $variables['#attached']['library'][] = 'degov_common/slick';
+    $markup = render($variables['content']);
+
+    if (!empty($markup)) {
+      $variables['#attached']['drupalSettings']['degov_social_media_settings']['code']['yt'] = $markup;
+      $variables['attributes']['class'][] = 'js-social-media-wrapper';
+      $variables['attributes']['data-social-media-source'] = 'youtube';
+      $variables['attributes']['data-social-media-entity'] = 'yt';
+      $variables['social_media_disabled'] = TRUE;
+    }
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function degov_social_media_youtube_theme() {
+  return [
+    'degov_social_media_youtube' => [
+      'render element' => 'elements',
+      'variables' => [
+        'title' => NULL,
+        'description' => NULL,
+        'videoID' => NULL,
+        'thumbnail' => NULL,
+        'link_display' => NULL,
+        'caption' => NULL,
+        'date' => NULL,
+        'views' => NULL,
+        'comments' => NULL,
+        'likes' => NULL,
+        'dislikes' => NULL,
+      ],
+    ],
+  ];
+}

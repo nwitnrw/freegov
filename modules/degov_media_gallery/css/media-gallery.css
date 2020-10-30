@@ -1,0 +1,71 @@
+.slick__download-link {
+  transition: opacity 800ms ease-in-out;
+  opacity: 1;
+}
+.slick__download-link[href=""] {
+  opacity: 0;
+}
+
+.l-slick-navi {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: rgba(255, 255, 255, 0.65);
+
+  position: absolute;
+  bottom: 32%;
+  width: calc( 100% - 108px);
+  margin: 0 auto;
+  left: 43px;
+  right: auto;
+  height: 40px;
+}
+
+.l-slick-navi .slick-prev,
+.l-slick-navi .slick-next {
+  transform: unset;
+  line-height: 0;
+  position: relative;
+  width: 40px;
+  height: inherit;
+  display: inline-block;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.l-slick-navi .slick-prev:before,
+.l-slick-navi .slick-next:before {
+  padding: 0;
+  display: inline-block;
+  line-height: inherit;
+  height: inherit;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.l-slider-media-copyright {
+  position: relative;
+  width: 100%;
+  max-width: 80%;
+  margin: 0 auto;
+  text-align: right;
+  float: right;
+}
+
+.l-slider-media-copyright .media-copyright {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: inherit;
+  transition: opacity 800ms ease-in-out;
+  opacity: 0;
+}
+
+.l-slider-media-copyright .media-copyright.is-visible {
+  opacity: 1;
+}

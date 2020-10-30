@@ -1,0 +1,32 @@
+footer.site-footer {
+  @extend .p-5;
+  background-color: $blue;
+  color: $white;
+  .chevron {
+    font-size: $font-size-base * .7;
+  }
+  a {
+    color: $white;
+  }
+  a.first-level-link {
+    text-decoration: none;
+  }
+  .first-level {
+    .first-level-link {
+      font-size: $font-size-base * 1.1;
+      font-weight: bold;
+      i {
+        display: none;
+      }
+    }
+    .second-level {
+      .second-level-link {
+      }
+    }
+  }
+  .under-block-header-line {
+    width: 50px;
+    height: 2px;
+    background-color: $white;
+  }
+}

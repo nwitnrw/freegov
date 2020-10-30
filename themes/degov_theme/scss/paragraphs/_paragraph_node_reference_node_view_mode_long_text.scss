@@ -1,0 +1,46 @@
+.paragraph-node-reference-node-view-mode-long-text {
+  @extend .paragraph-node-reference-node-view-mode-small-image;
+  @extend .pt-5;
+  background-color: $gray-lighter;
+  .paragraph__content {
+    article {
+
+      .teaser-image {
+        picture {
+          > img {
+            max-width: 10rem;
+            width: 10rem;
+          }
+        }
+      }
+      .teaser-content {
+        background-color: $white;
+        .teaser-content-inner {
+          font-size: .7rem;
+          .teaser-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: $font-size-base;
+            height: $font-size-base * 5;
+            @include media-breakpoint-up(lg) {
+              line-height: $line-height-base;
+              font-size: $font-size-base;
+              height: $font-size-base * 8;
+            }
+          }
+          h3, h2 {
+            font-size: .9rem;
+            margin-bottom: .4rem;
+            @include media-breakpoint-up(lg) {
+              font-size: $h2-font-size * .9;
+            }
+          }
+          @include media-breakpoint-up(lg) {
+            font-size: $font-size-base;
+            height: $font-size-base * 8;
+          }
+        }
+      }
+    }
+  }
+}

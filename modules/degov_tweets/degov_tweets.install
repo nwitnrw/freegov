@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_tweets module.
+ */
+
+/**
+ * Add tweets block, set tweeter account credentials.
+ */
+function degov_tweets_update_870200() {
+  /* @var \Drupal\degov_common\DegovModuleUpdater $updater */
+  $updater = \Drupal::service('degov_config.module_updater');
+  $updater->applyUpdates('degov_tweets', '870200');
+}

@@ -1,0 +1,36 @@
+domain: ''
+domains_option: 1
+domains_list: ''
+eu_only: false
+exclude_paths: "/admin\r\n/admin/*\r\n/batch\r\n/node/add*\r\n/node/*/*\r\n/user/*/*"
+export:
+  folder: custom
+langcode: de
+popup_agreed:
+  format: rich_text
+popup_agree_button_message: 'Akzeptieren'
+popup_agreed_enabled: false
+popup_bg_hex: 1b4265
+popup_clicking_confirmation: true
+popup_delay: 1
+popup_disagree_button_message: 'Weitere Informationen'
+popup_enabled: true
+popup_find_more_button_message: 'Weitere Informationen'
+popup_height: null
+popup_hide_agreed: false
+popup_hide_button_message: Hide
+popup_info:
+  value: "<h2>Auf dieser Seite werden Cookies verwendet.</h2>\n\n<p>Mit dem Anklicken der Schaltfläche <em>Akzeptieren</em> erklären Sie sich damit einverstanden, dass wir das tun.</p>\n"
+  format: rich_text
+mobile_popup_info:
+  value: "<h2>Auf dieser Seite werden Cookies verwendet.</h2>\n\n<p>Mit dem Antippen der Schaltfläche <em>Akzeptieren</em> erklären Sie sich damit einverstanden, dass wir das tun.</p>\n"
+  format: rich_text
+popup_link: 'http://www.example.com'
+popup_link_new_window: true
+popup_position: false
+popup_text_hex: ffffff
+popup_width: 100%
+withdraw_message:
+  value: '<h2>Auf dieser Seite werden Cookies verwendet.</h2>\n<p>Du hast uns erlaubt Cookies zu setzen.</p>'
+  format: rich_text
+disagree_button_label: 'Nein, danke'

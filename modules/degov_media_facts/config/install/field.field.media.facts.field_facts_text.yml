@@ -1,0 +1,23 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_facts_text
+    - media.type.facts
+  enforced:
+    module:
+      - degov_media_facts
+  module:
+    - text
+id: media.facts.field_facts_text
+field_name: field_facts_text
+entity_type: media
+bundle: facts
+label: Text
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

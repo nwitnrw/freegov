@@ -1,0 +1,40 @@
+name: 'deGov - Demo Content'
+type: module
+description: 'Generates a predefined set of media and node entities for a quick demo setup'
+core: 8.x
+package: 'deGov'
+
+dependencies:
+  - pathauto:pathauto
+  - degov:degov_auto_crop
+  - degov:degov_media_address
+  - degov:degov_media_audio
+  - degov:degov_media_citation
+  - degov:degov_media_contact
+  - degov:degov_media_document
+  - degov:degov_media_gallery
+  - degov:degov_media_image
+  - degov:degov_media_instagram
+  - degov:degov_media_person
+  - degov:degov_media_social_media_embed
+  - degov:degov_media_tweet
+  - degov:degov_media_video
+  - degov:degov_media_video_mobile
+  - degov:degov_media_video_upload
+  - degov:degov_node_blog
+  - degov:degov_node_event
+  - degov:degov_node_normal_page
+  - degov:degov_node_press
+  - degov:degov_node_external_teaser
+  - degov:degov_node_faq
+  - degov:degov_paragraph_downloads
+  - degov:degov_paragraph_faq
+  - degov:degov_paragraph_header
+  - degov:degov_paragraph_header_video
+  - degov:degov_paragraph_iframe
+  - degov:degov_paragraph_map
+  - degov:degov_paragraph_media_reference
+  - degov:degov_paragraph_node_reference
+  - degov:degov_paragraph_view_reference
+  - degov:degov_paragraph_slideshow
+  - degov:degov_paragraph_text

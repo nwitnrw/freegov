@@ -1,0 +1,17 @@
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_media_generic_9
+    - media.type.video_mobile
+id: media.video_mobile.field_media_generic_9
+field_name: field_media_generic_9
+entity_type: media
+bundle: video_mobile
+label: 'Generic media'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_paragraph_slideshow module.
+ */
+
+use Drupal\degov_common\Common;
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_paragraph_slideshow_uninstall() {
+  // Removes all module type defined content when uninstalling the module.
+  Common::removeContent([
+    'entity_type' => 'paragraph',
+    'entity_bundles' => ['slide', 'slideshow'],
+  ]);
+}
+
+/**
+ * Add description to field_slideshow_type
+ */
+function degov_paragraph_slideshow_update_8001() {
+  \Drupal::service('degov_config.module_updater')->applyUpdates('degov_paragraph_slideshow', '8001');
+}
+
+/**
+ * Moved dependencies
+ */
+function degov_paragraph_slideshow_update_8002() {
+  \Drupal::service('degov_config.module_updater')->applyUpdates('degov_paragraph_slideshow', '8002');
+}
+
+/**
+ * Corrected view mode for slides, Update slideshow types
+ */
+function degov_paragraph_slideshow_update_8003() {
+  \Drupal::configFactory()
+    ->getEditable('core.entity_view_display.paragraph.slide.default')
+    ->set('content.field_slide_media.settings.view_mode', 'slider_main_16_9');
+  /** @var \Drupal\degov_common\DegovModuleUpdater $updater */
+  $updater = \Drupal::service('degov_config.module_updater');
+  $updater->reImport('field.storage.paragraph.field_slideshow_type', 'degov_paragraph_slideshow', 'install');
+}
+
+/**
+ * deGov - Update: 7.3.0
+ *  - Remove outdated description for field field_slideshow_type in paragraph.slideshow.
+ */
+function degov_paragraph_slideshow_update_870300() {
+  \Drupal::configFactory()
+    ->getEditable('field.field.paragraph.slideshow.field_slideshow_type')
+    ->set('description', '')
+    ->save();
+}
+
+/**
+ * deGov - Update: 8.0.0
+ * Additional video support for slides.
+ */
+function degov_paragraph_slideshow_update_880000() {
+  $config = \Drupal::configFactory()->getEditable('field.field.paragraph.slide.field_slide_media');
+  $config->set('dependencies.config', array_merge(
+    $config->get('dependencies.config'),
+    ['media.type.video_mobile', 'media.type.video_upload']
+  ));
+  $config->set('settings.handler_settings.target_bundles', array_merge(
+    $config->get('settings.handler_settings.target_bundles'),
+    [
+      'video_mobile' => 'video_mobile',
+      'video_upload' => 'video_upload',
+    ]
+  ));
+  $config->save();
+}

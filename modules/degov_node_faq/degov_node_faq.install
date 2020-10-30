@@ -1,0 +1,114 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_node_faq module.
+ */
+
+use Drupal\Core\Config\Config;
+use Drupal\degov_common\Common;
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_node_faq_uninstall() {
+  /** @var \Drupal\degov_common\Entity\WorkflowHandler $workflowService */
+  $workflowService = \Drupal::service('degov_common.workflow_handler');
+  $workflowService->disableWorkflow('faq');
+
+  // Removes all module type defined content when uninstalling the module.
+  Common::removeContent([
+    'entity_type'    => 'node',
+    'entity_bundles' => ['faq'],
+  ]);
+}
+
+/**
+ * Implements hook_install().
+ */
+function degov_node_faq_install() {
+  /** @var \Drupal\degov_common\Entity\WorkflowHandler $workflowService */
+  $workflowService = \Drupal::service('degov_common.workflow_handler');
+  $workflowService->enableWorkflow('faq');
+}
+
+/**
+ * Enable workflow for content type
+ */
+function degov_node_faq_update_8010() {
+  \Drupal::service('module_installer')->install(['degov_users_roles']);
+  /** @var \Drupal\degov_common\Entity\WorkflowHandler $workflowService */
+  $workflowService = \Drupal::service('degov_common.workflow_handler');
+  $workflowService->enableWorkflow('faq');
+}
+
+/**
+ * Adds internal title field, set paragraph form mode to experimental
+ */
+function degov_node_faq_update_8012() {
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_node_faq', '8012');
+}
+
+/**
+ * Remove FAQs own search index and search page view.
+ */
+function degov_node_faq_update_8013() {
+  /**
+   * @var \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   */
+  $configFactory = \Drupal::configFactory();
+
+  if (($searchFAQIndex = $configFactory->getEditable('search_api.index.search_faq')) instanceof Config) {
+    $searchFAQIndex->delete();
+  }
+
+  if (($searchFAQView = $configFactory->getEditable('views.view.search_faq')) instanceof Config) {
+    $searchFAQView->delete();
+  }
+
+}
+
+/**
+ * deGov Update 7.5.0 - Add the missing weight to FAQ content paragraphs.
+ */
+function degov_node_faq_update_870500() {
+  $existingConfig = \Drupal::configFactory()
+    ->getEditable('core.entity_form_display.node.faq.default');
+  if (!$existingConfig->isNew() && $existingConfig->get('content.field_content_paragraphs.weight') === NULL) {
+    $existingConfig->set('content.field_content_paragraphs.weight', 6)->save();
+  }
+}
+
+/**
+ * Add field field_tags to faq
+ * FAQ: Add field_tag to display mode
+ * FAQ: Add field_tags input field to form display mode
+ */
+function degov_node_faq_update_870600() {
+  // Add field field_tags to faq.
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_node_faq', '870600');
+
+  // FAQ: Add field_tag to display mode.
+  $configFactory = \Drupal::service('config.factory');
+  $config = $configFactory->getEditable('core.entity_view_display.node.faq.default');
+  $config->set('content.field_tags.type', 'entity_reference_label');
+  $config->set('content.field_tags.weight', '4');
+  $config->set('content.field_tags.region', 'content');
+  $config->set('content.field_tags.label', 'above');
+  $config->set('content.field_tags.settings.link', 'true');
+  $config->set('content.field_tags.third_party_settings', []);
+  $config->save();
+
+  // FAQ: Add field_tags input field to form display mode.
+  $config = $configFactory->getEditable('core.entity_form_display.node.faq.default');
+  $config->set('content.field_tags.type', 'entity_reference_autocomplete');
+  $config->set('content.field_tags.weight', '121');
+  $config->set('content.field_tags.region', 'content');
+  $config->set('content.field_tags.settings.match_operator', 'CONTAINS');
+  $config->set('content.field_tags.settings.size', '60');
+  $config->set('content.field_tags.settings.placeholder', '');
+  $config->set('content.field_tags.third_party_settings', []);
+  $config->save();
+}

@@ -1,0 +1,25 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_image_and_crop_styles
+  module:
+    - crop
+name: teaser_squared_1_1_320
+label: 'Teaser squared (1:1) 320'
+effects:
+  1eb2f4da-ca05-48d1-abbb-2a98c1b014a6:
+    uuid: 1eb2f4da-ca05-48d1-abbb-2a98c1b014a6
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: 1_to_1
+  2917cfab-e85b-4c3b-917f-31a66d2e4512:
+    uuid: 2917cfab-e85b-4c3b-917f-31a66d2e4512
+    id: image_scale
+    weight: 2
+    data:
+      width: 320
+      height: 320
+      upscale: true

@@ -1,0 +1,80 @@
+
+// At small sizes close button gets his own line.
+$modal-header-one-line-min-width: 520px !default;
+// At large sizes things can move a little left.
+$modal-padding-left-on-large: 25px !default;
+
+.modal-dialog {
+  pointer-events: all;
+  .btn:hover {
+    cursor: pointer;
+  }
+}
+
+.modal-header {
+  background: $white;
+  display: flex;
+  flex-direction: column-reverse;
+  padding-top: 30px;
+  padding-bottom: 0;
+  border: 0;
+  background-clip: padding-box;
+
+  .modal-title {
+    outline: 0;
+  }
+
+  .float-right {
+    align-self: flex-end;
+    @media screen and (min-width: $modal-header-one-line-min-width){
+      align-self: flex-start;
+    }
+
+    .modal-close {
+      display: inline-block;
+      margin-top: -30px;
+      margin-right: -10px;
+      padding-top: 0;
+      padding-right: 5px;
+      padding-bottom: 0;
+      color: darkgray;
+      vertical-align: text-top;
+
+      &:hover {
+        > span {
+          text-decoration: underline;
+        }
+      }
+
+      i:before {
+        display: block;
+        font-size: 24px;
+        padding: 10px;
+      }
+    }
+  }
+
+  @media screen and (min-width: $modal-header-one-line-min-width){
+    flex-direction: row;
+    padding-left: $modal-padding-left-on-large;
+  }
+}
+
+.modal-content {
+  >div {
+    @media screen and (min-width: $modal-header-one-line-min-width){
+      padding-left: $modal-padding-left-on-large;
+    }
+  }
+}
+
+.modal-footer {
+  padding-top: 0;
+  border-top: 0;
+
+  .btn[type="submit"] {
+    background: $link-color;
+    color: $white;
+  }
+}
+

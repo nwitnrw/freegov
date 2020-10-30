@@ -1,0 +1,73 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the entity_reference_timer module.
+ */
+
+use Drupal\entity_reference_timer\FieldSwitchService;
+use Drupal\locale\Gettext;
+
+/**
+ * Implements hook_requirements().
+ */
+function entity_reference_timer_requirements(string $phase): array {
+  $requirements = [];
+
+  if ($phase === 'runtime' && !FieldSwitchService::fieldExists()) {
+    $requirements['entity_reference_timer'] = [
+      'title' => t('Entity Reference Timer'),
+      'value' => t('Required field missing.'),
+      'description' => t('entity_reference_timer expects the field <em>:fieldName</em> to be present. The module is marked as installed, but it will no work. You should uninstall it.', [':fieldName' => FieldSwitchService::getFieldConfigKey()]),
+      'severity' => REQUIREMENT_ERROR,
+    ];
+  }
+
+  return $requirements;
+}
+
+/**
+ * Implements hook_install().
+ */
+function entity_reference_timer_install() {
+  \Drupal::database()->schema()->addField('cachetags', 'expires', [
+    'description' => 'Point in time when this tag should expire automatically.',
+    'type'        => 'int',
+    'size'        => 'big',
+    'not null'    => FALSE,
+  ]);
+
+  FieldSwitchService::updateField();
+  entity_reference_timer_import_translations();
+}
+
+function entity_reference_timer_import_translations(): void {
+  $file = new \stdClass();
+  $file->uri = drupal_get_path('module', 'entity_reference_timer') . '/translations/de-de.po';
+  $file->langcode = 'de';
+
+  Gettext::fileToDatabase($file, [
+    'overwrite_options' => [
+      'not_customized' => TRUE,
+    ],
+  ]);
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function entity_reference_timer_uninstall() {
+  FieldSwitchService::uninstallField();
+  \Drupal::database()->schema()->dropField('cachetags', 'expires');
+}
+
+/**
+ * Implements hook_schema_alter().
+ */
+function entity_reference_timer_schema_alter(&$schema) {
+  $schema['cachetags']['fields']['expires'] = [
+    'description' => 'Point in time when this tag should expire automatically.',
+    'type' => 'int',
+    'not null' => FALSE,
+  ];
+}

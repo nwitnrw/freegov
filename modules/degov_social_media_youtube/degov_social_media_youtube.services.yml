@@ -1,0 +1,4 @@
+services:
+  degov_social_media_youtube.youtube:
+    class: Drupal\degov_social_media_youtube\Youtube
+    autowire: TRUE

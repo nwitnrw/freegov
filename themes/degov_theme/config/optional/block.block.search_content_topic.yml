@@ -1,0 +1,22 @@
+langcode: de
+status: false
+dependencies:
+  config:
+    - facets.facet.search_content_topic
+  module:
+    - facets
+  theme:
+    - degov_theme
+id: search_content_topic
+theme: degov_theme
+region: content
+weight: -1
+provider: null
+plugin: 'facet_block:search_content_topic'
+settings:
+  id: 'facet_block:search_content_topic'
+  label: Thema
+  provider: facets
+  label_display: visible
+  block_id: search_content_topic
+visibility: {  }

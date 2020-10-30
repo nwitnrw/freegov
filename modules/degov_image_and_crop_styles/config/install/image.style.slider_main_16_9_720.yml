@@ -1,0 +1,25 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_image_and_crop_styles
+  module:
+    - crop
+name: slider_main_16_9_720
+label: 'Slider main (16:9) 720'
+effects:
+  96cef7cc-1c3b-433e-b593-8b64788a1f17:
+    uuid: 96cef7cc-1c3b-433e-b593-8b64788a1f17
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: 16_to_9
+  a8e807ca-4191-47b7-9945-e79407554ece:
+    uuid: a8e807ca-4191-47b7-9945-e79407554ece
+    id: image_scale
+    weight: 2
+    data:
+      width: 720
+      height: null
+      upscale: false

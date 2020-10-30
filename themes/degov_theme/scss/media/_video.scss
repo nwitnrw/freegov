@@ -1,0 +1,9 @@
+.video,
+.video-upload,
+.video-responsive {
+  &__transcription {
+    &__header {
+      cursor: pointer;
+    }
+  }
+}

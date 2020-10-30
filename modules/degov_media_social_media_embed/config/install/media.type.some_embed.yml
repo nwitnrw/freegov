@@ -1,0 +1,17 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_media_social_media_embed
+  module:
+    - media_entity_generic
+id: some_embed
+label: Social-Media-Einbettung
+description: 'Stellt ein Media Bundle für das Einbetten von Social Media Inhalten (Feeds und dgl.) zur Verfügung.'
+source: generic
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_media_generic_7
+field_map: {  }

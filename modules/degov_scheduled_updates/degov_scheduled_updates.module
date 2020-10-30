@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ */
+
+/**
+ * Implements hook_locale_translation_projects_alter().
+ */
+function degov_scheduled_updates_locale_translation_projects_alter(&$projects) {
+  $projects['degov_scheduled_updates'] = [
+    'info' => [
+      'name'                                 => 'deGov - Scheduled Updates',
+      'interface translation project'        => 'degov_scheduled_updates',
+      'interface translation server pattern' => drupal_get_path('module', 'degov_scheduled_updates') . '/translations/%language.po',
+    ],
+  ];
+}

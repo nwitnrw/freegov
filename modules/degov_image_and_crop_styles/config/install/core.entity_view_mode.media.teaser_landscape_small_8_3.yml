@@ -1,0 +1,14 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_image_and_crop_styles
+  module:
+    - lightning_core
+    - media
+third_party_settings: { }
+id: media.teaser_landscape_small_8_3
+label: 'Teaser landscape small (8:3)'
+targetEntityType: media
+cache: true

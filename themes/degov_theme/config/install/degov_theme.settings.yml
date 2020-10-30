@@ -1,0 +1,40 @@
+features:
+  node_user_picture: true
+  comment_user_picture: true
+  comment_user_verification: true
+  favicon: true
+logo:
+  use_default: true
+favicon:
+  use_default: true
+social-icons:
+  1:
+    font-awesome-classes: 'fab fa-facebook'
+    url: 'https://facebook.com'
+  2:
+    font-awesome-classes: 'fab fa-instagram'
+    url: 'https://instagram.com'
+  3:
+    font-awesome-classes: 'fab fa-twitter'
+    url: 'https://twitter.com/'
+  4:
+    font-awesome-classes: 'fab fa-youtube'
+    url: 'https://youtube.com'
+  5:
+    font-awesome-classes: ''
+    url: ''
+  6:
+    font-awesome-classes: ''
+    url: ''
+  7:
+    font-awesome-classes: ''
+    url: ''
+  8:
+    font-awesome-classes: ''
+    url: ''
+  9:
+    font-awesome-classes: ''
+    url: ''
+  10:
+    font-awesome-classes: ''
+    url: ''

@@ -1,0 +1,56 @@
+<?php
+
+/**
+ * @file
+ */
+
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+
+function degov_theming_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+  if ($entity->getEntityType()->id() == 'node') {
+    if (!empty($build['#attached']['html_head_link'])) {
+
+      $validRelAttributeValues = [
+        'alternate',
+        'archives',
+        'author',
+        'bookmark',
+        'canonical',
+        'dns-prefetch',
+        'external',
+        'first',
+        'help',
+        'icon',
+        'import',
+        'index',
+        'last',
+        'license',
+        'manifest',
+        'modulepreload',
+        'next',
+        'nofollow',
+        'noopener',
+        'noreferrer',
+        'opener',
+        'pingback',
+        'preconnect',
+        'prefetch',
+        'preload',
+        'prerender',
+        'prev',
+        'search',
+        'shortcut icon',
+        'shortlink',
+        'stylesheet',
+        'tag',
+      ];
+
+      foreach ($build['#attached']['html_head_link'] as $key => $config) {
+        if (!in_array($config[0]['rel'], $validRelAttributeValues)) {
+          unset($build['#attached']['html_head_link'][$key]);
+        }
+      }
+    }
+  }
+}

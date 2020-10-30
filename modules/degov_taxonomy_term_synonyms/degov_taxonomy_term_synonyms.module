@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * @file
+ * The deGov Taxonomy Term Synonyms module.
+ */
+
+use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\ViewExecutable;
+
+/**
+ * Implements hook_entity_bundle_field_info_alter().
+ */
+function degov_taxonomy_term_synonyms_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
+  /** @var \Drupal\field\Entity\FieldConfig[] $fields */
+  if (isset($fields['field_tags']) && $entity_type->id() === 'node') {
+    $fields['field_tags']->setSetting('handler', 'tag_and_synonym');
+  }
+}
+
+/**
+ * Implements hook_entity_form_display_alter().
+ */
+function degov_taxonomy_term_synonyms_entity_form_display_alter(EntityFormDisplayInterface $form_display, array $context) {
+  if ($form_display->getTargetEntityTypeId() === 'node'
+    && ($component = $form_display->getComponent('field_tags'))
+  ) {
+    $component['type'] = 'tag_synonym_reference_autocomplete';
+    $form_display->setComponent('field_tags', $component);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function degov_taxonomy_term_synonyms_form_views_exposed_form_alter(array &$form, FormStateInterface $form_state, string $form_id) {
+  // Retrieve the view object and the query plugin.
+  $storage = $form_state->getStorage();
+  if (!isset($storage['view'])) {
+    return;
+  }
+  $view = $storage['view'];
+  if (!($view instanceof ViewExecutable) || $view->id() !== 'content' || !isset($form["field_tags_target_id"])) {
+    return;
+  }
+
+  $form['field_tags_target_id']['#type'] = 'tag_and_synonym_reference_autocomplete';
+}

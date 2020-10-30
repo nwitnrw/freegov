@@ -1,0 +1,13 @@
+services:
+  entity_reference_timer.visibility_service:
+    class: Drupal\entity_reference_timer\Service\EntityReferenceTimerVisibilityService
+    arguments: [ '@database' , '@current_route_match']
+  entity_reference_timer.cron_service:
+    class: Drupal\entity_reference_timer\Service\EntityReferenceTimerCronService
+    arguments: [ '@cache_tags.invalidator', '@database' ]
+  entity_reference_timer.uninstall_validator:
+    class: Drupal\entity_reference_timer\EntityReferenceTimerUninstallValidator
+    tags:
+      - { name: module_install.uninstall_validator }
+    arguments: ['@entity_type.manager']
+    lazy: true

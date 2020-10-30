@@ -1,0 +1,149 @@
+status: true
+dependencies:
+  config:
+    - field.field.media.video_mobile.field_allow_download
+    - field.field.media.video_mobile.field_allow_download_4k
+    - field.field.media.video_mobile.field_allow_download_fullhd
+    - field.field.media.video_mobile.field_allow_download_hdready
+    - field.field.media.video_mobile.field_allow_download_mobile
+    - field.field.media.video_mobile.field_copyright
+    - field.field.media.video_mobile.field_description
+    - field.field.media.video_mobile.field_fullhd_video_mobile_mp4
+    - field.field.media.video_mobile.field_hdready_video_mobile_mp4
+    - field.field.media.video_mobile.field_include_search
+    - field.field.media.video_mobile.field_media_accessibility
+    - field.field.media.video_mobile.field_media_duration
+    - field.field.media.video_mobile.field_media_generic_9
+    - field.field.media.video_mobile.field_media_in_library
+    - field.field.media.video_mobile.field_media_language
+    - field.field.media.video_mobile.field_media_publish_date
+    - field.field.media.video_mobile.field_media_transcription
+    - field.field.media.video_mobile.field_mobile_video_mobile_mp4
+    - field.field.media.video_mobile.field_subtitle
+    - field.field.media.video_mobile.field_tags
+    - field.field.media.video_mobile.field_title
+    - field.field.media.video_mobile.field_ultrahd4k_video_mobile_mp4
+    - field.field.media.video_mobile.field_video_mobile_caption
+    - field.field.media.video_mobile.field_video_mobile_mp4
+    - field.field.media.video_mobile.field_video_mobile_preview
+    - field.field.media.video_mobile.field_video_mobile_subtitle
+    - media.type.video_mobile
+  enforced:
+    module:
+      - degov_media_video_mobile
+  module:
+    - degov_common
+    - entity_reference_revisions
+    - text
+id: media.video_mobile.default
+targetEntityType: media
+bundle: video_mobile
+mode: default
+content:
+  field_copyright:
+    type: entity_reference_label
+    weight: 4
+    region: content
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+  field_description:
+    type: text_default
+    weight: 8
+    region: content
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+  field_media_accessibility:
+    weight: 7
+    label: above
+    settings:
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_media_duration:
+    weight: 9
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: duration
+    region: content
+  field_media_language:
+    weight: 6
+    label: above
+    settings:
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_media_transcription:
+    weight: 10
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_subtitle:
+    weight: 2
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_tags:
+    type: taxonomy_term_search
+    weight: 5
+    region: content
+    label: hidden
+    settings:
+      route_name: view.search_media.page
+    third_party_settings: {  }
+  field_title:
+    weight: 1
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_video_mobile_caption:
+    type: string
+    weight: 3
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_video_mobile_subtitle:
+    type: entity_reference_revisions_entity_view
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_allow_download: true
+  field_allow_download_4k: true
+  field_allow_download_fullhd: true
+  field_allow_download_hdready: true
+  field_allow_download_mobile: true
+  field_fullhd_video_mobile_mp4: true
+  field_hdready_video_mobile_mp4: true
+  field_include_search: true
+  field_media_generic_9: true
+  field_media_in_library: true
+  field_media_publish_date: true
+  field_mobile_video_mobile_mp4: true
+  field_ultrahd4k_video_mobile_mp4: true
+  field_video_mobile_mp4: true
+  field_video_mobile_preview: true
+  langcode: true
+  name: true
+  thumbnail: true
+  uid: true

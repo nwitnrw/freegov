@@ -1,0 +1,22 @@
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_media_transcription
+    - media.type.video_mobile
+  enforced:
+    module:
+      - degov_media_video_mobile
+  module:
+    - text
+id: media.video_mobile.field_media_transcription
+field_name: field_media_transcription
+entity_type: media
+bundle: video_mobile
+label: Transkription
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

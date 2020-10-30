@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - degov_search_media
+    - system
+  theme:
+    - degov_theme
+id: degovsearchmediafilters
+theme: degov_theme
+region: content
+weight: -11
+provider: null
+plugin: degov_search_media_filter
+settings:
+  id: degov_search_media_filter
+  label: 'DeGov search media filters'
+  provider: degov_search_media
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: /mediathek
+    negate: false
+    context_mapping: {  }

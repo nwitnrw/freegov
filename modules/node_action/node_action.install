@@ -1,0 +1,103 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the node_action module.
+ */
+
+use Drupal\Core\Config\Config;
+use Drupal\Core\Url;
+use Drupal\degov_common\Entity\ConfigStorageFactory;
+
+/**
+ * Implements hook_install().
+ */
+function node_action_install() {
+  node_action_remove_unwanted_actions();
+
+  /**
+   * @var \Drupal\degov_common\Entity\ConfigStorageFactory $configFactory
+   */
+  $configFactory = \Drupal::service('degov_common.config_storage_factory');
+  /**
+   * @var \Drupal\Core\Config\Config $config
+   */
+  $config = $configFactory->getEditable('system.action.node_unpublish_action');
+  $config->set('plugin', 'node_action:entity:unpublish_action:node')->save();
+
+  /**
+   * @var \Drupal\Core\Config\Config $config
+   */
+  $config = $configFactory->getEditable('system.action.node_publish_action');
+  $config->set('plugin', 'node_action:entity:publish_action:node')->save();
+
+  $config = $configFactory->getEditable('system.action.node_change_author_action');
+  if ($config->get('langcode') === 'de') {
+    $config->set('label', t('Change the author', [], ['langcode' => 'de']))->save(TRUE);
+  }
+
+  $config = $configFactory->getEditable('system.action.node_moderation_state_action');
+  if ($config->get('langcode') === 'de') {
+    $config->set('label', t('Change moderation state', [], ['langcode' => 'de']))->save(TRUE);
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function node_action_uninstall() {
+  /**
+   * @var \Drupal\degov_common\Entity\ConfigStorageFactory $configStorageFactory
+   */
+  $configStorageFactory = \Drupal::service('degov_common.config_storage_factory');
+
+  /**
+   * @var \Drupal\Core\Config\Config $config
+   */
+  $config = $configStorageFactory->getEditable('system.action.node_unpublish_action');
+  $config->set('plugin', 'node_action:entity:unpublish_action:node')->save();
+}
+
+function node_action_remove_unwanted_actions() {
+  /**
+   * @var \Drupal\degov_common\Entity\ConfigStorageFactory $configStorageFactory
+   */
+  $configStorageFactory = \Drupal::service('degov_common.config_storage_factory');
+  $configsToDelete = [
+    'system.action.node_make_sticky_action',
+    'system.action.node_make_unsticky_action',
+    'system.action.node_promote_action',
+    'system.action.node_save_action',
+    'system.action.node_unpromote_action',
+    'system.action.pathauto_update_alias_node',
+  ];
+
+  foreach ($configsToDelete as $configToDelete) {
+    $config = $configStorageFactory->getEditable($configToDelete);
+    $config->delete();
+  }
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function node_action_requirements(string $phase): array {
+  $requirements = [];
+
+  if ($phase === 'runtime' && !\Drupal::service('module_handler')->moduleExists('permissions_by_term')) {
+    $requirements['node_action'] = [
+      'title' => t('Node Action'),
+      'description' => t(
+        'By <a href=":extend">enabling</a> the Permissions by Term module, additional permission checks will become available when running bulk actions on content.<br />For more information on Permissions by Term, take a look at the project page on <a href=":project_page" target="_blank">drupal.org</a>!',
+        [
+          ':extend' => Url::fromRoute('system.modules_list')->toString(),
+          ':project_page' => 'https://www.drupal.org/project/permissions_by_term',
+        ]
+      ),
+      'value' => t('Additional functionality available'),
+      'severity' => REQUIREMENT_WARNING,
+    ];
+  }
+
+  return $requirements;
+}

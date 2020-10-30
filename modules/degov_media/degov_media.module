@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * @file
+ * Drupal hooks implementations for the degov_media module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\file\Entity\File;
+use Drupal\media\MediaInterface;
+
+/**
+ * Implements hook_preprocess().
+ */
+function degov_media_preprocess(&$variables) {
+  if (!empty($variables['media']) && $variables['media'] instanceof MediaInterface && !empty($variables['view_mode'])) {
+    $variables['attributes']['class'][] = 'media--view-mode-' . $variables['view_mode'];
+  }
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function degov_media_entity_delete(EntityInterface $entity) {
+  if ($entity->getEntityTypeId() === 'media') {
+    $skip_paths = [];
+    if (\Drupal::service('config.storage')->exists('media.settings')) {
+      $media_settings = \Drupal::service('config.storage')
+        ->read('media.settings');
+      if (!empty($media_settings['icon_base_uri']) && is_string($media_settings['icon_base_uri'])) {
+        $skip_paths[] = $media_settings['icon_base_uri'];
+      }
+    }
+
+    // Get field definitions for entity type / bundle.
+    $bundleFields = \Drupal::service('entity_field.manager')
+      ->getFieldDefinitions($entity->getEntityTypeId(), $entity->bundle());
+    foreach ($bundleFields as $fieldKey => $field) {
+      // Filter out the file fields.
+      if (in_array($field->getType(), ['file', 'image'])) {
+        // Delete the files associated with the fields.
+        $fieldValue = $entity->get($fieldKey)->getValue();
+        if (!empty($fieldValue[0]['target_id'])) {
+          $referencedFile = File::load($fieldValue[0]['target_id']);
+          if ($referencedFile instanceof File) {
+            foreach ($skip_paths as $skip_path) {
+              if (strpos($referencedFile->getFileUri(), $skip_path) !== FALSE) {
+                return;
+              }
+            }
+            $referencedFile->delete();
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements template_preprocess_views_view().
+ */
+function degov_media_preprocess_views_view(&$variables) {
+  if ($variables['id'] === 'latest_media' && $variables['display_id'] === 'block_1') {
+    $variables['#attached']['library'][] = 'degov_common/slick';
+  }
+}

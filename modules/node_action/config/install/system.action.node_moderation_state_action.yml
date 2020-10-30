@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node_moderation_state_action
+label: 'Change moderation state'
+type: node
+plugin: 'node_action:entity:moderation_state_action:node'
+configuration: {  }

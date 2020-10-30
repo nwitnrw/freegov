@@ -1,0 +1,43 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.video_header.field_header_media
+    - field.field.paragraph.video_header.field_header_text
+    - field.field.paragraph.video_header.field_override_caption
+    - paragraphs.paragraphs_type.video_header
+  module:
+    - text
+  enforced:
+    module:
+      - degov_paragraph_header_video
+id: paragraph.video_header.preview
+targetEntityType: paragraph
+bundle: video_header
+mode: preview
+content:
+  field_header_media:
+    weight: 1
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_header_text:
+    weight: 2
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_override_caption:
+    weight: 0
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden: {  }

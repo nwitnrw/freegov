@@ -1,0 +1,4 @@
+services:
+  Drupal\degov_node_external_teaser\EventSubscriber\RedirectSubscriber:
+    tags:
+      - { name: 'event_subscriber' }

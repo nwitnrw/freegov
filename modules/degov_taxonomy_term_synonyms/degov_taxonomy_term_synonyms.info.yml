@@ -1,0 +1,7 @@
+name: 'deGov - Taxonomy Synonyms'
+package: deGov
+description: 'Enable adding synonyms to tags.'
+type: module
+core: 8.x
+dependencies:
+  - degov:degov_taxonomy_term_tags

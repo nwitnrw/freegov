@@ -1,0 +1,70 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - image.style.teaser_landscape_2_1_320
+    - image.style.teaser_landscape_2_1_384
+    - image.style.teaser_landscape_2_1_480
+    - image.style.teaser_landscape_2_1_576
+    - image.style.teaser_landscape_2_1_640
+    - image.style.teaser_landscape_2_1_768
+  enforced:
+    module:
+      - degov_image_and_crop_styles
+  module:
+    - degov_image_and_crop_styles
+id: teaser_landscape
+label: 'Teaser landscape'
+image_style_mappings:
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.lg
+    multiplier: 1.5x
+    image_mapping_type: image_style
+    image_mapping: teaser_landscape_2_1_480
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.lg
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: teaser_landscape_2_1_320
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.lg
+    multiplier: 2x
+    image_mapping_type: image_style
+    image_mapping: teaser_landscape_2_1_640
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.md
+    multiplier: 1.5x
+    image_mapping_type: image_style
+    image_mapping: teaser_landscape_2_1_576
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.md
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: teaser_landscape_2_1_384
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.md
+    multiplier: 2x
+    image_mapping_type: image_style
+    image_mapping: teaser_landscape_2_1_768
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.sm
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: teaser_landscape_2_1_480
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.xs
+    multiplier: 1.5x
+    image_mapping_type: image_style
+    image_mapping: teaser_landscape_2_1_480
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.xs
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: teaser_landscape_2_1_320
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.xs
+    multiplier: 2x
+    image_mapping_type: image_style
+    image_mapping: teaser_landscape_2_1_640
+breakpoint_group: degov_image_and_crop_styles.media
+fallback_image_style: teaser_landscape_2_1_320

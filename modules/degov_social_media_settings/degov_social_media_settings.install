@@ -1,0 +1,57 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_social_media_settings module.
+ */
+
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Add social media source Instagram.
+ */
+function degov_social_media_settings_update_8004() {
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_social_media_settings', '8004');
+}
+
+/**
+ * Add translations for disabled social media feeds.
+ */
+function degov_social_media_settings_update_8005() {
+  degov_common_add_translation("This social media source is disabled. You can enable it in the <a href=\"#\" class=\"js-social-media-settings-open\">social media settings</a>.", 'de', "Diese \"Social-Media\" Quelle ist deaktiviert. Sie können sie in den <a href=\"#\" class=\"js-social-media-settings-open\">\"Social-Media\" Einstellungen aktivieren</a>.");
+}
+
+/**
+ * Adds missing field
+ */
+function degov_social_media_settings_update_8006() {
+  $all_bundle_fields = \Drupal::service('entity_field.manager')->getFieldDefinitions('media', 'video');
+
+  if (isset($all_bundle_fields['field_social_media_source'])) {
+    \Drupal::service('degov_config.module_updater')
+      ->applyUpdates('degov_social_media_settings', '8006');
+  }
+}
+
+/**
+ * deGov 7.1.0 - Add the social media settings block to the theme.
+ */
+function degov_social_media_settings_update_870100() {
+  $config = \Drupal::configFactory()
+    ->getEditable('block.block.socialmediasettingsblock');
+
+  $newConfigData = Yaml::parseFile(\Drupal::service('extension.list.module')
+    ->getPath('degov_social_media_settings') . '/config/block/block.block.socialmediasettingsblock.yml');
+
+  $config->setData($newConfigData)->save();
+}
+
+/**
+ * Place the social_media_settings block to proper region.
+ */
+function degov_social_media_settings_update_870200() {
+  /* @var \Drupal\degov_common\DegovModuleUpdater $updater */
+  $updater = \Drupal::service('degov_config.module_updater');
+  $updater->applyUpdates('degov_social_media_settings', '870200');
+}

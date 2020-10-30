@@ -1,0 +1,183 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_media_document module.
+ */
+
+use Drupal\Core\Url;
+use Drupal\degov_common\Common;
+use Drupal\field\Entity\FieldConfig;
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Implements hook_install().
+ */
+function degov_media_document_install(): void {
+  // Adds the document tab upon installation to the CKEditor media browser.
+  $ckeditorMediaBrowserConfig = \Drupal::configFactory()->getEditable('entity_browser.browser.ckeditor_media_browser');
+  if (!$ckeditorMediaBrowserConfig->isNew()) {
+    $filtersConfig = $ckeditorMediaBrowserConfig->get('widgets');
+    $partialFile = \Drupal::service('extension.list.module')->getPath('degov_media_document') . '/config/partials/entity_browser.browser.ckeditor_media_browser.yml';
+    if (file_exists($partialFile)) {
+      $filtersConfig += Yaml::parseFile($partialFile);
+      $ckeditorMediaBrowserConfig->set('widgets', $filtersConfig);
+      $ckeditorMediaBrowserConfig->save();
+    }
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_media_document_upload_uninstall(): void {
+  // Remove the document bundle dependency on the entity media browser.
+  $dependencies = \Drupal::config('entity_browser.browser.media_browser')
+    ->get('dependencies.config');
+  foreach ($dependencies as $key => $dependency) {
+    if ($dependency == 'media.type.document') {
+      unset($dependencies[$key]);
+    }
+  }
+  $dependencies = array_values($dependencies);
+  \Drupal::configFactory()->getEditable('entity_browser.browser.media_browser')
+    ->set('dependencies.config', $dependencies)
+    ->save(TRUE);
+
+  // Remove the document tab from the entity media browser.
+  $key = "88a662a5-10c0-4229-b807-07b76e36b771";
+  $widgets = \Drupal::config("entity_browser.browser.media_browser")
+    ->get("widgets");
+  if (!empty($widgets[$key])) {
+    unset($widgets[$key]);
+    \Drupal::configFactory()->getEditable("entity_browser.browser.media_browser")
+      ->set("widgets", $widgets)
+      ->save(TRUE);
+  }
+  // Remove content.
+  Common::removeContent([
+    'entity_type' => 'media',
+    'entity_bundles' => ['document'],
+  ]);
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function degov_media_document_requirements(string $phase): array {
+  $requirements = [];
+
+  if (!\Drupal::service('module_handler')->moduleExists('permissions_by_entity')) {
+    $requirements['degov_media_document'] = [
+      'title' => t('deGov media document'),
+      'description' => t(
+        'By <a href=":extend">enabling</a> the Permissions by Entity module, permission checks during document download will become available.<br />For more information on Permissions by Entity and Permissions by Term, take a look at the project page on <a href=":project_page" target="_blank">drupal.org</a>!',
+        [
+          ':extend' => Url::fromRoute('system.modules_list')->toString(),
+          ':project_page' => 'https://www.drupal.org/project/permissions_by_term',
+        ]
+      ),
+      'value' => t('Additional functionality available'),
+      'severity' => REQUIREMENT_WARNING,
+    ];
+  }
+
+  return $requirements;
+}
+
+/**
+ * deGov Udpate 5.1.0 - Configuration updates for restricted files.
+ */
+function degov_media_document_update_850100(): void {
+  /**
+   * @var \Drupal\degov_common\DegovModuleUpdater $updater
+   */
+  $updater = \Drupal::service('degov_config.module_updater');
+  $updater->reImport('field.field.media.document.field_section', 'degov_media_document', 'install');
+  $updater->reImport('field.storage.media.field_section', 'degov_media_document', 'install');
+  $updater->rewriteModuleConfig('degov_media_document');
+}
+
+/**
+ * deGov Update 6.0.0
+ * Make document field required
+ */
+function degov_media_document_update_860000(): void {
+  $fieldDocumentConfig = \Drupal::configFactory()
+    ->getEditable('field.field.media.document.field_document');
+  if (!empty($fieldDocumentConfig)) {
+    $fieldDocumentConfig->set('required', TRUE);
+    $fieldDocumentConfig->save();
+  }
+}
+
+/**
+ * deGov Update 7.6.0 - Add new view mode content_search, add description and
+ * preview image fields, add the fields to the default display.
+ */
+function degov_media_document_update_876000(): void {
+  // Add new display mode and fields.
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_media_document', '876000');
+
+  // Add fields to form display.
+  $formDisplayConfig = \Drupal::configFactory()->getEditable('core.entity_form_display.media.document.default');
+  $parsedData = Yaml::parseFile(\Drupal::service('extension.list.module')->getPath('degov_media_document') . '/config/rewrite/core.entity_form_display.media.document.default.yml');
+  if (!empty($parsedData)) {
+    $formDisplayConfig->setData($parsedData)->save();
+  }
+
+  // Add fields to default display.
+  $defaultDisplayConfig = \Drupal::configFactory()->getEditable('core.entity_view_display.media.document.default');
+  $dependenciesConfig = $defaultDisplayConfig->get('dependencies.config');
+  $dependenciesConfig = array_merge($dependenciesConfig, ['field.field.media.document.field_description', 'field.field.media.document.field_document_preview', 'image.style.thumbnail']);
+  $defaultDisplayConfig->set('dependencies.config', $dependenciesConfig);
+  $hiddenConfig = $defaultDisplayConfig->get('hidden');
+  $hiddenConfig = array_merge($hiddenConfig, ['field_description' => TRUE, 'field_document_preview' => TRUE]);
+  $defaultDisplayConfig->set('hidden', $hiddenConfig);
+  $defaultDisplayConfig->save();
+}
+
+/**
+ * deGov Update 8.3.2
+ * - Allows only those file extentions in document media browser, which are
+ * allow for the media type document.
+ */
+function degov_media_document_update_883002(): string {
+  // Default list: doc docx xls xlsx csv ppt pptx pdf odt ods odp.
+  $field_config = FieldConfig::loadByName('media', 'document', 'field_document');
+  $file_extensions = implode(' ', explode(',', $field_config->getSetting('file_extensions')));
+
+  $entity_browser_ids = ['media_browser', 'ckeditor_media_browser'];
+
+  $labels = [];
+
+  foreach ($entity_browser_ids as $entity_browser_id) {
+    /** @var \Drupal\entity_browser\EntityBrowserInterface $entity_browser */
+    $entity_browser = \Drupal::entityTypeManager()->getStorage('entity_browser')->load($entity_browser_id);
+    $widgets = $entity_browser->getWidgets();
+    /** @var \Drupal\entity_browser\WidgetInterface $widget */
+    foreach ($widgets as $uuid => $widget) {
+      $config = $widget->getConfiguration();
+      $keys = array_key_exists('media_type', $config['settings']) && array_key_exists('form_mode', $config['settings']);
+      if (!$keys) {
+        continue;
+      }
+      $values = ($config['settings']['media_type'] === 'document') && ($config['settings']['form_mode'] === 'media_browser');
+      if (!$values) {
+        continue;
+      }
+      if ($config['settings']['extensions'] === $file_extensions) {
+        continue;
+      }
+      $config['settings']['extensions'] = $file_extensions;
+      $widget->setConfiguration($config);
+      $labels[] = sprintf('%s (%s)', $entity_browser->label(), $widget->label());
+    }
+    $entity_browser->save();
+  }
+  if (\count($labels) > 0) {
+    return sprintf('Set file extensions list of %s to: %s.', implode(', ', $labels), $file_extensions);
+  }
+  return 'Skipped update.';
+}

@@ -1,0 +1,4 @@
+services:
+  degov_tweets.twitter:
+    class: Drupal\degov_tweets\TwitterAPIExchange
+    arguments: ['@config.factory', '@messenger', '@logger.factory']

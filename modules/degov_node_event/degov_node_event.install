@@ -1,0 +1,144 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_node_event module.
+ */
+
+use Drupal\degov_common\Common;
+use Drupal\language\Config\LanguageConfigOverride;
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Set Monday as the first day of the week.
+ * Enable workflow for content type
+ */
+function degov_node_event_install() {
+  \Drupal::configFactory()->getEditable('system.date')->set('first_day', 1)->save(TRUE);
+  /** @var \Drupal\degov_common\Entity\WorkflowHandler $workflowService */
+  $workflowService = \Drupal::service('degov_common.workflow_handler');
+  $workflowService->enableWorkflow('event');
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_node_event_uninstall() {
+  /** @var \Drupal\degov_common\Entity\WorkflowHandler $workflowService */
+  $workflowService = \Drupal::service('degov_common.workflow_handler');
+  $workflowService->disableWorkflow('event');
+
+  // Removes all module type defined content when uninstalling the module.
+  Common::removeContent([
+    'entity_type' => 'node',
+    'entity_bundles' => ['event'],
+  ]);
+}
+
+/**
+ * Enable workflow for content type
+ */
+function degov_node_event_update_8012() {
+  \Drupal::service('module_installer')->install(['degov_users_roles']);
+  /** @var \Drupal\degov_common\Entity\WorkflowHandler $workflowService */
+  $workflowService = \Drupal::service('degov_common.workflow_handler');
+  $workflowService->enableWorkflow('event');
+
+}
+
+/**
+ * Updated view display modes
+ */
+function degov_node_event_update_8013() {
+  /** @var \Drupal\degov_common\DegovModuleUpdater $updater */
+  $updater = \Drupal::service('degov_config.module_updater');
+  $updater->applyUpdates('degov_node_event', '8013');
+}
+
+/**
+ * Set paragraph form mode to experimental
+ */
+function degov_node_event_update_8014() {
+  /** @var \Drupal\degov_common\DegovModuleUpdater $updater */
+  $updater = \Drupal::service('degov_config.module_updater');
+  $updater->applyUpdates('degov_node_faq', '8014');
+}
+
+/**
+ * deGov Update 5.1.0 - Apply config to use the landscape_to_squared image style.
+ */
+function degov_node_event_update_850100() {
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_node_event', '8014');
+}
+
+/**
+ * deGov update 7.0 - Show only upcoming events in the latest events block.
+ */
+function degov_node_event_update_870000() {
+  $latestEventsConfig = \Drupal::configFactory()->getEditable('views.view.latest_events');
+
+  if (!$latestEventsConfig->isNew()) {
+    $filtersConfig = $latestEventsConfig->get('display.default.display_options.filters');
+
+    if (!empty($filtersConfig)) {
+      $partialConfigFile = drupal_get_path('module', 'degov_node_event') . '/config/partial/views.view.latest_events.yml';
+      if (file_exists($partialConfigFile)) {
+        $filtersConfig += Yaml::parseFile($partialConfigFile);
+        $latestEventsConfig->set('display.default.display_options.filters', $filtersConfig)->save();
+      }
+    }
+  }
+}
+
+/**
+ * Fix viewmode of field_teaser_image in entity_view_display slim.
+ */
+function degov_node_event_update_870100() {
+  /** @var \Drupal\Core\Config\ConfigFactory $configFactory */
+  $configFactory = \Drupal::service('config.factory');
+  $configFromStorage = $configFactory->getEditable('core.entity_view_display.node.event.slim');
+  $configFromStorage->set('content.field_teaser_image.settings.view_mode', 'teaser_landscape_2_1');
+  $configFromStorage->save();
+}
+
+/**
+ * Fix translation of labels on node event article
+ */
+function degov_node_event_update_870500() {
+  /** @var \Drupal\Core\Language\LanguageManagerInterface $configTranslation */
+  $configTranslation = \Drupal::languageManager()->getLanguageConfigOverride('de', 'core.entity_form_display.node.event.default');
+  if ($configTranslation instanceof LanguageConfigOverride) {
+    $configTranslation->set('third_party_settings.field_group.group_preview.label', 'Vorschau');
+    $configTranslation->set('third_party_settings.field_group.group_header.label', 'Kopfzeile');
+    $configTranslation->set('third_party_settings.field_group.group_content.label', 'Inhalt');
+    $configTranslation->set('third_party_settings.field_group.group_common.label', 'Allgemein');
+    $configTranslation->set('third_party_settings.field_group.group_righ.label', 'Seitenleiste rechts');
+
+    $configTranslation->save(TRUE);
+  }
+}
+
+/**
+ * deGov 8.1.0 - Fix viewmode of field_teaser_image in entity_view_display small_image.
+ */
+function degov_node_event_update_880100() {
+  /** @var \Drupal\Core\Config\ConfigFactory $configFactory */
+  $configFactory = \Drupal::service('config.factory');
+  $configFromStorage = $configFactory->getEditable('core.entity_view_display.node.event.small_image');
+  $configFromStorage->set('content.field_teaser_image.settings.view_mode', 'teaser_squared_1_1');
+  $configFromStorage->save();
+}
+
+/**
+ * deGov 8.2.0 - Fix viewmode of field_teaser_image in entity_view_display slideshow.
+ */
+function degov_node_event_update_880200() {
+  /** @var \Drupal\Core\Config\ConfigFactoryInterface $configFactory */
+  $configFactory = \Drupal::service('config.factory');
+  $config = $configFactory->getEditable('core.entity_view_display.node.event.slideshow');
+  if (!$config->isNew()) {
+    $config->set('content.field_teaser_image.settings.view_mode', 'slider_main_16_9');
+    $config->save();
+  }
+}

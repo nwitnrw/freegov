@@ -1,0 +1,138 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_media_address module.
+ */
+
+use Drupal\degov_common\Common;
+use Drupal\field\Entity\FieldStorageConfig;
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_media_address_uninstall() {
+  // Removes all module type defined content when uninstalling the module.
+  Common::removeContent([
+    'entity_type' => 'media',
+    'entity_bundles' => ['address'],
+  ]);
+}
+
+/**
+ * Added source field to generic media type 'address'
+ */
+function degov_media_address_update_8010() {
+  \Drupal::configFactory()->getEditable('media.type.address')
+    ->set('source_configuration.source_field', 'field_media_generic')->save();
+}
+
+/**
+ * Set settings for automatic latitude and longitude calculation.
+ */
+function degov_media_address_update_8011() {
+
+  /**
+   * @var \Drupal\Core\Config\ConfigFactory $configFactory
+   */
+  $configFactory = \Drupal::service('config.factory');
+  /**
+   * @var Drupal\Core\Config\Config $config
+   */
+  $config = $configFactory->getEditable('field.field.media.address.field_address_location');
+  $config->set('third_party_settings.geocoder_field.geocode_field', 'field_address_address');
+  $config->set('third_party_settings.geocoder_field.plugins', ['openstreetmap']);
+  $config->save();
+}
+
+/**
+ * Add field for link.
+ */
+function degov_media_address_update_870600() {
+  /**
+   * @var \Drupal\Core\Config\ConfigFactory $configFactory
+   */
+  $configFactory = \Drupal::service('config.factory');
+  /**
+   * @var Drupal\Core\Config\Config $config
+   */
+  $config = $configFactory->getEditable('core.entity_form_display.media.address.default');
+  $moduleConfig = $config->get('dependencies.module');
+  $moduleConfig[] = 'link';
+  $config->set('dependencies.module', $moduleConfig);
+
+  $dependenciesConfig = $config->get('dependencies.config');
+  $dependenciesConfig[] = 'field.field.media.address.field_address_link';
+  $config->set('dependencies.config', $dependenciesConfig);
+
+  $config->set('third_party_settings.field_group.group_contact_details.children', array_merge(
+    $config->get('third_party_settings.field_group.group_contact_details.children'),
+    ['field_address_link'])
+  );
+
+  $config->set('content', array_merge(
+    $config->get('content'),
+    [
+      'field_address_link' => [
+        'weight'               => 24,
+        'settings'             => [
+          'placeholder_url'   => '',
+          'placeholder_title' => '',
+        ],
+        'third_party_settings' => [],
+        'type'                 => 'link_default',
+        'region'               => 'content',
+      ],
+    ]
+  ));
+  $config->save(TRUE);
+
+  $fieldAddressLinkStorageConfig = Yaml::parseFile(drupal_get_path('module', 'degov_media_address') . '/config/install/field.storage.media.field_address_link.yml');
+
+  FieldStorageConfig::create($fieldAddressLinkStorageConfig)->save();
+
+  $fieldAddressLinkConfig = Yaml::parseFile(drupal_get_path('module', 'degov_media_address') . '/config/install/field.field.media.address.field_address_link.yml');
+  $config = $configFactory->getEditable('field.field.media.address.field_address_link');
+  if (!$config->isNew()) {
+    throw new \Exception('Storage contains unexpected config.');
+  }
+  $config->setData($fieldAddressLinkConfig);
+  $config->save(TRUE);
+
+  $config = $configFactory->getEditable('core.entity_view_display.media.address.default');
+  $dependenciesConfig = $config->get('dependencies.config');
+  $dependenciesConfig[] = 'field.field.media.address.field_address_link';
+  $config->set('dependencies.config', $dependenciesConfig);
+
+  $dependenciesModule = $config->get('dependencies.module');
+  $dependenciesModule[] = 'link';
+  $config->set('dependencies.module', $dependenciesModule);
+
+  $config->set('content', array_merge($config->get('content'), [
+    'field_address_link' => [
+      'weight'   => 6,
+      'label'    => 'hidden',
+      'settings' => [
+        'trim_length' => 80,
+        'url_only'    => FALSE,
+        'url_plain'   => FALSE,
+        'rel'         => '',
+        'target'      => '',
+      ],
+    ],
+  ]));
+  $config->save(TRUE);
+
+}
+
+/**
+ * Switch cardinality of field_map_address_reference to unlimited.
+ */
+function degov_media_address_update_880300() {
+  $paragraphMapConfig = \Drupal::configFactory()->getEditable('field.storage.paragraph.field_map_address_reference');
+
+  if (!$paragraphMapConfig->isNew()) {
+    $paragraphMapConfig->set('cardinality', -1)->save();
+  }
+}

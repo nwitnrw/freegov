@@ -1,0 +1,11 @@
+name: 'deGov - Media Manager'
+description: 'Extends the media library.'
+package: deGov
+type: module
+core: 8.x
+dependencies:
+  - block
+  - degov_search_media
+  - system
+  - user
+  - views

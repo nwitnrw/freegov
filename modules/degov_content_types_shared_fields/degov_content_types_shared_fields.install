@@ -1,0 +1,82 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_content_types_shared_fields module.
+ */
+
+/**
+ * deGov Update 7.3.0
+ *   - Move core.entity_view_mode.media.preview_wide from degov_media_overrides to degov_content_types_shared_fields.
+ *   - Install views_parity_row to provide better output in view latest_media.
+ */
+function degov_content_types_shared_fields_update_870300() {
+  /** @var \Drupal\Core\Config\ConfigFactoryInterface $configFactory */
+  $configFactory = \Drupal::configFactory();
+
+  $config_name = 'core.entity_view_mode.media.preview_wide';
+  $configEditable = $configFactory->getEditable($config_name);
+  $configEditable->set('dependencies.enforced.module', ['degov_content_types_shared_fields']);
+  $configEditable->save();
+  $config_name = 'views.view.latest_media';
+  $configEditable = $configFactory->getEditable($config_name);
+  if (!$configEditable->isNew()) {
+    /** @var \Drupal\Core\ProxyClass\Extension\ModuleInstaller $module_installer */
+    $module_installer = \Drupal::service('module_installer');
+    $module_installer->install(['views_parity_row']);
+
+    $configs = [
+      'core.entity_view_mode.media.preview_wide',
+    ];
+    $dependencies_config = $configEditable->get('dependencies.config');
+    if (in_array('core.entity_view_mode.media.preview', $dependencies_config)) {
+      $key = array_search('core.entity_view_mode.media.preview', $dependencies_config);
+      unset($dependencies_config[$key]);
+    }
+
+    foreach ($configs as $config) {
+      if (!in_array($config, $dependencies_config)) {
+        $dependencies_config[] = $config;
+      }
+    }
+    $dependencies_config = array_values($dependencies_config);
+    $configEditable->set('dependencies.config', $dependencies_config);
+    // degov_media_overrides has the config entity from above.
+    $modules = [
+      'views_parity_row',
+    ];
+    $dependencies_module = $configEditable->get('dependencies.module');
+    foreach ($modules as $module) {
+      if (!in_array($module, $dependencies_module)) {
+        $dependencies_module[] = $module;
+      }
+    }
+    $configEditable->set('dependencies.module', array_values($dependencies_module));
+
+    $display_options = $configEditable->get('display.default.display_options');
+    $display_options['style']['options']['row_class'] = '';
+    $display_options['row']['type'] = 'views_parity_row_entity:media';
+    $display_options['row']['options']['view_mode'] = 'preview_wide';
+    $display_options['row']['options']['views_parity_row_enable'] = TRUE;
+    $display_options['row']['options']['views_parity_row'] = [
+      'frequency' => '3',
+      'start' => '2',
+      'end' => '0',
+      'view_mode' => 'preview'
+    ];
+    $configEditable->set('display.default.display_options', $display_options);
+    $configEditable->save(TRUE);
+  }
+}
+
+/**
+ * deGov Update 8.7.6: Rename the Media search view mode from 'Suche' to
+ * 'Mediathek'.
+ */
+function degov_content_types_shared_fields_update_876000() {
+  $mediaSearchViewModeConfig = \Drupal::configFactory()
+    ->getEditable('core.entity_view_mode.media.search');
+  if (!empty($mediaSearchViewModeConfig)) {
+    $mediaSearchViewModeConfig->set('label', 'Mediathek')->save();
+  }
+}

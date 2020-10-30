@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * @file
+ * The deGov Search Synonyms module.
+ */
+
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Link;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Url;
+use Drupal\degov_search_synonyms\Plugin\search_api\processor\SynonymProcessor;
+use Drupal\views\ViewExecutable;
+
+/**
+ * Implements hook_views_pre_view().
+ */
+function degov_search_synonyms_views_pre_view(ViewExecutable $view, $display_id, array &$args) {
+  if ($view->id() !== 'search_content' || $display_id !== 'page_1') {
+    return;
+  }
+
+  $input = $view->getExposedInput();
+  if (SynonymProcessor::ignoreSynonyms() || empty($input['volltext'])) {
+    return;
+  }
+
+  $fulltext_key = 'volltext';
+  $header = $view->getHandlers('header');
+  $content = $header['result']['content'];
+  $input = Html::escape($input[$fulltext_key]);
+  // Check if input matches name of assigned synonym.
+  $term_ids = SynonymProcessor::getSynonymsFromString($input);
+
+  if ($term_ids) {
+    // Get names of tags targeted by synonym.
+    $q = Drupal::database()->select('taxonomy_term_field_data', 'td');
+    $q->addField('td', 'name');
+    $q->condition('td.tid', array_column($term_ids, 'tid'), 'IN');
+    $term_names = $q->execute()->fetchCol();
+
+    $tag_links = [];
+    $route_name = Drupal::routeMatch()->getRouteName();
+    foreach ($term_names as $term_name) {
+      $url = Url::fromRoute($route_name);
+      $url->setRouteParameter($fulltext_key, $term_name);
+      $link_options = [
+        'attributes' => [
+          'class' => [
+            'js-search-for-tag',
+          ],
+        ],
+      ];
+      $url->setOptions($link_options);
+      $tag_links[] = Link::fromTextAndUrl($term_name, $url)->toString();
+    }
+    $tag_links = Markup::create(implode(', ', $tag_links));
+
+    $content .= '<div>' . t('Results for: @tags', ['@tags' => $tag_links]);
+    $url_to_ignore_synonyms = Drupal::request()->getRequestUri() . '&ignore-synonyms=true';
+    $synonym_link = Markup::create("<a class='js-search-instead-for' href='$url_to_ignore_synonyms'>" . $input . "</a>");
+    $content .= "<br>" . t('Search instead for @synonym', ['@synonym' => $synonym_link]);
+    $content .= '</div>';
+    $view->setHandlerOption($display_id, 'header', 'result', 'content', $content);
+  }
+}

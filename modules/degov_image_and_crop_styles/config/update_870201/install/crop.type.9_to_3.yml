@@ -1,0 +1,32 @@
+uuid: 830dc53b-612e-4e79-8a9e-6d5811d96b42
+langcode: en
+status: true
+dependencies:
+  module:
+    - degov_auto_crop
+third_party_settings:
+  degov_auto_crop:
+    offsets:
+      landscape:
+        top: '1'
+        bottom: '2'
+        left: '1'
+        right: '1'
+      portrait:
+        top: '1'
+        bottom: '2'
+        left: '1'
+        right: '1'
+      square:
+        top: '1'
+        bottom: '2'
+        left: '1'
+        right: '1'
+label: '9 zu 3'
+id: 9_to_3
+description: '9:3 Bildzuschnitt, z.B. für Citation image'
+aspect_ratio: '9:3'
+soft_limit_width: 480
+soft_limit_height: 180
+hard_limit_width: null
+hard_limit_height: null

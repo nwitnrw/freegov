@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * @file
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\degov_common\Common;
+
+/**
+ * Implements hook_preprocess().
+ */
+function degov_paragraph_block_reference_preprocess(&$variables, $hook, &$info) {
+  Common::addThemeSuggestions($variables, $hook, $info, [
+    'module_name'       => 'degov_paragraph_block_reference',
+    'entity_type'       => 'paragraph',
+    'entity_bundles'    => ['block_reference'],
+    'entity_view_modes' => ['default', 'preview'],
+  ]);
+
+  Common::addThemeSuggestions($variables, $hook, $info, [
+    'module_name' => 'degov_paragraph_block_reference',
+    'entity_type' => 'paragraph',
+    'entity_bundles' => ['block_reference_sidebar'],
+    'entity_view_modes' => ['default', 'preview'],
+  ]);
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function degov_paragraph_block_reference_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (!empty($form['field_sidebar_right_paragraphs']['widget']) && is_array($form['field_sidebar_right_paragraphs']['widget'])) {
+    foreach ($form['field_sidebar_right_paragraphs']['widget'] as $widget_key => &$widget) {
+      if (!empty($widget['#paragraph_type']) && $widget['#paragraph_type'] === 'block_reference_sidebar') {
+        if (!empty($widget['subform']['field_block_plugin']['widget'][0]['settings']['label'])) {
+          $widget['subform']['field_block_plugin']['widget'][0]['settings']['label']['#access'] = FALSE;
+        }
+
+        if (!empty($widget['subform']['field_block_plugin']['widget'][0]['settings']['label_display'])) {
+          $widget['subform']['field_block_plugin']['widget'][0]['settings']['label_display']['#access'] = FALSE;
+          $widget['subform']['field_block_plugin']['widget'][0]['settings']['label_display']['#default_value'] = FALSE;
+        }
+
+        if (!empty($widget['subform']['field_block_plugin']['widget'][0]['settings']['views_label_checkbox'])) {
+          $widget['subform']['field_block_plugin']['widget'][0]['settings']['views_label_checkbox']['#access'] = FALSE;
+        }
+
+        if (!empty($widget['subform']['field_block_plugin']['widget'][0]['settings']['views_label_fieldset'])) {
+          $widget['subform']['field_block_plugin']['widget'][0]['settings']['views_label_fieldset']['#access'] = FALSE;
+        }
+      }
+    }
+  }
+}

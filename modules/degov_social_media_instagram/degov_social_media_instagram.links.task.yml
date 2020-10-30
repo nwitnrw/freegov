@@ -1,0 +1,4 @@
+degov_social_media_instagram.admin_settings:
+  route_name: degov_social_media_instagram.admin_settings
+  base_route: degov_social_media_instagram.admin_settings
+  title: 'Instagram Settings'

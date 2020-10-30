@@ -1,0 +1,5 @@
+name: 'deGov - Font Awesome Icon Picker'
+description: 'Provides an icon picker for Font Awesome icons.'
+package: deGov
+type: module
+core: 8.x

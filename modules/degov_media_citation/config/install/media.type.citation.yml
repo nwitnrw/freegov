@@ -1,0 +1,17 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_media_citation
+  module:
+    - media_entity_generic
+id: citation
+label: Zitat
+description: 'Ein Media-Bundle mit einem Zitat sowie einem optionalen Bild.'
+source: generic
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_media_generic_2
+field_map: {  }

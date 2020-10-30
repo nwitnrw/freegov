@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_paragraph_map module.
+ */
+
+use Drupal\degov_common\Common;
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_paragraph_map_uninstall() {
+  // Removes all module type defined content when uninstalling the module.
+  Common::removeContent([
+    'entity_type' => 'paragraph',
+    'entity_bundles' => ['map'],
+  ]);
+}
+
+/**
+ * Switch map display via new paragraph based "map_paragraph_field_formatter".
+ */
+function degov_paragraph_map_update_880300() {
+  $paragraphViewDisplayConfig = \Drupal::configFactory()->getEditable('core.entity_view_display.paragraph.map.default');
+
+  if (!$paragraphViewDisplayConfig->isNew() && !\Drupal::moduleHandler()->moduleExists('nrwgov')) {
+    $replace = Yaml::parse(file_get_contents(drupal_get_path('module', 'degov_paragraph_map') . '/config/partial/core.entity_view_display.paragraph.map.default.yml'));
+    $paragraphViewDisplayConfig->setData($replace)->save();
+  }
+}

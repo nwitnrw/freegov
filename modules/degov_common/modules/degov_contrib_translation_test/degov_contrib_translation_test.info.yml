@@ -1,0 +1,8 @@
+name: degov_contrib_translation_test
+description: "Test module to test the service degov_common.translation_import."
+type: module
+package: deGov
+core: 8.x
+hidden: true
+interface translation project: degov_contrib_translation_test
+interface translation server pattern: profiles/contrib/degov/modules/degov_common/modules/degov_contrib_translation_test/contribtranslations/de.po

@@ -1,0 +1,12 @@
+{
+  "ignore": [
+    "node_modules",
+    "package.json",
+    "package-json.lock",
+    "webpack-dist",
+    "*.scss"
+  ],
+  "plugins": [
+    "transform-es2015-modules-commonjs"
+  ]
+}

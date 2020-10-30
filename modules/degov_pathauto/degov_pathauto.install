@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_pathauto module.
+ */
+
+/**
+ * degov_pathauto update_870500
+ *  - Replace outdated pattern with new custom token and update default settings.
+ */
+function degov_pathauto_update_870500() {
+  /** @var \Drupal\degov_common\DegovModuleUpdater $module_updater */
+  $module_updater = \Drupal::service('degov_config.module_updater');
+  $module_updater->applyUpdates('degov_pathauto', '870500');
+}
+
+/**
+ * degov_pathauto update_870501
+ *  - Update default media pattern to working standard.
+ */
+function degov_pathauto_update_870501() {
+  $pathautoConfig = \Drupal::configFactory()
+    ->getEditable('pathauto.pattern.media');
+  if (!$pathautoConfig->isNew()) {
+    $currentPattern = $pathautoConfig->get('pattern');
+    $oldPattern = '[media:bundle-name]/[media:name]';
+    $newPattern = '[media:bundle]/[media:name]';
+    if ($currentPattern === $oldPattern) {
+      $pathautoConfig
+        ->set('pattern', $newPattern)
+        ->save();
+    }
+  }
+}

@@ -1,0 +1,8 @@
+entity_reference_date_widget:
+  version: 'VERSION'
+  js:
+    js/script.js: {}
+  css:
+    theme:
+      css/style.css:
+        minified: true

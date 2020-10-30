@@ -1,0 +1,111 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.map.field_map_address_reference
+    - field.field.paragraph.map.field_map_address_view_mode
+    - field.field.paragraph.map.field_sub_title
+    - field.field.paragraph.map.field_title
+    - field.field.paragraph.map.field_title_link
+    - paragraphs.paragraphs_type.map
+  enforced:
+    module:
+      - degov_paragraph_map
+  module:
+    - link
+    - options
+id: paragraph.map.default
+targetEntityType: paragraph
+bundle: map
+mode: default
+content:
+  field_map_address_reference:
+    weight: 3
+    label: hidden
+    settings:
+      width: 450px
+      height: 400px
+      gestureHandling: cooperative
+      style:
+        maptype: ROADMAP
+        style: '[]'
+        pin: ''
+      map_center:
+        center_coordinates: null
+      popup:
+        choice: null
+        text: null
+        view_mode: null
+        label: false
+        shadow_style: 0
+        padding: 13
+        border_radius: 7
+        border_width: 1
+        border_color: '#cccccc'
+        background_color: '#ffffff'
+        min_width: auto
+        max_width: auto
+        min_height: auto
+        max_height: auto
+        arrow_style: 0
+        arrow_size: 10
+        arrow_position: 50
+        disable_auto_pan: 0
+        hide_close_button: 0
+        disable_animation: 1
+        classes:
+          content_container: sgmpopup-content-wrapper
+          background: sgmpopup-content
+          arrow: sgmpopup-arrow
+          arrow_outer: sgmpopup-arrow-outer
+          arrow_inner: sgmpopup-arrow-inner
+      zoom:
+        default: 15
+        max: 17
+        min: 5
+      maptypecontrol: true
+      scalecontrol: true
+      rotatecontrol: true
+      draggable: true
+      mobile_draggable: true
+      zoomcontrol: true
+      streetviewcontrol: true
+    third_party_settings: {  }
+    type: map_paragraph_field_formatter
+    region: content
+  field_map_address_view_mode:
+    weight: 4
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_sub_title:
+    weight: 1
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_title:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_title_link:
+    weight: 2
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: true
+      url_plain: true
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+hidden: {  }

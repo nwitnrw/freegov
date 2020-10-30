@@ -1,0 +1,126 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_node_press module.
+ */
+
+use Drupal\degov_common\Common;
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_node_press_uninstall() {
+  /** @var \Drupal\degov_common\Entity\WorkflowHandler $workflowService */
+  $workflowService = \Drupal::service('degov_common.workflow_handler');
+  $workflowService->disableWorkflow('press');
+
+  // Removes all module type defined content when uninstalling the module.
+  Common::removeContent([
+    'entity_type' => 'node',
+    'entity_bundles' => ['press'],
+  ]);
+}
+
+/**
+ * Implements hook_install().
+ */
+function degov_node_press_install() {
+  /** @var \Drupal\degov_common\Entity\WorkflowHandler $workflowService */
+  $workflowService = \Drupal::service('degov_common.workflow_handler');
+  $workflowService->enableWorkflow('press');
+}
+
+/**
+ * Enable workflow for content type
+ * */
+function degov_node_press_update_8012() {
+  \Drupal::service('module_installer')->install(['degov_users_roles']);
+  /** @var \Drupal\degov_common\Entity\WorkflowHandler $workflowService */
+  $workflowService = \Drupal::service('degov_common.workflow_handler');
+  $workflowService->enableWorkflow('press');
+}
+
+/**
+ * Adds missing view modes
+ */
+function degov_node_press_update_8013() {
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_node_press', '8013');
+}
+
+/**
+ * Updated date format in node view mode's display to DD.MM.YYYY
+ */
+function degov_node_press_update_8014() {
+  /** @var \Drupal\Core\Config\ConfigFactory $configFactory */
+  $configFactory = \Drupal::service('config.factory');
+
+  $configNamespaces = [
+    'core.entity_view_display.node.press.default',
+    'core.entity_view_display.node.press.email_html',
+    'core.entity_view_display.node.press.email_plain',
+    'core.entity_view_display.node.press.latest',
+    'core.entity_view_display.node.press.long_text',
+    'core.entity_view_display.node.press.preview',
+    'core.entity_view_display.node.press.slideshow',
+    'core.entity_view_display.node.press.slim',
+    'core.entity_view_display.node.press.small_image',
+  ];
+
+  foreach ($configNamespaces as $namespace) {
+    $configFromYaml = Yaml::parse(
+    file_get_contents(drupal_get_path('module', 'degov_node_press') . '/config/install/' . $namespace . '.yml')
+    );
+
+    $configFromStorage = $configFactory->getEditable($namespace);
+    $configFromStorage->set('content.field_press_date', $configFromYaml['content']['field_press_date']);
+    $configFromStorage->save();
+  }
+
+}
+
+function degov_node_press_update_dependencies() {
+  $dependencies['degov_node_press'][8013] = [
+    'degov_common' => 8029,
+  ];
+  return $dependencies;
+}
+
+/**
+ * Update paragraph experimental
+ */
+function degov_node_press_update_8015() {
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_node_press', '8015');
+}
+
+/**
+ * deGov Update 5.1.0 - Apply config to use the landscape_to_squared image style.
+ */
+function degov_node_press_update_850100() {
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_node_press', '8015');
+}
+
+/**
+ * deGov Update 7.0.0 - Update the latest press release view block description.
+ */
+function degov_node_press_update_870000() {
+  $configFactory = \Drupal::service('config.factory');
+  $config = $configFactory->getEditable('views.view.press_latest_content');
+  $config->set('display.press_slider.display_options.block_description', 'Neuste Pressemitteilung (Slider)');
+  $config->save(TRUE);
+}
+
+/**
+ * Update existing entity form translations.
+ */
+function degov_node_press_update_880000() {
+  /**
+   * @var \Drupal\degov_common\TranslationImport $translationImport
+   */
+  $translationImport = \Drupal::service('degov_common.translation_import');
+  $translationImport->importConfigTranslation('de', 'core.entity_form_display.node.press.default', drupal_get_path('module', 'degov_node_press') . '/config/install/language/de/core.entity_form_display.node.press.default.yml');
+}

@@ -1,0 +1,23 @@
+services:
+  degov_theming.template:
+    class: Drupal\degov_theming\Service\Template
+    arguments: ['@theme.manager', '@degov_theming.component_location', '@twig', '@theme.initialization']
+  degov_theming.drupal_path:
+    class: Drupal\degov_theming\Service\DrupalPath
+    arguments: []
+  degov_theming.component_location:
+    class: Drupal\degov_theming\Facade\ComponentLocation
+    arguments: ['@library.discovery', '@degov_theming.filesystem_factory', '@degov_theming.drupal_path']
+  degov_theming.link_twig_extension:
+    class: Drupal\degov_theming\TwigExtension\LinkExtension
+    arguments: []
+    tags:
+    - { name: twig.extension }
+  degov_theming.filesystem_factory:
+    class: Drupal\degov_theming\Factory\FilesystemFactory
+    arguments: []
+  degov_theming.is_empty_value_extension:
+    class: Drupal\degov_theming\TwigExtension\IsEmptyValueExtension
+    arguments: ['@renderer', '@url_generator', '@theme.manager', '@date.formatter', '@logger.factory']
+    tags:
+      - { name: twig.extension }

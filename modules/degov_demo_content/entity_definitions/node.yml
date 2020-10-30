@@ -1,0 +1,676 @@
+# content
+teaser_page:
+  type: 'normal_page'
+  title: 'Page with all teasers'
+  status: 1
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Nullam id dolor id nibh ultricies'
+  field_teaser_sub_title: 'Inceptos Risus Elit'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_1}}'
+  moderation_state: 'published'
+page_with_text_paragraph:
+  type: 'normal_page'
+  title: 'Page with text paragraph'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with text paragraph'
+  field_teaser_sub_title: 'Egestas Risus Bibendum Parturient'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_4}}'
+  field_content_paragraphs:
+    - text_1
+    - text_2
+  status: 1
+  moderation_state: 'published'
+page_with_text_sidebar:
+  type: 'normal_page'
+  title: 'Page with text paragraph in sidebar'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with text paragraph in sidebar'
+  field_teaser_sub_title: 'Consectetur Nibh Venenatis'
+  field_teaser_image: ''
+  field_content_paragraphs:
+    - text_2
+  field_sidebar_right_paragraphs:
+    - text_3
+  status: 1
+  moderation_state: 'published'
+page_with_download_paragraph:
+  type: 'normal_page'
+  title: 'Page with download paragraph'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with download paragraph'
+  field_teaser_sub_title: 'Tortor Aenean Dapibus Adipiscing'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_3}}'
+  field_content_paragraphs:
+  - download_1
+  status: 1
+  moderation_state: 'published'
+page_with_iframe_paragraph:
+  type: 'normal_page'
+  title: 'Page with iframe paragraph'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with iframe paragraph'
+  field_teaser_sub_title: 'Egestas Vulputate'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_1}}'
+  field_content_paragraphs:
+  - iframe_1
+  status: 1
+  moderation_state: 'published'
+page_with_map_paragraph:
+  type: 'normal_page'
+  title: 'Page with map paragraph'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with map paragraph'
+  field_teaser_sub_title: 'Ultricies Tellus Bibendum Pellentesque Purus'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_5}}'
+  field_content_paragraphs:
+  - map_1
+  - map_2
+  - map_3
+  - map_4
+  status: 1
+  moderation_state: 'published'
+page_with_faq_list_paragraph:
+  type: 'normal_page'
+  title: 'Page with FAQ-List paragraph'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with FAQ-List paragraph'
+  field_teaser_sub_title: 'Egestas Sit'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_4}}'
+  field_content_paragraphs:
+    - faq_list_1
+  status: 1
+  moderation_state: 'published'
+page_with_all_media:
+  type: 'normal_page'
+  title: 'Page with references to all types of media'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with references to all media'
+  field_teaser_sub_title: 'Condimentum Tristique Mattis Elit'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_3}}'
+  field_content_paragraphs:
+    - views_reference_latest_media
+    - media_reference_image
+    - media_reference_gallery
+    - media_reference_gallery_no_view_mode
+    - media_reference_video_upload
+    - media_reference_video
+    - media_reference_document
+    - media_reference_audio
+    - media_reference_address
+    - media_reference_citation
+    - media_reference_person
+    - media_reference_contact_1
+    - media_reference_contact_2
+    - media_reference_contact_3
+    - media_reference_contact_4
+    - media_reference_tweet
+    - media_reference_instagram
+    - media_reference_some_embed
+    - media_reference_image_viewmode_default
+    - media_reference_responsive_video
+  status: 1
+  moderation_state: 'published'
+page_with_all_views_references:
+  type: 'normal_page'
+  title: 'Page with views references'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with views references'
+  field_teaser_sub_title: 'Magna Malesuada'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_1}}'
+  field_content_paragraphs:
+  - views_reference_latest_content
+  - views_reference_latest_press_1
+  - views_reference_latest_press_2
+  - views_reference_latest_press_3
+  - views_reference_latest_press_4
+  - views_reference_latest_events_1
+  - views_reference_latest_events_2
+  - views_reference_latest_events_3
+  - views_reference_latest_events_4
+  status: 1
+  moderation_state: 'published'
+page_with_events_views_reference:
+  type: 'normal_page'
+  title: 'Page with events views reference'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with events views reference'
+  field_teaser_sub_title: 'Bibendum Vulputate Ligula'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_2}}'
+  field_content_paragraphs:
+  - views_reference_latest_events_1
+  status: 1
+  moderation_state: 'published'
+press_release_1:
+  type: 'press'
+  title: 'A press release'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_press_date: '2020-02-01'
+  field_teaser_title: 'A press release'
+  field_teaser_sub_title: 'Inceptos Sollicitudin'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_1}}'
+  field_content_paragraphs:
+  - text_1
+  - text_2
+  field_header_paragraphs:
+    - header_slideshow_all_slides_type_1
+  status: 1
+  field_social_media: 1
+  moderation_state: 'published'
+press_release_2:
+  type: 'press'
+  title: 'Another press release'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_press_date: '2020-01-31'
+  field_teaser_title: 'Another press release'
+  field_teaser_sub_title: 'Inceptos Sollicitudin'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_2}}'
+  field_content_paragraphs:
+    - text_1
+    - text_2
+  field_header_paragraphs:
+    - header_slideshow_all_slides_type_2
+  status: 1
+  field_social_media: 1
+  moderation_state: 'published'
+press_release_3:
+  type: 'press'
+  title: 'Yet another press release'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_press_date: '2020-01-30'
+  field_teaser_title: 'Yet another press release'
+  field_teaser_sub_title: 'Inceptos Sollicitudin'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_3}}'
+  field_content_paragraphs:
+    - text_1
+    - text_2
+  field_header_paragraphs:
+    - header_banner
+  status: 1
+  field_social_media: 1
+  moderation_state: 'published'
+press_release_4:
+  type: 'press'
+  title: 'Here goes a press release'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_press_date: '2020-01-29'
+  field_teaser_title: 'Here goes a press release'
+  field_teaser_sub_title: 'Inceptos Sollicitudin'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_4}}'
+  field_content_paragraphs:
+    - text_1
+    - text_2
+  status: 1
+  field_social_media: 1
+  moderation_state: 'published'
+press_release_5:
+  type: 'press'
+  title: 'This is one more press release'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_press_date: '2020-01-28'
+  field_teaser_title: 'This is one more press release'
+  field_teaser_sub_title: 'Inceptos Sollicitudin'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_5}}'
+  field_content_paragraphs:
+    - text_1
+    - text_2
+  status: 1
+  field_social_media: 1
+  moderation_state: 'published'
+press_release_6:
+  type: 'press'
+  title: 'And one more press release'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_press_date: '2020-01-27'
+  field_teaser_title: 'And one more press release'
+  field_teaser_sub_title: 'Inceptos Sollicitudin'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_1}}'
+  field_content_paragraphs:
+    - text_1
+    - text_2
+  status: 1
+  field_social_media: 1
+  moderation_state: 'published'
+blog_post_1:
+  type: 'blog'
+  title: 'A blog post'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'A blog post'
+  field_teaser_sub_title: 'Risus Quam Condimentum Lorem Fusce'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_1}}'
+  field_content_paragraphs:
+  - text_1
+  - text_2
+  status: 1
+  field_social_media: 1
+  field_blog_author: '{{MEDIA_ID_PERSON}}'
+  moderation_state: 'published'
+blog_post_2:
+  type: 'blog'
+  title: 'A blog post with type 1 slideshow'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'A blog post with type 1 slideshow'
+  field_teaser_sub_title: 'Risus Quam Condimentum Lorem Fusce'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_1}}'
+  field_content_paragraphs:
+  - text_1
+  - text_2
+  field_header_paragraphs:
+  - header_slideshow_all_slides_type_1
+  status: 1
+  field_social_media: 1
+  field_blog_author: '{{MEDIA_ID_PERSON}}'
+  moderation_state: 'published'
+blog_post_3:
+  type: 'blog'
+  title: 'A blog post with type 2 slideshow'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'A blog post with type 2 slideshow'
+  field_teaser_sub_title: 'Risus Quam Condimentum Lorem Fusce'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_1}}'
+  field_content_paragraphs:
+  - text_1
+  - text_2
+  field_header_paragraphs:
+  - header_slideshow_all_slides_type_1
+  status: 1
+  field_social_media: 1
+  field_blog_author: '{{MEDIA_ID_PERSON}}'
+  moderation_state: 'published'
+blog_post_4:
+  type: 'blog'
+  title: 'A blog post with header banner'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'A blog post with header banner'
+  field_teaser_sub_title: 'Risus Quam Condimentum Lorem Fusce'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_1}}'
+  field_content_paragraphs:
+  - text_1
+  - text_2
+  field_header_paragraphs:
+  - header_banner
+  status: 1
+  field_social_media: 1
+  field_blog_author: '{{MEDIA_ID_PERSON}}'
+  moderation_state: 'published'
+event_1:
+  type: 'event'
+  title: 'An event in the past'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'An event in the past'
+  field_teaser_sub_title: 'Sollicitudin Venenatis Mattis Pharetra'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_4}}'
+  field_content_paragraphs:
+  - text_1
+  - text_2
+  field_header_paragraphs:
+  - header_slideshow_all_slides_type_1
+  field_event_date: '2018-01-01 09:00:00'
+  field_event_date_end: '2018-01-01 16:00:00'
+  field_event_location:
+    country_code: 'DE'
+    organization: 'publicplan'
+    address_line1: 'Bilker Straße 29'
+    postal_code: 40213
+    locality: 'Düsseldorf'
+  status: 1
+  field_social_media: 1
+  moderation_state: 'published'
+event_2:
+  type: 'event'
+  title: 'An event in the future'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'An event in the future'
+  field_teaser_sub_title: 'Vestibulum Vehicula Fusce'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_1}}'
+  field_content_paragraphs:
+  - text_1
+  - text_2
+  field_header_paragraphs:
+  - header_slideshow_all_slides_type_2
+  field_event_date: '2028-01-06 09:00:00'
+  field_event_date_end: '2028-01-06 16:00:00'
+  field_event_location:
+    country_code: 'DE'
+    organization: 'publicplan'
+    address_line1: 'Kennedydamm 24'
+    postal_code: 40476
+    locality: 'Düsseldorf'
+  status: 1
+  field_social_media: 1
+  moderation_state: 'published'
+event_3:
+  type: 'event'
+  title: 'Another event in the future'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Another event in the future'
+  field_teaser_sub_title: 'Vestibulum Vehicula Fusce'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_2}}'
+  field_content_paragraphs:
+    - text_1
+    - text_2
+  field_header_paragraphs:
+  - header_banner
+  field_event_date: '2028-01-05 09:00:00'
+  field_event_date_end: '2028-01-05 16:00:00'
+  field_event_location:
+    country_code: 'DE'
+    organization: 'publicplan'
+    address_line1: 'Kennedydamm 24'
+    postal_code: 40476
+    locality: 'Düsseldorf'
+  status: 1
+  field_social_media: 1
+  moderation_state: 'published'
+event_4:
+  type: 'event'
+  title: 'This is a future event'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'This is a future event'
+  field_teaser_sub_title: 'Vestibulum Vehicula Fusce'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_3}}'
+  field_content_paragraphs:
+    - text_1
+    - text_2
+  field_event_date: '2028-01-04 09:00:00'
+  field_event_date_end: '2028-01-04 16:00:00'
+  field_event_location:
+    country_code: 'DE'
+    organization: 'publicplan'
+    address_line1: 'Kennedydamm 24'
+    postal_code: 40476
+    locality: 'Düsseldorf'
+  status: 1
+  field_social_media: 1
+  moderation_state: 'published'
+event_5:
+  type: 'event'
+  title: 'Here goes a future event'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Here goes a future event'
+  field_teaser_sub_title: 'Vestibulum Vehicula Fusce'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_4}}'
+  field_content_paragraphs:
+    - text_1
+    - text_2
+  field_event_date: '2028-01-03 09:00:00'
+  field_event_date_end: '2028-01-03 16:00:00'
+  field_event_location:
+    country_code: 'DE'
+    organization: 'publicplan'
+    address_line1: 'Kennedydamm 24'
+    postal_code: 40476
+    locality: 'Düsseldorf'
+  status: 1
+  field_social_media: 1
+  moderation_state: 'published'
+# header
+node_with_video_header:
+  type: 'normal_page'
+  title: 'Page with video header'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with video header'
+  field_teaser_sub_title: 'Porta Tristique Sit'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_3}}'
+  field_header_paragraphs:
+    - header_video
+  status: 1
+  moderation_state: 'published'
+node_with_type1_slideshow:
+  type: 'normal_page'
+  title: 'Page with type 1 slideshow'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with type 1 slideshow'
+  field_teaser_sub_title: 'A page with a type 1 slideshow'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_3}}'
+  status: 1
+  field_header_paragraphs:
+    - header_slideshow_all_slides_type_1
+  moderation_state: 'published'
+node_with_type1_slideshow_single_slide:
+  type: 'normal_page'
+  title: 'Page with type 1 slideshow single slide'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with type 1 slideshow single slide'
+  field_teaser_sub_title: 'A page with a type 1 slideshow and a single slide'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_3}}'
+  status: 1
+  field_header_paragraphs:
+    - header_slideshow_single_slides_type_1
+  moderation_state: 'published'
+node_with_type1_slideshow_andSidebar:
+  type: 'normal_page'
+  title: 'Page with type 1 slideshow and sidebar'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with type 1 slideshow and sidebar'
+  field_teaser_sub_title: 'A page with a type 1 slideshow and sidebar'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_3}}'
+  status: 1
+  field_header_paragraphs:
+    - header_slideshow_all_slides_type_1
+  field_sidebar_right_paragraphs:
+    - text_3
+  moderation_state: 'published'
+node_with_type2_slideshow:
+  type: 'normal_page'
+  title: 'Page with type 2 slideshow'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with type 2 slideshow'
+  field_teaser_sub_title: 'A page with a type 2 slideshow'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_4}}'
+  status: 1
+  field_header_paragraphs:
+    - header_slideshow_all_slides_type_2
+  moderation_state: 'published'
+node_with_type2_slideshow_single_slide:
+  type: 'normal_page'
+  title: 'Page with type 2 slideshow single slide'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with type 2 slideshow and a single slide'
+  field_teaser_sub_title: 'A page with a type 2 slideshow and a single slide'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_3}}'
+  status: 1
+  field_header_paragraphs:
+    - header_slideshow_single_slides_type_2
+  moderation_state: 'published'
+node_with_type2_slideshow_and_sidebar:
+  type: 'normal_page'
+  title: 'Page with type 2 slideshow and sidebar'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with type 2 slideshow and sidebar'
+  field_teaser_sub_title: 'A page with a type 2 slideshow and sidebar'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_4}}'
+  status: 1
+  field_header_paragraphs:
+    - header_slideshow_all_slides_type_2
+  field_sidebar_right_paragraphs:
+    - text_3
+  moderation_state: 'published'
+node_with_press_slideshow:
+  type: 'normal_page'
+  title: 'Page with press slideshow'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with press slideshow'
+  field_teaser_sub_title: 'A page with a press slideshow'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_3}}'
+  status: 1
+  field_content_paragraphs:
+    - views_reference_latest_press_slider
+  moderation_state: 'published'
+node_with_press_slideshow_and_sidebar:
+  type: 'normal_page'
+  title: 'Page with press slideshow and sidebar'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with press slideshow'
+  field_teaser_sub_title: 'A page with a press slideshow'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_3}}'
+  status: 1
+  field_content_paragraphs:
+    - views_reference_latest_press_slider
+  field_sidebar_right_paragraphs:
+    - text_3
+  moderation_state: 'published'
+node_with_banner:
+  type: 'normal_page'
+  title: 'Page with banner'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with banner'
+  field_teaser_sub_title: 'A page with an image header'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_1}}'
+  status: 1
+  field_header_paragraphs:
+    - header_banner
+  moderation_state: 'published'
+page_with_image_overridden_caption:
+  type: 'normal_page'
+  title: 'Page with overridden Media caption'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with overridden Media caption'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_1}}'
+  field_content_paragraphs:
+    - media_reference_image
+    - media_reference_image_overridden
+  status: 1
+  moderation_state: 'published'
+node_with_video_mobile:
+  type: 'normal_page'
+  title: 'Page with responsive video'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_tags: '{{DEMOTAG}}'
+  field_teaser_title: 'Page with responsive video'
+  field_teaser_sub_title: 'Nibh Ullamcorper'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_3}}'
+  field_content_paragraphs:
+    - media_reference_responsive_video
+  status: 1
+  moderation_state: 'published'
+node_external_teaser:
+  type: 'external_teaser'
+  title: 'External teaser'
+  field_link:
+    - uri: 'https://www.publicplan.de'
+      title: 'www.publicplan.de'
+  field_teaser_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_4}}'
+node_faq_1:
+  type: 'faq'
+  title: 'FAQ demo'
+  field_internal_title: 'FAQ demo'
+  moderation_state: 'published'
+  field_teaser_image: '{{MEDIA_ID_IMAGE-image_4}}'
+  field_faq_description:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_content_paragraphs:
+    - faq_list_1

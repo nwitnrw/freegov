@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_media_contact module.
+ */
+
+use Drupal\degov_common\Common;
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_media_contact_uninstall() {
+  // Removes all module type defined content when uninstalling the module.
+  Common::removeContent([
+    'entity_type' => 'media',
+    'entity_bundles' => ['contact'],
+  ]);
+}
+
+/**
+ * Moved configuration from image styles module
+ */
+function degov_media_contact_update_8011() {
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_media_contact', '8011');
+}

@@ -1,0 +1,18 @@
+dependencies:
+  config:
+    - field.field.node.press.field_teaser_sub_title
+content:
+  field_teaser_sub_title:
+    type: string
+    weight: 2
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_teaser_text:
+    weight: 3
+  field_teaser_image:
+    type: degov_preview_image
+    settings:
+      view_mode: teaser_landscape_2_1

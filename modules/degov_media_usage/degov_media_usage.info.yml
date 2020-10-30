@@ -1,0 +1,7 @@
+name: 'deGov - Media Usage'
+description: 'Provides the editor with a list view detailing which media entity is used in which capacity.'
+package: deGov
+type: module
+core: 8.x
+dependencies:
+  - drupal:media

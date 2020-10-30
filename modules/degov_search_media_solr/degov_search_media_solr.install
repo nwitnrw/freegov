@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_search_media_solr module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function degov_search_media_solr_install() {
+  // Flush plugin caches so our facets will be shown.
+  \Drupal::service('plugin.cache_clearer')->clearCachedDefinitions();
+}
+
+/**
+ * deGov 8.0.8 – Set the ignore character filter to omit media bundles, otherwise it will destroy underscores.
+ */
+function degov_search_media_solr_update_880008() {
+  $searchIndexConfig = \Drupal::configFactory()
+    ->getEditable('search_api.index.search_media');
+  if (!$searchIndexConfig->isNew()) {
+    $processorConfig = $searchIndexConfig->get('processor_settings.ignore_character');
+    $processorConfig['all_fields'] = FALSE;
+    if (($key = array_search('bundle', $processorConfig['fields'], TRUE)) !== FALSE) {
+      unset($processorConfig['fields'][$key]);
+    }
+    $searchIndexConfig->set('processor_settings.ignore_character', $processorConfig)
+      ->save(TRUE);
+  }
+}

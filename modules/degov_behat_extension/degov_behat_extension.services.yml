@@ -1,0 +1,4 @@
+services:
+  degov_behat_extension.static_uris_fetcher:
+    class: Drupal\degov_behat_extension\PerformanceCheck\StaticUrisFetcher
+    arguments: [ '@path_alias.repository', '@entity_type.manager' ]

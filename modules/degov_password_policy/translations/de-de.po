@@ -1,0 +1,65 @@
+# $Id$
+#
+# German translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  degov_password_policy.info.yml: n/a
+#  src/EventSubscriber/PasswordExpirationSubscriber.php: n/a
+#  src/Validate/PasswordHistory.php: n/a
+#  src/Validate/PasswordPolicy.php: n/a
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2019-11-29 13:33+0100\n"
+"PO-Revision-Date: 2019-11-29 13:36+0100\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: German <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: de\n"
+"X-Generator: Poedit 2.2.4\n"
+
+#: degov_password_policy.info.yml:0
+msgid "deGov - Password Policy"
+msgstr "deGov - Password Policy"
+
+#: degov_password_policy.info.yml:0
+msgid "Überprüfungen und Konfigurationsmöglichkeiten für sichere Passwörter."
+msgstr "Überprüfungen und Konfigurationsmöglichkeiten für sichere Passwörter."
+
+#: src/EventSubscriber/PasswordExpirationSubscriber.php:93
+msgid "This site requires that you change your password every 40 days. Please change your password to proceed."
+msgstr ""
+"Diese Seite erfordert, dass Sie alle 40 Tage ein neues Passwort wählen. Bitte ändern Sie Ihr Passwort um "
+"fortzufahren."
+
+#: src/EventSubscriber/PasswordExpirationSubscriber.php:103
+msgid "Your password will expire soon, please update it!"
+msgstr "Ihr Passwort wird in Kürze ablaufen, bitte wählen Sie ein neues!"
+
+#: src/Validate/PasswordHistory.php:27
+msgid "Password has been used already. Choose a different password."
+msgstr "Sie haben dieses Passwort bereits zuvor verwendet. Bitte wählen Sie ein anderes Passwort."
+
+#: src/Validate/PasswordPolicy.php:29
+msgid "Password should be at least 12 characters long"
+msgstr "Passwort muss mindestens 12 Zeichen lang sein"
+
+#: src/Validate/PasswordPolicy.php:32
+msgid "Password should contain at least one digit"
+msgstr "Passwort muss mindestens eine Ziffer enthalten"
+
+#: src/Validate/PasswordPolicy.php:35
+msgid "Password should contain at least one upper-case letter"
+msgstr "Passwort muss mindestens einen Großbuchstaben enthalten"
+
+#: src/Validate/PasswordPolicy.php:38
+msgid "Password should contain at least one lower-case letter"
+msgstr "Passwort muss mindestens einen Kleinbuchstaben enthalten"
+
+#: src/Validate/PasswordPolicy.php:41
+msgid "Password should contain at least one special character"
+msgstr "Passwort muss mindestens ein Sonderzeichen enthalten"

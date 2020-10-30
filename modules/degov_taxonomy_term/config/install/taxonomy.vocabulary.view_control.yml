@@ -1,0 +1,7 @@
+langcode: de
+status: true
+name: Ansichtssteuerung
+vid: view_control
+description: ''
+hierarchy: 0
+weight: 0

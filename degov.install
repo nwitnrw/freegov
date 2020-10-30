@@ -1,0 +1,501 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the deGov profile.
+ */
+
+use Drupal\field\Entity\FieldConfig;
+use Drupal\media\Entity\MediaType;
+use Drupal\user\Entity\Role;
+use Symfony\Component\Yaml\Yaml;
+use Drupal\degov\TranslationImporter;
+use Drupal\Core\File\FileSystemInterface;
+
+/**
+ * Implements hook_install().
+ */
+function degov_install() {
+  TranslationImporter::importForProfile('degov');
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function degov_requirements(string $phase) {
+  $requirements = [];
+
+  if ($phase === 'runtime') {
+    /** @var \Drupal\Core\Extension\ExtensionList $moduleExtensionList */
+    $moduleExtensionList = \Drupal::service('extension.list.module');
+    $requirements['degov_common'] = [
+      'severity'    => REQUIREMENT_OK,
+      'title'       => t('deGov version'),
+      'description' => t('Version of deGov'),
+      'value'       => t('Version: @version', ['@version' => $moduleExtensionList->getExtensionInfo('degov')['version']]),
+    ];
+  }
+
+  $privateFilePath = \Drupal::service('file_system')->realpath('private://');
+  if (empty($privateFilePath) || preg_match("/private\:$/", $privateFilePath)) {
+    $requirements['file_private_path'] = [
+      'title'       => t('Private file system'),
+      'value'       => t('Not configured'),
+      'description' => t('The installation profile requires the private file system to be configured. Please <a href=":settings_howto" target="_blank">edit</a> your settings.php accordingly.', [':settings_howto' => 'https://www.drupal.org/docs/8/core/modules/file/overview#private-file-system']),
+      'severity'    => REQUIREMENT_ERROR,
+    ];
+  }
+
+  $profileInfo = Yaml::parseFile(\Drupal::service('extension.list.profile')->getPathname('degov'));
+  $phpVersionConflicts = (array_key_exists('php version conflicts', $profileInfo) && is_array($profileInfo['php version conflicts'])) ? $profileInfo['php version conflicts'] : [];
+  foreach ($phpVersionConflicts as $phpVersionConflict) {
+    preg_match('/^([<>=]*)\s*(\d(\.\d){0,2})$/', $phpVersionConflict, $matches);
+    $operator = !empty($matches[1]) ? $matches[1] : '==';
+    $conflictingVersion = $matches[2];
+    if (version_compare(PHP_VERSION, $conflictingVersion, $operator)) {
+      $requirements['php_version_conflicts'] = [
+        'title'       => t('PHP version conflicts'),
+        'value'       => t('Unsupported PHP version'),
+        'description' => t('You are attempting to install deGov on PHP @phpVersion. deGov currently does not support PHP @conflict', [
+          '@phpVersion' => PHP_VERSION,
+          '@conflict'   => $phpVersionConflict,
+        ]),
+        'severity'    => REQUIREMENT_ERROR,
+      ];
+    }
+  }
+  if ($phase === 'runtime') {
+    $deprecated_dependencies = [];
+    foreach ($deprecated_dependencies as $deprecated_dependency) {
+      if (\Drupal::moduleHandler()->moduleExists($deprecated_dependency)) {
+        $requirements['degov_deprecated_dependency_' . $deprecated_dependency] = [
+          'title'       => 'Deprecated dependency',
+          'description' => t('The module <i>:module_name</i> will be removed as a dependency from deGov in the next release. Please add the dependency to your project\'s composer.json or uninstall it.', [':module_name' => $deprecated_dependency]),
+          'severity'    => REQUIREMENT_WARNING,
+          'value'       => t('The dependency to the module <i>:module_name</i> is deprecated', [':module_name' => $deprecated_dependency]),
+        ];
+      }
+    }
+  }
+  return $requirements;
+}
+
+/**
+ * Implements hook_update_dependencies().
+ */
+function degov_update_dependencies() {
+  $dependencies['field_group'][8301] = [
+    'degov' => 8501,
+  ];
+  $dependencies['degov'][880000] = [
+    'system' => 8805
+  ];
+  return $dependencies;
+}
+
+function degov_update_8440() {
+  // Read the configuration.
+  $module_data = \Drupal::config('core.extension')->get('module');
+
+  // Remove lightning.
+  unset($module_data['lightning']);
+
+  // Write the configuration.
+  \Drupal::configFactory()
+    ->getEditable('core.extension')
+    ->set('module', $module_data)
+    ->save();
+}
+
+/**
+ * Uninstalls the lightning API module. It will be removed in 3.x
+ */
+function degov_update_8441() {
+  \Drupal::service('module_installer')->uninstall(['lightning_api']);
+}
+
+/**
+ * Uninstalls the lightning workflow module. It will be removed in 3.x
+ */
+function degov_update_8442() {
+  \Drupal::service('module_installer')->uninstall(['lightning_workflow']);
+  \Drupal::service('module_installer')->uninstall(['lightning_scheduler']);
+}
+
+/**
+ * Installing Bartik theme to prevent configuration errors created by block imports
+ */
+function degov_update_8443() {
+  \Drupal::service('theme_installer')->install(['bartik']);
+}
+
+/**
+ * Install degov_paragraph_webform and degov_paragraph_slideshow by default
+ */
+function degov_update_8444() {
+  /** @var \Drupal\Core\Extension\ModuleInstallerInterface $moduleInstaller */
+  $moduleInstaller = \Drupal::service('module_installer');
+  $moduleInstaller->install([
+    'degov_paragraph_webform',
+    'degov_paragraph_slideshow',
+    'degov_paragraph_header',
+  ]);
+}
+
+/**
+ * Remove password policy module
+ */
+function degov_update_8445() {
+  \Drupal::service('module_installer')->uninstall([
+    'degov_password_policy',
+    'password_policy_length',
+    'password_policy_characters',
+    'password_policy_character_types',
+    'password_policy_history',
+    'password_policy_username',
+    'password_policy',
+  ]);
+}
+
+/**
+ * Add missing image preview icons
+ */
+function degov_update_8447() {
+
+  if (\Drupal::moduleHandler()->moduleExists('media')) {
+    $source = drupal_get_path('module', 'media') . '/images/icons';
+    $destination = \Drupal::config('media.settings')->get('icon_base_uri');
+    \Drupal::service('file_system')->prepareDirectory($destination, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
+
+    $files = \Drupal::service('file_system')->scanDirectory($source, '/.*\.(svg|png|jpg|jpeg|gif)$/');
+    foreach ($files as $file) {
+      // When reinstalling the media module we don't want to copy the icons when
+      // they already exist. The icons could be replaced (by a contrib module or
+      // manually), so we don't want to replace the existing files. Removing the
+      // files when we uninstall could also be a problem if the files are
+      // referenced somewhere else. Since showing an error that it was not
+      // possible to copy the files is also confusing, we silently do nothing.
+      if (!file_exists($destination . DIRECTORY_SEPARATOR . $file->filename)) {
+        \Drupal::service('file_system')->copy($file->uri, $destination, FileSystemInterface::EXISTS_ERROR);
+      }
+    }
+  }
+}
+
+/**
+ * Safe scheduled_updates uninstall
+ */
+function degov_update_8448() {
+  foreach ([
+    'normal_page',
+    'blog',
+    'press',
+    'simplenews_issue',
+    'faq',
+    'event',
+    'external_teaser',
+  ] as $nodeType) {
+    $fieldConfig = FieldConfig::loadByName('node', $nodeType, 'scheduled_updates');
+    if (!empty($fieldConfig)) {
+      $fieldConfig->delete();
+    }
+  }
+}
+
+/**
+ * Uninstalls an old lightning dependency
+ */
+function degov_update_8449() {
+  // Read the configuration.
+  $module_data = \Drupal::config('core.extension')->get('module');
+
+  // Remove openapi_redoc.
+  unset($module_data['openapi_redoc']);
+
+  // Write the configuration.
+  \Drupal::configFactory()
+    ->getEditable('core.extension')
+    ->set('module', $module_data)
+    ->save();
+}
+
+/**
+ * Translate social media settings string into German.
+ */
+function degov_update_8500() {
+  /** @var \Drupal\degov_common\TranslationImport $translation_import */
+  $translation_import = \Drupal::service('degov_common.translation_import');
+  $translation_import->import('degov', 'profile');
+}
+
+/**
+ * Repair broken view modes
+ */
+function degov_update_8501() {
+
+  $viewModes = \Drupal::entityQuery('entity_view_display')->execute();
+  foreach ($viewModes as $viewMode) {
+    $configurationName = 'core.entity_view_display.' . $viewMode;
+    if (\Drupal::config($configurationName)->get('id') === NULL) {
+      [$entityType, $viewModeId] = explode('.', $viewMode);
+      if ($entityType === 'node' || $entityType === 'media') {
+        $moduleName = 'degov_' . $entityType . '_' . $viewModeId;
+        if (\Drupal::moduleHandler()->moduleExists($moduleName)) {
+          $replace = Yaml::parse(file_get_contents(drupal_get_path('module', $moduleName) . '/config/install/' . $configurationName . '.yml'));
+          \Drupal::configFactory()
+            ->getEditable($configurationName)
+            ->setData($replace)
+            ->save(TRUE);
+        }
+      }
+    }
+  }
+
+  $viewModes = \Drupal::entityQuery('entity_form_display')->execute();
+  foreach ($viewModes as $viewMode) {
+    $configurationName = 'core.entity_form_display.' . $viewMode;
+    if (\Drupal::config($configurationName)->get('id') === NULL) {
+      [$entityType, $viewModeId] = explode('.', $viewMode);
+      if ($entityType === 'node' || $entityType === 'media') {
+        $moduleName = 'degov_' . $entityType . '_' . $viewModeId;
+        if (\Drupal::moduleHandler()->moduleExists($moduleName)) {
+          $replace = Yaml::parse(file_get_contents(drupal_get_path('module', $moduleName) . '/config/install/' . $configurationName . '.yml'));
+          \Drupal::configFactory()
+            ->getEditable($configurationName)
+            ->setData($replace)
+            ->save(TRUE);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * deGov Update 5.1.0 - Removal of the Workbench Access module.
+ *
+ * Installation of deGov Email Login module. Install the Link Attributes module,
+ * if it is not already installed.
+ */
+function degov_update_850100() {
+  if (!\Drupal::moduleHandler()->moduleExists('link_attributes')) {
+    \Drupal::service('module_installer')->install([
+      'link_attributes',
+    ]);
+  }
+
+  if (!\Drupal::moduleHandler()->moduleExists('degov_email_login')) {
+    \Drupal::service('module_installer')->install(['degov_email_login']);
+  }
+
+  if (\Drupal::moduleHandler()->moduleExists('degov_workbench_access')) {
+    \Drupal::service('module_installer')->uninstall(['degov_workbench_access']);
+  }
+}
+
+/**
+ * Re-Import search_media view, Remove media type video_file if there is no content., Adds missing fields to forms.
+ */
+function degov_update_860000() {
+  /**
+   * @var $moduleUpdater \Drupal\degov_common\DegovModuleUpdater
+   */
+  $moduleUpdater = \Drupal::service('degov_config.module_updater');
+  $moduleUpdater->reImport('views.view.search_media', 'degov_search_media', 'install');
+  $moduleUpdater->reImport('core.entity_form_display.node.normal_page.default', 'degov_node_normal_page', 'install');
+  $moduleUpdater->reImport('core.entity_form_display.node.event.default', 'degov_node_event', 'install');
+  $moduleUpdater->reImport('core.entity_form_display.node.blog.default', 'degov_node_blog', 'install');
+  $moduleUpdater->reImport('core.entity_form_display.node.press.default', 'degov_node_press', 'install');
+
+  if (!\Drupal::entityQuery('media')
+    ->condition('bundle', 'video_file')
+    ->accessCheck(FALSE)
+    ->execute()) {
+    $mediaType = MediaType::load('video_file');
+    if ($mediaType) {
+      $mediaType->delete();
+    }
+  }
+
+  // Re-apply scheduled updates fields.
+  if (\Drupal::moduleHandler()->moduleExists('degov_scheduled_updates')) {
+    $moduleUpdater->applyRewrites('degov_scheduled_updates', '8001');
+  }
+}
+
+/**
+ * Install the degov_config_integrity, degov_auto_crop and degov_file_management modules, update translations.
+ */
+function degov_update_860100() {
+  if (!\Drupal::moduleHandler()->moduleExists('degov_config_integrity')) {
+    \Drupal::service('module_installer')->install(['degov_config_integrity']);
+  }
+
+  if (!\Drupal::moduleHandler()->moduleExists('degov_file_management')) {
+    \Drupal::service('module_installer')->install(['degov_file_management']);
+  }
+
+  if (!\Drupal::moduleHandler()->moduleExists('degov_auto_crop')) {
+    \Drupal::service('module_installer')->install(['degov_auto_crop']);
+  }
+
+  /** @var \Drupal\degov_common\TranslationImport $translation_import */
+  $translation_import = \Drupal::service('degov_common.translation_import');
+  $translation_import->import('degov', 'profile');
+}
+
+/**
+ * deGov Update 6.2.0 - Install the filter_disallow module.
+ */
+function degov_update_860200() {
+  if (!\Drupal::moduleHandler()->moduleExists('filter_disallow')) {
+    \Drupal::service('module_installer')->install(['filter_disallow']);
+  }
+}
+
+/**
+ * deGov Update 7.1.0 - Enable the deGov copyright module, the icon picker, media file links, install theme blocks
+ */
+function degov_update_870100() {
+  $modulesToInstall = [
+    'degov_copyright_block',
+    'degov_fa_icon_picker',
+    'media_file_links',
+  ];
+  foreach ($modulesToInstall as $moduleToInstall) {
+    if (!\Drupal::moduleHandler()->moduleExists($moduleToInstall)) {
+      \Drupal::service('module_installer')->install([$moduleToInstall]);
+    }
+  }
+
+  $configsToInstall = [
+    'block.block.footer',
+    'system.menu.below-footer-menu',
+    'block.block.belowfootermenu',
+  ];
+  foreach ($configsToInstall as $configToInstall) {
+    $config = \Drupal::configFactory()
+      ->getEditable($configToInstall);
+    $newConfigData = Yaml::parseFile(\Drupal::service('extension.list.theme')
+      ->getPath('degov_theme') . '/config/optional/' . $configToInstall . '.yml');
+    $config->setData($newConfigData)->save();
+  }
+}
+
+/**
+ * deGov update 7.3.0
+ * - Disable SQL Rewrite in the content view. Temporary solution for Issue #2971902: https://www.drupal.org/project/drupal/issues/2971902.
+ * - Give the editor and manager roles the permissions to create, edit and delete terms in the section taxonomy vocabulary.
+ */
+function degov_update_870300() {
+  $viewsViewContentConfig = Drupal::configFactory()->getEditable('views.view.content');
+  if ($viewsViewContentConfig->getRawData()) {
+    $newViewsViewContentConfig = Yaml::parse(file_get_contents(drupal_get_path('profile', 'degov') . '/config/partial/views.view.content.yml'));
+    $viewsViewContentConfig->merge($newViewsViewContentConfig);
+    $viewsViewContentConfig->save(TRUE);
+  }
+
+  $roles = ['editor', 'manager'];
+  foreach ($roles as $roleId) {
+    $role = Role::load($roleId);
+    if ($role) {
+      $role->grantPermission('create terms in section');
+      $role->grantPermission('delete terms in section');
+      $role->grantPermission('edit terms in section');
+      $role->save();
+    }
+  }
+}
+
+/**
+ * deGov 7.5.0 - Install the node_action module and grant related permissions to manager and editor roles.
+ */
+function degov_update_870500() {
+  if (!\Drupal::moduleHandler()->moduleExists('node_action')) {
+    \Drupal::service('module_installer')->install(['node_action']);
+
+    /**
+     * @var \Drupal\user\Entity\Role[] $roles
+     */
+    $roles = Role::loadMultiple([
+      'manager'
+    ]);
+
+    foreach ($roles as $id => $role) {
+      $role->grantPermission('use node publish action');
+      $role->grantPermission('use node unpublish action');
+      $role->grantPermission('use change moderation state action');
+      $role->grantPermission('use change author action');
+      $role->save();
+    }
+
+    /**
+     * @var \Drupal\user\Entity\Role $roles
+     */
+    $editorRole = Role::load('editor');
+    $editorRole->grantPermission('use change moderation state action');
+    $editorRole->grantPermission('use change author action');
+    $editorRole->save();
+  }
+}
+
+/**
+ * deGov 7.6.0 - Enable the Entity Reference Date module for scheduled teasers
+ */
+function degov_update_870600() {
+  if (!\Drupal::moduleHandler()->moduleExists('entity_reference_timer')) {
+    \Drupal::service('module_installer')->install(['entity_reference_timer']);
+  }
+}
+
+/**
+ * deGov 8.0.0
+ * - Enable the synonym modules
+ * - Install the degov_media_usage module with its related submodules
+ */
+function degov_update_880000() {
+  $newModules = [
+    'degov_taxonomy_term_synonyms',
+    'degov_search_synonyms',
+    'degov_search_priority_keywords',
+    'degov_media_usage',
+    'degov_media_usage_node',
+    'degov_media_usage_paragraphs'
+  ];
+  foreach ($newModules as $newModule) {
+    if (!\Drupal::moduleHandler()->moduleExists($newModule)) {
+      \Drupal::service('module_installer')->install([$newModule]);
+    }
+  }
+}
+
+/**
+ * deGov 8.0.5 - Install the degov_password_policy module
+ */
+function degov_update_880005() {
+  if (!\Drupal::moduleHandler()->moduleExists('degov_password_policy')) {
+    \Drupal::service('module_installer')->install(['degov_password_policy']);
+  }
+}
+
+/**
+ * deGov 8.1.8 - Reimport translations
+ */
+function degov_update_880108() {
+  TranslationImporter::importForProfile('degov');
+}
+
+/**
+ * Enable media_copyright module.
+ */
+function degov_update_880300() {
+  if (!\Drupal::moduleHandler()->moduleExists('degov_media_copyright')) {
+    \Drupal::service('module_installer')->install(['degov_media_copyright']);
+  }
+}
+
+/**
+ * deGov 8.3.2 - Reimport translations
+ */
+function degov_update_880302() {
+  TranslationImporter::importForProfile('degov');
+}

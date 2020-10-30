@@ -1,0 +1,12 @@
+name: 'deGov - Mediensuche'
+description: 'Allgemeine Konfiguration für die Mediensuche.'
+type: module
+core: 8.x
+package: deGov
+dependencies:
+  - 'drupal:block'
+  - 'degov:degov_search_base'
+  - 'drupal:media'
+  - 'drupal:system'
+  - 'drupal:user'
+  - 'drupal:views'

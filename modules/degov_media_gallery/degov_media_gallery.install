@@ -1,0 +1,73 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_media_gallery module.
+ */
+
+use Drupal\degov_common\Common;
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_media_gallery_uninstall() {
+  // Removes all module type defined content when uninstalling the module.
+  Common::removeContent([
+    'entity_type' => 'media',
+    'entity_bundles' => ['gallery'],
+  ]);
+}
+
+/**
+ * Added source field to generic media type 'gallery'
+ */
+function degov_media_gallery_update_8010() {
+  \Drupal::configFactory()->getEditable('media.type.gallery')
+    ->set('source_configuration.source_field', 'field_media_generic_5')->save();
+}
+
+/**
+ * Moved configuration from image styles module
+ */
+function degov_media_gallery_update_8011() {
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_media_gallery', '8011');
+}
+
+/**
+ * Add missing view mode preview wide
+ */
+function degov_media_gallery_update_8012() {
+  /**
+   * @var \Drupal\degov_common\DegovModuleUpdater $degovModuleUpdater
+   */
+  $degovModuleUpdater = \Drupal::service('degov_config.module_updater');
+  $degovModuleUpdater->applyUpdates('degov_media_gallery', '8012');
+}
+
+/**
+ * Added source field to generic media type 'gallery'
+ */
+function degov_media_gallery_update_8013() {
+  \Drupal::configFactory()->getEditable('media.type.gallery')
+    ->set('source_configuration.source_field', 'field_media_generic_4')->save();
+}
+
+/**
+ * Adds new field publish date
+ */
+function degov_media_gallery_update_8014() {
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_media_gallery', '8014');
+}
+
+/**
+ * Define a default value for publish date
+ */
+function degov_media_gallery_update_8015() {
+  /**
+   * @var \Drupal\degov_common\DegovModuleUpdater $degovModuleUpdater
+   */
+  $degovModuleUpdater = \Drupal::service('degov_config.module_updater');
+  $degovModuleUpdater->applyUpdates('degov_media_gallery', '8015');
+}

@@ -1,0 +1,98 @@
+{#
+/**
+ * @file
+ * Default theme implementation to format the deGov social media settings block.
+ *
+ * Available variables:
+ *   - social_media_netiquette_url: URL of the netiquette page
+ *   - social_media_privacy_url: URL of the privacy page
+ *   - social_media_sources: available media sources.
+ */
+#}
+<ul class="navbar-nav mr-auto mt-1 social-media-settings-menu skin--font-header">
+  <li class="nav-item nav-link">
+    <a role="button" href="#" data-toggle="modal" data-target="#social-media-settings"
+       class="js-social-media-settings-open social-media-settings--menu-item hidden">
+      <span class="d-none d-lg-inline-block d-xl-inline-block d-md-inline-block d-sm-none">{{ 'Social Media Settings'|trans }}</span>
+      <i class="fa fa-cogs" aria-hidden="true"></i></a>
+  </li>
+</ul>
+
+<div id="social-media-settings" class="social-media-settings modal fade"
+     aria-labelledby="social-media-settings-modal-title" role="dialog"
+     aria-describedby="social-media-settings-modal-description"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h2 tabindex="-1" id="social-media-settings-modal-title"
+          class="modal-title">{{ 'Social Media Settings'|trans }}</h2>
+      <div class="float-right">
+        <button type="button"
+                class="modal-close modal-button btn btn-default"
+                data-dismiss="modal">
+          <span>{{ 'Close'|trans }}</span>
+          <i aria-hidden="true" class="fa fa-times fa-fw fa-2x"></i>
+        </button>
+      </div>
+    </div>
+    <div class="modal-content">
+      <div class="modal-body">
+        <div id="social-media-settings-modal-description" class="social-media-settings__text">
+          <p>
+            {{ 'If you activate these fields with a click, information will be transmitted to and stored by one or more of the following services:'| trans }}
+          </p>
+
+          <div class="social-media-read-more">
+            <div class="collapse" id="social-media-read-more-toggle" >
+              <p>
+                <a href="http://www.facebook.com" target="_blank">Facebook</a>,
+                <a href="https://twitter.com/" target="_blank">Twitter</a>,
+                <a href="https://www.youtube.com/" target="_blank">Youtube</a>,
+                <a href="https://plus.google.com/" target="_blank">Google</a>,
+                <a href="https://de.pinterest.com/" target="_blank">Pinterest</a>,
+                <a href="https://instagram.com/" target="_blank">Instagram</a>,
+                <a href="https://www.flickr.com/" target="_blank">Flickr</a>,
+                <a href="https://vimeo.com/" target="_blank">Vimeo</a>
+              </p>
+              {% trans %}<p>Please read carefully our notes and information on <a href="{{ social_media_privacy_url }}" title="To the privacy page" target="_blank">Privacy</a> and <a href="{{ social_media_netiquette_url }}" title="To netiquette" target="_blank">Netiquette</a> before you activate individual social media.</p>{% endtrans %}
+            </div>
+            <div role="presentation" class="social-media-read-more__overlay"></div>
+            <div class="social-media-read-more__button skin--font-secondary" data-toggle="collapse" data-target="#social-media-read-more-toggle" role="button" aria-expanded="false" aria-controls="social-media-read-more-toggle">
+              <span class="show-more">{% trans %}show more{% endtrans %}<i class="fa fa-chevron-down" aria-hidden="true"></i></span>
+              <span class="show-less">{% trans %}show less{% endtrans %}<i class="fa fa-chevron-up" aria-hidden="true"></i></span>
+            </div>
+          </div>
+
+          <p>
+            <strong>{% trans %}Permanently enable data feeds from social networks and agree to data transfer:{% endtrans %}</strong>
+          </p>
+        </div>
+        <ul class="social-media-settings__settings-list">
+          <li>
+            <input id="checkbox-all-keys" class="js-social-media-source-all checkbox-switch" type="checkbox" value="all" />
+            <label for="checkbox-all-keys">{{ 'All'|trans }}</label>
+          </li>
+          {% for key, name in social_media_sources %}
+            <li>
+              <input id="checkbox-{{ key }}" class="js-social-media-source checkbox-switch" type="checkbox" value="{{ key }}" />
+              <label for="checkbox-{{ key }}">{{ name }}</label>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button"
+                class="social-media-settings__cancel modal-button btn btn-default"
+                data-dismiss="modal">
+          {{ 'Cancel'|trans }}
+        </button>
+        <button type="submit"
+                class="js-social-media-settings-save modal-button social-media-settings__save btn skin--background-secondary"
+                data-dismiss="modal">
+          {{ 'Save'|trans }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

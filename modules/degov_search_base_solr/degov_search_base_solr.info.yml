@@ -1,0 +1,12 @@
+name: 'deGov - Search Base Solr'
+description: 'Base module for search indexing via Apache Solr.'
+type: module
+core: 8.x
+package: deGov
+dependencies:
+  - facets:facets
+  - search_api
+  - search_api_solr
+  - search_api_attachments
+  - search_api_sorts
+hidden: true

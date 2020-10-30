@@ -1,0 +1,13 @@
+.paragraph-node-reference-node-view-mode-slim {
+  @extend .paragraph-node-reference-node-view-mode-preview;
+  .paragraph__content {
+    article {
+      h3, h2 {
+        font-size: $h3-font-size * .7;
+        @include media-breakpoint-up(lg) {
+          font-size: $h3-font-size;
+        }
+      }
+    }
+  }
+}

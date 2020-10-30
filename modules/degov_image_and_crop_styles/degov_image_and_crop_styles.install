@@ -1,0 +1,189 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_image_and_crop_styles module.
+ */
+
+use Drupal\Core\Config\Config;
+use Symfony\Component\Yaml\Yaml;
+
+function _degov_image_and_crop_styles_set_enforced_and_uuid(Config $getEditable) {
+  /** @var \Drupal\Component\Uuid\Php $uuid_service */
+  $uuid_service = \Drupal::service('uuid');
+  $getEditable->set('dependencies.enforced.module', ['degov_image_and_crop_styles']);
+  if (empty($getEditable->get('uuid'))) {
+    $getEditable->set('uuid', $uuid_service->generate());
+  }
+  $getEditable->save(TRUE);
+}
+
+/**
+ * deGov Update 5.1.0 - Add a new responsive image style
+ */
+function degov_image_and_crop_styles_update_850100() {
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_image_and_crop_styles', '8001');
+}
+
+/**
+ * deGov Update 7.1.0 - Add image style for logo / slogan images.
+ */
+function degov_image_and_crop_styles_update_870100() {
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_image_and_crop_styles', '870100');
+}
+
+/**
+ * - Move some config from degov_demo_content to degov_image_and_crop_styles.
+ * - Sets offsets to the crop-types.
+ */
+function degov_image_and_crop_styles_update_870200() {
+  /** @var \Drupal\Core\Config\ConfigFactoryInterface $configFactory */
+  $configFactory = \Drupal::configFactory();
+
+  // The configs was in earlier version only imported via degov_demo_content.
+  $config_names = [
+    'crop.type.12_to_5',
+    'image.style.slider_full_width_480',
+    'image.style.slider_full_width_960',
+    'image.style.slider_full_width_1440',
+    'image.style.slider_full_width_1920',
+    'responsive_image.styles.slider_full_width'
+  ];
+
+  foreach ($config_names as $config_name) {
+    $configEditable = $configFactory->getEditable($config_name);
+    if ($configEditable->isNew()) {
+      /** @var \Drupal\degov_common\DegovConfigUpdate $updater */
+      $updater = \Drupal::service('degov_config.updater');
+      $updater->importConfigFile('degov_image_and_crop_styles', $config_name);
+    }
+    else {
+      _degov_image_and_crop_styles_set_enforced_and_uuid($configEditable);
+    }
+  }
+  $entityTypeManager = \Drupal::service('entity_type.manager');
+  $crop_types = $entityTypeManager
+    ->getStorage('crop_type')
+    ->loadMultiple();
+  $default_offsets = [
+    'left'   => 1,
+    'right'  => 1,
+    'top'    => 1,
+    'bottom' => 1,
+  ];
+  $offsets = [
+    'landscape' => $default_offsets,
+    'portrait' => $default_offsets,
+    'square' => $default_offsets
+  ];
+  foreach ($crop_types as $crop_type) {
+    $crop_type->setThirdPartySetting('degov_auto_crop', 'offsets', $offsets);
+    $crop_type->save();
+    $scale_2x = [
+      '2_to_1',
+      '4_to_1',
+      '8_to_3',
+      '12_to_5',
+      '16_to_9'
+    ];
+    $settings = $crop_type->getThirdPartySetting('degov_auto_crop', 'offsets', []);
+    if ($crop_type->id() === '1_to_1') {
+      $settings['portrait']['bottom'] = 2;
+    }
+    elseif (in_array($crop_type->id(), $scale_2x)) {
+      $settings['landscape']['bottom'] = 2;
+      $settings['portrait']['bottom'] = 2;
+      $settings['square']['bottom'] = 2;
+    }
+    $crop_type->setThirdPartySetting('degov_auto_crop', 'offsets', $settings);
+    $crop_type->save();
+  }
+}
+
+/**
+ * Add image style for citation brick.
+ */
+function degov_image_and_crop_styles_update_870201() {
+  /** @var \Drupal\degov_common\DegovModuleUpdater $moduleUpdater */
+  $moduleUpdater = \Drupal::service('degov_config.module_updater');
+  $moduleUpdater->applyUpdates('degov_image_and_crop_styles', '870201');
+}
+
+/**
+ * deGov Update 7.5.0 - Fix typo in sizes of the image_mapping.
+ */
+function degov_image_and_crop_styles_update_870500() {
+  /** @var \Drupal\degov_common\DegovModuleUpdater $moduleUpdater */
+  $moduleUpdater = \Drupal::service('degov_config.module_updater');
+  $moduleUpdater->applyUpdates('degov_image_and_crop_styles', '870500');
+}
+
+/**
+ * deGov Update 7.6.0 - Set the path for js/css of the cropper js lib.
+ */
+function degov_image_and_crop_styles_update_870600() {
+  /** @var \Drupal\Core\Config\ConfigFactoryInterface $configFactory */
+  $configFactory = \Drupal::configFactory();
+  $config = $configFactory->getEditable('image_widget_crop.settings');
+  $config->set('settings.library_url', 'libraries/cropper/dist/cropper.js');
+  $config->set('settings.css_url', 'libraries/cropper/dist/cropper.css');
+  $config->save();
+}
+
+/**
+ * deGov Update 8.0.0 — Re-import configs from 8.7.1 if they are missing.
+ */
+function degov_image_and_crop_styles_update_880000() {
+  $configsToReimport = [
+    'core.entity_view_mode.media.header_logo_slogan'          => \Drupal::service('module_handler')
+      ->getModule('degov_image_and_crop_styles')
+      ->getPath() . '/config/install/core.entity_view_mode.media.header_logo_slogan.yml',
+    'image.style.logo_slogan'                                 => \Drupal::service('module_handler')
+      ->getModule('degov_image_and_crop_styles')
+      ->getPath() . '/config/install/image.style.logo_slogan.yml',
+    'core.entity_view_display.media.image.header_logo_slogan' => \Drupal::service('module_handler')
+      ->getModule('degov_media_image')
+      ->getPath() . '/config/install/core.entity_view_display.media.image.header_logo_slogan.yml',
+  ];
+
+  foreach ($configsToReimport as $configKey => $pathToConfigFile) {
+    $configObject = \Drupal::configFactory()->getEditable($configKey);
+    if ($configObject->isNew()) {
+      $configObject->setData(Yaml::parseFile($pathToConfigFile))->save(TRUE);
+    }
+  }
+}
+
+/**
+ * deGov Update 8.1.6 — Enforce image styles optimized for the nrwGOV theme.
+ */
+function degov_image_and_crop_styles_update_880106() {
+  $modulePath = \Drupal::service('module_handler')
+    ->getModule('degov_image_and_crop_styles')
+    ->getPath();
+  $configsToInstall = [
+    'image.style.teaser_squared_1_1_180'               => $modulePath . '/config/install/image.style.teaser_squared_1_1_180.yml',
+    'responsive_image.styles.teaser_squared'           => $modulePath . '/config/install/responsive_image.styles.teaser_squared.yml',
+    'image.style.teaser_landscape_2_1_320'             => $modulePath . '/config/install/image.style.teaser_landscape_2_1_320.yml',
+    'image.style.teaser_landscape_2_1_640'             => $modulePath . '/config/install/image.style.teaser_landscape_2_1_640.yml',
+    'image.style.teaser_squared_1_1_427'               => $modulePath . '/config/install/image.style.teaser_squared_1_1_427.yml',
+    'image.style.teaser_squared_1_1_640'               => $modulePath . '/config/install/image.style.teaser_squared_1_1_640.yml',
+    'image.style.teaser_squared_1_1_854'               => $modulePath . '/config/install/image.style.teaser_squared_1_1_854.yml',
+    'responsive_image.styles.teaser_landscape_squared' => $modulePath . '/config/install/responsive_image.styles.teaser_landscape_squared.yml',
+    'image.style.teaser_landscape_2_1_384'             => $modulePath . '/config/install/image.style.teaser_landscape_2_1_384.yml',
+    'image.style.teaser_landscape_2_1_576'             => $modulePath . '/config/install/image.style.teaser_landscape_2_1_576.yml',
+    'image.style.teaser_landscape_2_1_768'             => $modulePath . '/config/install/image.style.teaser_landscape_2_1_768.yml',
+    'responsive_image.styles.teaser_landscape'         => $modulePath . '/config/install/responsive_image.styles.teaser_landscape.yml',
+    'image.style.citation_320x120'                     => $modulePath . '/config/install/image.style.citation_320x120.yml',
+    'image.style.citation_384x144'                     => $modulePath . '/config/install/image.style.citation_384x144.yml',
+    'image.style.citation_640x240'                     => $modulePath . '/config/install/image.style.citation_640x240.yml',
+    'responsive_image.styles.citation_teaser'          => $modulePath . '/config/install/responsive_image.styles.citation_teaser.yml',
+  ];
+
+  foreach ($configsToInstall as $configKey => $pathToConfigFile) {
+    $configObject = \Drupal::configFactory()->getEditable($configKey);
+    $configObject->setData(Yaml::parseFile($pathToConfigFile))->save(TRUE);
+  }
+}

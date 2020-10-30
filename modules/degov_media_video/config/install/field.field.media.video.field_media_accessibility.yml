@@ -1,0 +1,28 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - media.type.video
+    - taxonomy.vocabulary.media_accessibility
+  module:
+    - degov_taxonomy_media_accessibility
+id: media.video.field_media_accessibility
+field_name: field_media_accessibility
+entity_type: media
+bundle: video
+label: Barrierefreiheit
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      media_accessibility: media_accessibility
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

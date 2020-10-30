@@ -1,0 +1,9 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_paragraph_webform
+id: webform
+label: Webform
+behavior_plugins: {  }

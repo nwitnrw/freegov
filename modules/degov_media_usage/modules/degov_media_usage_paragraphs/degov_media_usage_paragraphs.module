@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * @file
+ * Drupal hooks implementations for the degov_media_usage_paragraphs module.
+ */
+
+declare(strict_types=1);
+
+use Drupal\paragraphs\ParagraphInterface;
+
+function degov_media_usage_paragraphs_paragraph_insert(ParagraphInterface $entity): void {
+  static $handled = [];
+
+  /** @var \Drupal\degov_media_usage_paragraphs\Service\ParagraphPersistance $persistance */
+  $persistance = \Drupal::service('degov_media_usage_paragraphs.persistance');
+  if ($persistance->canHandle($entity) && !in_array($entity->id(), $handled, TRUE)) {
+    $media = $persistance->getMedia($entity);
+    if (!$media) {
+      return;
+    }
+
+    $persistance->store($entity, $media);
+    $handled[] = $entity->id();
+  }
+}
+
+function degov_media_usage_paragraphs_paragraph_update(ParagraphInterface $entity): void {
+  static $handled = [];
+
+  /** @var \Drupal\degov_media_usage_paragraphs\Service\ParagraphPersistance $persistance */
+  $persistance = \Drupal::service('degov_media_usage_paragraphs.persistance');
+  if ($persistance->canHandle($entity) && !in_array($entity->id(), $handled, TRUE)) {
+    $persistance->purge($entity);
+    $media = $persistance->getMedia($entity);
+    if (!$media) {
+      return;
+    }
+
+    $persistance->store($entity, $media);
+    $handled[] = $entity->id();
+  }
+}
+
+function degov_media_usage_paragraphs_paragraph_delete(ParagraphInterface $entity): void {
+  static $handled = [];
+
+  /** @var \Drupal\degov_media_usage_paragraphs\Service\ParagraphPersistance $persistance */
+  $persistance = \Drupal::service('degov_media_usage_paragraphs.persistance');
+  if ($persistance->canHandle($entity) && !in_array($entity->id(), $handled, TRUE)) {
+    $persistance->purge($entity);
+    $handled[] = $entity->id();
+    return;
+  }
+}

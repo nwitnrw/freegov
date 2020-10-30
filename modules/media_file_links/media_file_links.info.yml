@@ -1,0 +1,8 @@
+name: 'Media file links'
+description: 'Link to files contained in Media entities from the editor and menu entries.'
+type: module
+package: deGov
+core: 8.x
+dependencies:
+  - drupal:media
+  - degov:degov_rich_text_format_settings

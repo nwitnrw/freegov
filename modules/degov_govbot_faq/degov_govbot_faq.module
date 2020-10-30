@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ */
+
+use Drupal\Core\Access\AccessResultForbidden;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_node_access().
+ */
+function degov_govbot_faq_node_access(NodeInterface $node, $op, AccountInterface $account) {
+  /**
+   * @var \Drupal\degov_govbot_faq\FAQAccess $faqAccess
+   */
+  $faqAccess = \Drupal::service('degov_govbot_faq.faq_access');
+  if (!$faqAccess->isAccessibleOnSite($node)) {
+    return new AccessResultForbidden();
+  }
+}

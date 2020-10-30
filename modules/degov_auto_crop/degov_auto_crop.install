@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_auto_crop_update module.
+ */
+
+/**
+ * deGov Update 7.2.0 - Import translation.
+ */
+function degov_auto_crop_update_870200() {
+  /** @var \Drupal\degov_common\TranslationImport $translation_import */
+  $translation_import = \Drupal::service('degov_common.translation_import');
+  $translation_import->import('degov_auto_crop');
+}
+
+/**
+ * deGov Update 7.5.0 - Cast crop offsets to integer
+ */
+function degov_auto_crop_update_870500() {
+  $configsToUpdate = [
+    'crop.type.12_to_5',
+    'crop.type.16_to_9',
+    'crop.type.1_to_1',
+    'crop.type.2_to_1',
+    'crop.type.4_to_1',
+    'crop.type.8_to_3',
+    'crop.type.9_to_3',
+  ];
+
+  foreach ($configsToUpdate as $configToUpdate) {
+    $config = \Drupal::configFactory()->getEditable($configToUpdate);
+    if (!$config->isNew()) {
+      $autoCropOffsets = $config->get('third_party_settings.degov_auto_crop.offsets');
+      foreach ($autoCropOffsets as $alignment => $values) {
+        foreach ($values as $direction => $value) {
+          $autoCropOffsets[$alignment][$direction] = (int) $value;
+        }
+      }
+      $config->set('third_party_settings.degov_auto_crop.offsets', $autoCropOffsets)
+        ->save();
+    }
+  }
+}

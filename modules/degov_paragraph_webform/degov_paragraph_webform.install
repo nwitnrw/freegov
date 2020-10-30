@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_paragraph_webform module.
+ */
+
+use Drupal\degov_common\Common;
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_paragraph_webform_uninstall() {
+  // Removes all module type defined content when uninstalling the module.
+  Common::removeContent([
+    'entity_type' => 'paragraph',
+    'entity_bundles' => ['webform'],
+  ]);
+}
+
+/**
+ * Fix webform paragraph id for existing content.
+ */
+function degov_paragraph_webform_update_8001() {
+  /**
+   * @var \Drupal\Core\Database\Connection $database
+   */
+  $database = \Drupal::service('database');
+
+  $database->query("UPDATE {paragraph__field_sub_title} SET bundle = 'webform' WHERE bundle = 'webformular'");
+  $database->query("UPDATE {paragraph_revision__field_sub_title} SET bundle = 'webform' WHERE bundle = 'webformular'");
+  $database->query("UPDATE {paragraph_revision__field_title} SET bundle = 'webform' WHERE bundle = 'webformular'");
+  $database->query("UPDATE {paragraph_revision__field_title_link} SET bundle = 'webform' WHERE bundle = 'webformular'");
+  $database->query("UPDATE {paragraphs_item} SET type = 'webform' WHERE type = 'webformular'");
+  $database->query("UPDATE {paragraphs_item_field_data} SET type = 'webform' WHERE type = 'webformular'");
+  $database->query("UPDATE {paragraph__field_title} SET bundle = 'webform' WHERE bundle = 'webformular'");
+  $database->query("UPDATE {paragraph__field_title_link} SET bundle = 'webform' WHERE bundle = 'webformular'");
+}

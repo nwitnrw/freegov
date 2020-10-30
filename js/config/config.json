@@ -1,0 +1,23 @@
+{
+  "modules": {
+    "degov_media_video_mobile": [
+      {
+        "name":"fake_navigator",
+        "src": "src/client/FakeNavigator.js",
+        "export": false
+      }
+      ,
+      {
+        "name": "navi",
+        "src": "../modules/degov_media_video_mobile/js/get_connection.js",
+        "export": true
+      },
+      {
+      "name": "speed_checker",
+      "src":  "../modules/degov_media_video_mobile/js/speed_checker.js",
+       "export":true
+      }
+    ]
+
+  }
+}

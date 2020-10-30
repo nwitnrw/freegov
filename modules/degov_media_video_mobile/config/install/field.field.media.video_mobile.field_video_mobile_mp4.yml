@@ -1,0 +1,28 @@
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_video_mobile_mp4
+    - media.type.video_mobile
+  enforced:
+    module:
+      - degov_media_video_mobile
+  module:
+    - file
+id: media.video_mobile.field_video_mobile_mp4
+field_name: field_video_mobile_mp4
+entity_type: media
+bundle: video_mobile
+label: 'Standard Video'
+description: '960 x 540'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: media/video_mobile
+  file_extensions: mp4
+  max_filesize: ''
+  description_field: false
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file

@@ -1,0 +1,21 @@
+content:
+  field_override_caption:
+    weight: 5
+  field_slide_content_type_headlin:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_slide_headline:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_slide_text:
+    weight: 3

@@ -1,0 +1,28 @@
+dependencies:
+  config:
+    - field.field.node.event.field_teaser_sub_title
+    - field.field.node.event.field_internal_title
+third_party_settings:
+  field_group:
+    group_preview:
+      children:
+        - field_teaser_sub_title
+content:
+  field_internal_title:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_teaser_title:
+    weight: 3
+  field_teaser_sub_title:
+    type: string_textfield
+    weight: 4
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }

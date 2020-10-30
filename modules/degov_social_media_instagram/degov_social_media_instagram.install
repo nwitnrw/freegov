@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_social_media_instagram module.
+ */
+
+use Drupal\Core\Link;
+
+/**
+ * Add instagram block, set instagram account to fetch feed from.
+ */
+function degov_social_media_instagram_update_870200() {
+  /* @var \Drupal\degov_common\DegovModuleUpdater $updater */
+  $updater = \Drupal::service('degov_config.module_updater');
+  $updater->applyUpdates('degov_social_media_instagram', '870200');
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function degov_social_media_instagram_requirements(string $phase): array {
+  $requirements = [];
+  if ($phase === 'runtime') {
+    $degov_devel_settings = Drupal::config('degov_devel.settings');
+    if ($degov_devel_settings->get('dev_mode')) {
+      // Nothing to do here. In Dev-Mode we use fixtures.
+      return $requirements;
+    }
+    $degov_social_media_instagram = Drupal::config('degov_social_media_instagram.settings');
+    $user = trim($degov_social_media_instagram->get('user'));
+    $max = $degov_social_media_instagram->get('number_of_posts');
+
+    $requirements['degov_social_media_instagram'] = [
+      'title' => t('deGov Social Media Instagram')
+    ];
+    if (empty($user)) {
+      $requirements['degov_social_media_instagram'] += [
+        'value' => t('User name is empty. Enter one in the %settings.',
+          ['%settings' => Link::createFromRoute(t('settings'), 'degov_social_media_instagram.admin_settings')->toString()]),
+        'severity' => REQUIREMENT_WARNING,
+      ];
+      return $requirements;
+    }
+
+    /** @var \Drupal\degov_social_media_instagram\Instagram $instagram */
+    $instagram = Drupal::service('degov_social_media_instagram.instagram');
+
+    try {
+      $instagram->getMedias($user, $max);
+    }
+    catch (\Exception $exception) {
+      $requirements['degov_social_media_instagram'] += [
+        'value' => $exception->getMessage(),
+        'severity' => REQUIREMENT_ERROR,
+      ];
+    }
+  }
+  return $requirements;
+}

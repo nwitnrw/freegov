@@ -1,0 +1,182 @@
+<?php
+
+/**
+ * @file
+ * Drupal hooks implementations for the degov_media_copyright module.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Media entiy field provides a theme able caption/copyright string.
+ * It is propagated to parent paragraphs, so that it can be used in paragraph
+ * templates.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\media\MediaInterface;
+
+/**
+ * Computed copyright and caption.
+ *
+ * Media computed field using providing a common template for all media types.
+ *
+ * It is available media fields with field_copyright
+ * and can be used in paragraphs with the fields
+ *  - field_media_reference_media
+ *  - field_slide_media
+ */
+function degov_media_copyright_theme(): array {
+  return [
+    'field_media_copyright'  => [
+      'variables' => [
+        'caption' => FALSE,
+        'copyright' => FALSE,
+        'media_type' => FALSE,
+        'attributes' => [],
+      ],
+      'template'  => 'degov-media-copyright',
+    ],
+  ];
+}
+
+/**
+ * Provide field_media_copyright in media templates.
+ */
+function degov_media_copyright_preprocess_media(array &$variables) {
+  /** @var \Drupal\media\Entity\Media $media */
+  $media = isset($variables['elements']['#media']) ? $variables['elements']['#media'] : NULL;
+  $caption_field = 'field_' . $media->bundle() . '_caption';
+  if ($media && ($media->hasField($caption_field) || $media->hasField('field_copyright'))) {
+    $caption = (!$media->hasField($caption_field) || $media->get($caption_field)->isEmpty()) ? NULL : $media->get($caption_field)->first()->value;
+    $copyright = (!$media->hasField('field_copyright') || $media->get('field_copyright')->isEmpty()) ? NULL : $media->get('field_copyright')->first()->get('entity')->getString();
+    $variables['field_media_copyright'] = [
+      '#theme' => 'field_media_copyright',
+      '#caption' => $caption,
+      '#copyright' => $copyright,
+      '#media_type' => $media->bundle(),
+      '#attributes' => [],
+    ];
+    if ($media->_referringItem) {
+      $overrideCaption = isset($variables['content'][$caption_field][0]) ? $variables['content'][$caption_field][0]['#context']['value'] : NULL;
+      if ($overrideCaption) {
+        $variables['field_media_copyright']['#caption'] = $overrideCaption;
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_paragraph().
+ */
+function degov_media_copyright_preprocess_paragraph(array &$variables) {
+  /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
+  $paragraph = $variables['elements']['#paragraph'];
+  $bundle = $paragraph->bundle();
+  // Add field_media_copyright if dependants are met.
+  if (isset($variables['content']['field_media_copyright'])) {
+    $media = NULL;
+    if ($bundle === 'slide' && isset($variables['content']['field_slide_media'])) {
+      /** @var \Drupal\media\MediaInterface $media */
+      $media = $variables['content']['field_slide_media'][0]['#media'];
+    }
+
+    if ($media === NULL) {
+      // We need to do this or the edit form will break.
+      unset($variables['content']['field_media_copyright']);
+    }
+
+    // Provide template variable for paragraph & media templates.
+    // field_slide_media is handeled in degov_paragraph_slideshow preprocess.
+    if ($media instanceof MediaInterface) {
+
+      $caption_field = 'field_' . $media->bundle() . '_caption';
+      if ($paragraph->hasField('field_override_caption') || $media->hasField($caption_field) || $media->hasField('field_copyright')) {
+
+        $caption = $paragraph->hasField('field_override_caption') && !$paragraph->get('field_override_caption')->isEmpty() ? $paragraph->get('field_override_caption')->first()->value : NULL;
+        if (!$caption && $media->hasField($caption_field) && !$media->get($caption_field)->isEmpty()) {
+          $caption = $media->get($caption_field)->first()->value;
+        }
+        $copyright = NULL;
+        if ($media->hasField('field_copyright') && !$media->get('field_copyright')->isEmpty()) {
+          $copyright = $media->get('field_copyright')->first()->get('entity')->getString();
+        }
+        $variables['content']['field_media_copyright'] = [
+          '#theme' => 'field_media_copyright',
+          '#caption' => $caption,
+          '#copyright' => $copyright,
+          '#media_type' => 'degov_media_copyright_preprocess_paragraph',
+          '#attributes' => [],
+        ];
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_base_field_info().
+ */
+function degov_media_copyright_entity_base_field_info(EntityTypeInterface $entity_type): ?array {
+  if ($entity_type->id() === 'media') {
+    $fields = [];
+    return degov_media_copyright_create_field_value($fields);
+  }
+  // Attach field to all paragraph types.
+  if ($entity_type->id() === 'paragraph') {
+    $fields = [];
+    return degov_media_copyright_create_field_value($fields);
+  }
+  return NULL;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function degov_media_copyright_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Hide computed form from Manage display
+  // if entity does not meet requirements.
+  if ($form_id === 'entity_view_display_edit_form') {
+    if (isset($form['fields']['field_media_copyright'])) {
+      // Computed field_media_copyright depends on
+      // field_copyright and one of.
+      $unsetCopyright = TRUE;
+      $mediaCopyrightRequirements = [
+      // Media Reference field.
+        'field_media_reference_media',
+      // Slider paragraph.
+        'field_slide_media',
+      // Media types.
+        'field_copyright',
+      ];
+      foreach ($mediaCopyrightRequirements as $fieldName) {
+        if (isset($form['fields'][$fieldName])) {
+          $unsetCopyright = FALSE;
+        }
+      }
+      if ($unsetCopyright) {
+        unset($form['fields']['field_media_copyright']);
+      }
+    }
+  }
+}
+
+/**
+ * Add a field_media_copyright with computed copyright.
+ */
+function degov_media_copyright_create_field_value(array $fields): array {
+  $fields['field_media_copyright'] = BaseFieldDefinition::create('media_copyright')
+    ->setName('field_media_copyright')
+    ->setLabel(t('Media Copyright'))
+    ->setComputed(TRUE)
+    ->setClass('\Drupal\degov_media_copyright\MediaCopyrightItemList')
+    ->setDisplayConfigurable('form', FALSE)
+    ->setDisplayConfigurable('view', TRUE)
+    ->setDisplayOptions('view', [
+      'type' => 'hidden',
+      'label' => 'hidden',
+      'default_formatter' => 'media-copyright-formatter',
+    ]);
+  return $fields;
+}

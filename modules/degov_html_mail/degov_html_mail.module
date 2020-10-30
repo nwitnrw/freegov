@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Drupal hooks implementations for the degov_html_mail module.
+ */
+
+use Drupal\Component\Render\MarkupInterface;
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Render\Markup;
+
+/**
+ * Implements hook_preprocess().
+ */
+function degov_html_mail_preprocess(&$variables, $hook, &$info) {
+
+  if ($hook === 'swiftmailer') {
+    /** @var \Drupal\Core\Theme\ActiveTheme $theme */
+    $theme = \Drupal::service('theme.manager')->getActiveTheme();
+    // Check if there is mail.css exists in current active theme.
+    $mailstyle = DRUPAL_ROOT . '/' . drupal_get_path('theme', $theme->getName()) . '/public/css/mail.css';
+    if (is_file($mailstyle)) {
+      // If yes include the content of the file into email message.
+      $variables['css'] = @file_get_contents($mailstyle);
+    }
+    $variables['base_url'] = $GLOBALS['base_url'] . '/';
+  }
+}
+
+/**
+ * Implements hook_mail_alter().
+ */
+function degov_html_mail_mail_alter(&$message) {
+  // Attempt to convert relative URLs to absolute. Only apply this to parts
+  // of the body which are markup objects.
+  // Get Host of the site to have the links to start with it.
+  $host = \Drupal::request()->getSchemeAndHttpHost();
+  foreach ($message['body'] as &$body_part) {
+    if ($body_part instanceof MarkupInterface) {
+      $convertedString = Html::transformRootRelativeUrlsToAbsolute((string) $body_part, $host);
+      $body_part = Markup::create($convertedString);
+    }
+  }
+}

@@ -1,0 +1,7 @@
+display:
+  default:
+    display_options:
+      filters:
+        field_tags_target_id:
+          expose:
+            label: Schlagworte

@@ -1,0 +1,27 @@
+default:
+  suites:
+    default:
+      contexts:
+        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\degov\Behat\Context\InstallationContext
+        - Drupal\degov\Behat\Context\DrupalIndependentContext
+        - Drupal\degov\Behat\Context\FormContext
+        - Drupal\degov\Behat\Context\JavaScriptContext
+      paths:
+        features: '%paths.base%/docroot/profiles/contrib/degov/testing/behat/features_install'
+  extensions:
+    Behat\MinkExtension:
+      base_url: http://host.docker.internal
+      default_session: selenium_chrome
+      sessions:
+        selenium_chrome:
+          selenium2:
+            wd_host: http://localhost:4444/wd/hub
+            browser: chrome
+            capabilities:
+              extra_capabilities:
+                chromeOptions:
+                  args:
+                    - "--no-sandbox"
+                    - "--headless"
+                    - "--disable-gpu"

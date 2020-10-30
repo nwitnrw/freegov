@@ -1,0 +1,18 @@
+name: 'deGov - Media Facts'
+description: 'A media bundle for facts'
+package: deGov
+type: module
+core: 8.x
+dependencies:
+  - degov_common
+  - degov_media
+  - degov_content_types_shared_fields
+  - entity_browser
+  - field
+  - field_group
+  - language
+  - media
+  - media_entity_generic
+  - path
+  - taxonomy
+  - text

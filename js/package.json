@@ -1,0 +1,36 @@
+{
+  "name": "deGov",
+  "description": "deGov JS Test infrastructure",
+  "main": "node-form.js",
+  "dependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-transform-arrow-functions": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-es2015-arrow-functions": "^6.22.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-preset-env": "^1.7.0",
+    "copy-webpack-plugin": "^4.6.0",
+    "core-js": "^3.1.4",
+    "es6-promise": "^4.2.5",
+    "qunit": "^2.6.1",
+    "regenerator-runtime": "^0.13.2",
+    "sinon": "^5.0.10",
+    "webpack": "^4.20.2"
+  },
+  "scripts": {
+    "test": "npx qunit webpack-dist/bundle-test.js",
+    "babel-build-for-test": "babel src/**/*.js test/*.js -d babel-compiled-test",
+    "cleanup-babel-test": "rm -rf babel-compiled-test/",
+    "build-and-test": "npm run-script webpack-test && npm run-script test",
+    "build": "webpack --config webpack.js --mode production",
+    "build-dev": "webpack --config webpack.js --mode development",
+    "webpack-test": "npx webpack --entry ./src/**/*.js ./test/*.js --output ./webpack-dist/bundle-test.js --mode development",
+    "bat": "npm run-script build-and-test"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.2.1"
+  }
+}

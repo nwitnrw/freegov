@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - image.style.citation_307x102
+    - image.style.citation_384x144
+    - image.style.citation_640x240
+  module:
+    - degov_image_and_crop_styles
+id: citation_teaser
+label: 'Citation Teaser'
+image_style_mappings:
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.lg
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: citation_640x240
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.md
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: citation_384x144
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.xs
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: citation_307x102
+breakpoint_group: degov_image_and_crop_styles.media
+fallback_image_style: citation_307x102

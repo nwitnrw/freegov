@@ -1,0 +1,14 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_image_and_crop_styles
+  module:
+    - lightning_core
+    - media
+third_party_settings: { }
+id: media.teaser_squared_1_1
+label: 'Teaser squared (1:1)'
+targetEntityType: media
+cache: true

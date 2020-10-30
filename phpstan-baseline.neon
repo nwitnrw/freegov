@@ -1,0 +1,132 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 5
+			path: docroot/modules/contrib/scheduled_publish/src/Form/DeleteUpdateForm.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 1
+			path: docroot/modules/contrib/degov_simplenews/tests/src/Kernel/InstallationTest.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 6
+			path: docroot/modules/contrib/degov_simplenews/tests/src/Kernel/SubscriberManagementTest.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 6
+			path: docroot/modules/contrib/scheduled_publish/src/Form/EditUpdateForm.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 10
+			path: docroot/modules/contrib/scheduled_publish/src/Form/MultipleUpdatesForm.php
+
+		-
+			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			count: 1
+			path: docroot/modules/contrib/scheduled_publish/src/Plugin/Field/FieldFormatter/ScheduledPublishGenericFormatter.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 3
+			path: docroot/modules/contrib/scheduled_publish/src/Plugin/Field/FieldWidget/ScheduledPublishWidget.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 4
+			path: docroot/modules/contrib/scheduled_publish/tests/src/Kernel/FormatterTest.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 1
+			path: docroot/modules/contrib/scheduled_publish/tests/src/Kernel/MediaTest.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 1
+			path: docroot/modules/contrib/scheduled_publish/tests/src/Kernel/NodeTest.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 2
+			path: docroot/profiles/contrib/degov/modules/degov_behat_extension/src/BehatContext/PerformanceContext.php
+
+		-
+			message: "#^Cannot unset offset string on array\\<int, \\(int\\|string\\)\\>\\.$#"
+			count: 1
+			path: docroot/profiles/contrib/degov/modules/degov_common/src/Entity/WorkflowHandler.php
+
+		-
+			message: "#^Undefined variable\\: \\$argument$#"
+			count: 1
+			path: docroot/profiles/contrib/degov/modules/degov_paragraph_view_reference/degov_paragraph_view_reference.module
+
+		-
+			message: "#^Call to an undefined method Drupal\\\\degov\\\\Robo\\\\Plugin\\\\Commands\\\\DeGovCommands\\:\\:checkNodeVersion\\(\\)\\.$#"
+			count: 1
+			path: docroot/profiles/contrib/degov/src/Robo/Plugin/Commands/DeGovCommands.php
+
+		-
+			message: "#^Call to an undefined method Drupal\\\\degov\\\\Robo\\\\Plugin\\\\Commands\\\\DeGovPipelineCommands\\:\\:checkNodeVersion\\(\\)\\.$#"
+			count: 1
+			path: docroot/profiles/contrib/degov/src/Robo/Plugin/Commands/DeGovPipelineCommands.php
+
+		-
+			message: "#^Call to an undefined method Drupal\\\\degov\\\\Robo\\\\Plugin\\\\Commands\\\\ExampleCommands\\:\\:checkNodeVersion\\(\\)\\.$#"
+			count: 1
+			path: docroot/profiles/contrib/degov/src/Robo/Plugin/Commands/ExampleCommands.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 1
+			path: docroot/profiles/contrib/degov/testing/behat/context/BlockContext.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 27
+			path: docroot/profiles/contrib/degov/testing/behat/context/DrupalContext.php
+
+		-
+			message: "#^Instantiated class Drupal\\\\degov\\\\Behat\\\\Context\\\\TextNotFoundException not found\\.$#"
+			count: 1
+			path: docroot/profiles/contrib/degov/testing/behat/context/ModuleContext.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 2
+			path: docroot/profiles/contrib/degov/testing/behat/context/ModuleContext.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 6
+			path: docroot/profiles/contrib/degov/testing/behat/context/NodeContentTypeFormContext.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 3
+			path: docroot/profiles/contrib/degov/testing/behat/context/DrupalIndependentContext.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 3
+			path: docroot/profiles/contrib/degov/testing/behat/context/FormContext.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 2
+			path: docroot/profiles/contrib/degov/testing/behat/context/InstallationContext.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 2
+			path: docroot/profiles/contrib/degov/testing/behat/context/JavaScriptContext.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 2
+			path: docroot/profiles/contrib/degov/testing/behat/context/SmokeTestContext.php
+

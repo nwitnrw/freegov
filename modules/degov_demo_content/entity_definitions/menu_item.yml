@@ -1,0 +1,338 @@
+menu_item_1:
+  menu_name: main
+  node_title: 'Page with all teasers'
+  menu_title: 'All teasers'
+  menu_weight: -28
+  fontawesome_css_class: 'fa-drupal'
+  children:
+    - menu_name: main
+      node_title: 'Page with references to all types of media'
+      menu_title: 'Demo Media'
+      menu_weight: 90
+      children:
+        - menu_name: main
+          media_title: 'Vivamus sagittis lacus laoreet'
+          menu_title: 'Video 1'
+        - menu_name: main
+          media_title: 'Nullam quis risus eget'
+          menu_title: 'Video Mobile 1'
+        - menu_name: main
+          media_title: 'Cras justo odio, dapibus ac facilisis in, egestas eget.'
+          menu_title: 'Video 2'
+        - menu_name: main
+          media_title: 'Integer posuere erat a ante venenatis'
+          menu_title: 'Embed 1'
+        - menu_name: main
+          media_title: 'Donec ullamcorper nulla non metus auctor'
+          menu_title: 'Instagram 1'
+        - menu_name: main
+          media_title: 'Tweetulum audiencium grande'
+          menu_title: 'Tweet 1'
+        - menu_name: main
+          media_title: 'Image Gallery One'
+          menu_title: 'Galery 1'
+        - menu_name: main
+          media_title: 'Kontakt von Bettina'
+          menu_title: 'Contact 2 With image'
+        - menu_name: main
+          media_title: 'Kontakt von Edward'
+          menu_title: 'Contact 1'
+        - menu_name: main
+          media_title: 'Donec sed odio dui'
+          menu_title: 'Person 1'
+        - menu_name: main
+          media_title: 'Morbi leo risus'
+          menu_title: 'Citation 1'
+        - menu_name: main
+          media_title: 'GzevD Address'
+          menu_title: 'Address 2 GzevD'
+        - menu_name: main
+          media_title: 'Publicplan Address'
+          menu_title: 'Address 1 Publicplan'
+        - menu_name: main
+          media_title: 'Just a word document'
+          menu_title: 'Document 3 Word file'
+        - menu_name: main
+          media_title: 'A document with a word file and a preview image'
+          menu_title: 'Document 2 Word doc with image'
+        - menu_name: main
+          media_title: 'A document with a PDF'
+          menu_title: 'Document 1 PDF'
+        - menu_name: main
+          media_title: 'Latest Audio file'
+          menu_title: 'Audio 1'
+        - menu_name: main
+          media_title: 'A video upload with sound'
+          menu_title: 'Video Upload 2'
+        - menu_name: main
+          media_title: 'The latest video upload'
+          menu_title: 'Video Upload 1'
+        - menu_name: main
+          media_title: 'This image will be deleted'
+          menu_title: 'Image 5'
+        - menu_name: main
+          media_title: 'Maecenas faucibus mollis interdum'
+          menu_title: 'Image 4'
+        - menu_name: main
+          media_title: 'Image that cannot be accessed directly'
+          menu_title: 'Image 3 (Image that cannot be accessed directly)'
+        - menu_name: main
+          media_title: 'Lorem ipsum dolor sit amet, consectetur adipiscing'
+          menu_title: 'Image 2'
+        - menu_name: main
+          media_title: 'Demo image with a fixed title'
+          menu_title: 'Image 1'
+    - menu_name: main
+      node_title: 'Page with type 1 slideshow'
+      menu_title: 'Common paragraphs'
+      menu_weight: 20
+      children:
+        - menu_name: main
+          node_title: 'Page with press slideshow'
+        - menu_name: main
+          node_title: 'An event in the future'
+        - menu_name: main
+          node_title: 'A blog post'
+          menu_title: 'Blog Post'
+        - menu_name: main
+          node_title: 'A press release'
+          menu_title: 'Press release'
+        - menu_name: main
+          node_title: 'Page with FAQ-List paragraph'
+        - menu_name: main
+          node_title: 'Page with map paragraph'
+        - menu_name: main
+          node_title: 'Page with download paragraph'
+        - menu_name: main
+          node_title: 'Page with text paragraph in sidebar'
+        - menu_name: main
+          node_title: 'Page with iframe paragraph'
+        - menu_name: main
+          node_title: 'Page with FAQ-List paragraph'
+        - menu_name: main
+          node_title: 'Page with video header'
+        - menu_name: main
+          node_title: 'Page with text paragraph'
+    - menu_name: main
+      node_title: 'Page with references to all types of media'
+      menu_title: 'Views references'
+      menu_weight: 30
+      children:
+        - menu_name: main
+          node_title: 'Page with references to all types of media'
+        - menu_name: main
+          node_title: 'Page with all teasers'
+        - menu_name: main
+          node_title: 'Page with views references'
+        - menu_name: main
+          node_title: 'Page with events views reference'
+        - menu_name: main
+          node_title: 'Page with press slideshow and sidebar'
+        - menu_name: main
+          node_title: 'Page with overridden Media caption'
+        - menu_name: main
+          node_title: 'Page with responsive video'
+    - menu_name: main
+      node_title: 'Page with type 1 slideshow'
+      menu_title: 'Page with Slideshow'
+      menu_weight: 40
+      children:
+        - menu_name: main
+          node_title: 'Page with press slideshow'
+        - menu_name: main
+          node_title: 'Page with press slideshow and sidebar'
+        - menu_name: main
+          node_title: 'Page with type 1 slideshow'
+        - menu_name: main
+          node_title: 'Page with type 1 slideshow and sidebar'
+        - menu_name: main
+          node_title: 'Page with type 1 slideshow single slide'
+        - menu_name: main
+          node_title: 'Page with type 2 slideshow'
+        - menu_name: main
+          node_title: 'Page with type 2 slideshow single slide'
+        - menu_name: main
+          node_title: 'Page with type 2 slideshow and sidebar'
+menu_item_2:
+  menu_name: main
+  node_title: 'Page with video header'
+  menu_title: 'Video header'
+  menu_weight: -18
+  fontawesome_css_class: 'fa-theater-masks fas'
+  children:
+    -
+      menu_name: main
+      node_title: 'Page with text paragraph'
+    -
+      menu_name: main
+      node_title: 'Page with text paragraph in sidebar'
+      children:
+        -
+          menu_name: main
+          node_title: 'Page with FAQ-List paragraph'
+        -
+          menu_name: main
+          node_title: 'Page with video header'
+        -
+          menu_name: main
+          node_title: 'Page with text paragraph'
+menu_item_3:
+  menu_name: main
+  node_title: 'Page with text paragraph'
+  menu_title: 'Text paragraph'
+  menu_weight: -20
+  fontawesome_css_class: 'fa-balance-scale fas'
+  children:
+    -
+      menu_name: main
+      node_title: 'Page with responsive video'
+    -
+      menu_name: main
+      node_title: 'Page with text paragraph'
+    -
+      menu_name: main
+      node_title: 'Page with map paragraph'
+      children:
+        -
+          menu_name: main
+          node_title: 'Page with FAQ-List paragraph'
+        -
+          menu_name: main
+          node_title: 'Page with video header'
+        -
+          menu_name: main
+          node_title: 'Page with text paragraph'
+    -
+      menu_name: main
+      node_title: 'Page with video header'
+menu_item_4:
+  menu_name: main
+  node_title: 'Page with banner'
+  menu_weight: -26
+  fontawesome_css_class: "fa-university fas"
+  children:
+    -
+      menu_name: main
+      node_title: 'Page with text paragraph'
+      children:
+        -
+          menu_name: main
+          node_title: 'Page with FAQ-List paragraph'
+        -
+          menu_name: main
+          node_title: 'Page with video header'
+        -
+          menu_name: main
+          node_title: 'Page with text paragraph'
+    -
+      menu_name: main
+      node_title: 'Page with map paragraph'
+    -
+      menu_name: main
+      node_title: 'Page with video header'
+menu_item_5:
+  menu_name: main
+  node_title: 'Page with map paragraph'
+  menu_title: 'Map paragraph'
+  menu_weight: -24
+  fontawesome_css_class: 'fa-map fas'
+  children:
+    -
+      menu_name: main
+      node_title: 'Page with text paragraph'
+    -
+      menu_name: main
+      node_title: 'Page with map paragraph'
+      children:
+        -
+          menu_name: main
+          node_title: 'Page with FAQ-List paragraph'
+        -
+          menu_name: main
+          node_title: 'Page with video header'
+        -
+          menu_name: main
+          node_title: 'Page with text paragraph'
+    -
+      menu_name: main
+      node_title: 'Page with video header'
+menu_item_6:
+  menu_name: main
+  node_title: 'Page with FAQ-List paragraph'
+  menu_title: 'FAQ-List paragraph'
+  menu_weight: -30
+  fontawesome_css_class: 'fa-book-reader fas'
+  children:
+    -
+      menu_name: main
+      node_title: 'Page with text paragraph'
+    -
+      menu_name: main
+      node_title: 'Page with map paragraph'
+    -
+      menu_name: main
+      node_title: 'Page with video header'
+      children:
+        -
+          menu_name: main
+          node_title: 'Page with FAQ-List paragraph'
+        -
+          menu_name: main
+          node_title: 'Page with video header'
+        -
+          menu_name: main
+          node_title: 'Page with text paragraph'
+menu_item_7:
+  menu_name: main
+  node_title: 'Page with references to all types of media'
+  menu_weight: -22
+  fontawesome_css_class: 'fa-image fas'
+  children:
+    -
+      menu_name: main
+      node_title: 'Page with text paragraph'
+      children:
+        -
+          menu_name: main
+          node_title: 'Page with FAQ-List paragraph'
+        -
+          menu_name: main
+          node_title: 'Page with video header'
+        -
+          menu_name: main
+          node_title: 'Page with text paragraph'
+    -
+      menu_name: main
+      node_title: 'Page with map paragraph'
+    -
+      menu_name: main
+      node_title: 'Page with video header'
+menu_item_8:
+  menu_name: 'below-footer-menu'
+  menu_title: 'About'
+  node_title: 'Page with FAQ-List paragraph'
+menu_item_9:
+  menu_name: 'below-footer-menu'
+  menu_title: 'Privacy'
+  node_title: 'Page with map paragraph'
+menu_item_10:
+  menu_name: 'below-footer-menu'
+  node_title: 'Page with all teasers'
+  menu_title: 'Cookies'
+menu_item_13:
+  menu_name: 'header-top'
+  node_title: 'Page with all teasers'
+  menu_title: 'Kontakt'
+  fontawesome_css_class: 'fa-envelope'
+menu_item_14:
+  menu_name: 'footer'
+  menu_title: 'About'
+  node_title: 'Page with FAQ-List paragraph'
+menu_item_15:
+  menu_name: 'footer'
+  menu_title: 'Privacy'
+  node_title: 'Page with map paragraph'
+menu_item_16:
+  menu_name: 'footer'
+  node_title: 'Page with all teasers'
+  menu_title: 'Cookies'

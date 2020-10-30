@@ -1,0 +1,11 @@
+name: 'deGov - Paragraph text'
+description: 'A paragraph for formatted texts without character limit'
+type: module
+package: deGov
+core: 8.x
+dependencies:
+  - degov_content_types_shared_fields
+  - field
+  - link
+  - paragraphs
+  - text

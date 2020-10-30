@@ -1,0 +1,47 @@
+.pager {
+  .pager__item {
+    padding: 0.5rem 0.5rem 0.5rem 0.8rem;
+    &.pager__item--first,
+    &.pager__item--last {
+      letter-spacing: -2px;
+    }
+    &.pager__item--first {
+      padding-left: 0.5rem;
+    }
+    &.pager__item--last {
+      padding-right: .5rem;
+      padding-left: .5rem;
+    }
+    a {
+      color: $gray-dark;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: $blue;
+    }
+    margin: 0 0.5rem;
+  }
+
+  .pager__item:hover {
+    background-color: $gray-light;
+  }
+
+  .pager__item.is-active {
+    background-color: $gray-light;
+
+    a {
+      color: $blue;
+    }
+  }
+
+  .pager__item--first,
+  .pager__item--last,
+  .pager__item--next,
+  .pager__item--previous {
+    background-color: $blue;
+    a {
+      color: $white;
+    }
+  }
+}

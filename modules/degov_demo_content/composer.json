@@ -1,0 +1,21 @@
+{
+  "name": "drupal/degov_demo_content",
+  "type": "drupal-module",
+  "description": "Generates a predefined set of media and node entities for a quick demo setup",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/degov_demo_content",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/degov_demo_content",
+    "source": "http://cgit.drupalcode.org/degov_demo_content"
+  },
+  "require": { },
+  "extra": {
+    "drush": {
+      "services": {
+        "drush.services.yml": "^9"
+      }
+    }
+  }
+}

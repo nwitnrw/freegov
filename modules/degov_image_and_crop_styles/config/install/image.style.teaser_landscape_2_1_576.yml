@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.2_to_1
+  module:
+    - crop
+name: teaser_landscape_2_1_576
+label: 'Teaser landscape (2:1) 576'
+effects:
+  0750b546-6849-4af7-917b-4969be353708:
+    uuid: 0750b546-6849-4af7-917b-4969be353708
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: 2_to_1
+  7e212478-3400-4a91-b3dc-662b22f154aa:
+    uuid: 7e212478-3400-4a91-b3dc-662b22f154aa
+    id: image_scale
+    weight: 2
+    data:
+      width: 576
+      height: null
+      upscale: false

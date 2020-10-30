@@ -1,0 +1,24 @@
+name: 'deGov - Node External Teaser'
+description: 'A content type for external teaser.'
+type: module
+core: 8.x
+version: 8.x-1.0
+dependencies:
+  - entity_browser
+  - entity_reference_display
+  - facets
+  - field
+  - language
+  - lightning_core
+  - link
+  - menu_ui
+  - node
+  - degov_image_and_crop_styles
+  - degov_node_overrides
+  - degov_paragraph_node_reference
+  - path
+  - responsive_image
+  - search_api_sorts
+  - simplenews
+  - text
+  - user

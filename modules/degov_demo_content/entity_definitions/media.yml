@@ -1,0 +1,271 @@
+image_1:
+  bundle: 'image'
+  name: 'Demo image with a fixed title'
+  file: 'vladimir-riabinin-1058013-unsplash.jpg'
+  field_image_caption: 'Latest image file'
+  status: 1
+  field_include_search: 1
+  field_allow_download: true
+  created: 1578206060
+image_2:
+  bundle: 'image'
+  name: 'Lorem ipsum dolor sit amet, consectetur adipiscing'
+  file: 'humberto-chavez-1058365-unsplash.jpg'
+  status: 1
+  field_allow_download: true
+  field_royalty_free: 1
+  field_include_search: 1
+image_3:
+  bundle: 'image'
+  name: 'Image that cannot be accessed directly'
+  file: 'taneli-lahtinen-1058552-unsplash.jpg'
+  status: 1
+  field_allow_download: false
+  field_include_search: 0
+image_4:
+  bundle: 'image'
+  name: 'Maecenas faucibus mollis interdum'
+  file: 'kari-shea-1066699-unsplash.jpg'
+  status: 1
+  field_include_search: 1
+image_5:
+  bundle: 'image'
+  name: 'This image will be deleted'
+  file: 'taneli-lahtinen-1058552-unsplash.jpg'
+  status: 1
+  field_include_search: 1
+image_6:
+  bundle: 'image'
+  name: 'Contact image'
+  file: 'alexander-andrews-JYGnB9gTCls-unsplash.jpg'
+  status: 1
+  field_include_search: 1
+video_upload_1:
+  bundle: 'video_upload'
+  name: 'The latest video upload'
+  file: 'pexels-videos-1409899-standard.mp4'
+  field_video_upload_preview: '{{MEDIA_ID_IMAGE-image_2}}'
+  field_media_transcription:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  status: 1
+  field_include_search: 1
+  created: 1578119660
+video_upload_2:
+  bundle: 'video_upload'
+  name: 'A video upload with sound'
+  file: 'pexels-videos-855600-standard.mp4'
+  field_video_upload_preview: '{{MEDIA_ID_IMAGE-image_2}}'
+  field_media_transcription:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_video_upload_subtitle:
+    - 'video_upload_subtitle_file_1'
+  status: 1
+  field_include_search: 1
+audio_1:
+  bundle: 'audio'
+  name: 'Latest Audio file'
+  file: 'dummy.mp3'
+  field_audio_preview: '{{MEDIA_ID_IMAGE-image_4}}'
+  field_subtitle: 'Mirum audio subtilissima'
+  field_audio_caption: 'Yaruslavov ellipsum'
+  field_media_transcription:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  status: 1
+  field_include_search: 1
+  created: 1578292460
+document_1:
+  bundle: 'document'
+  name: 'A document with a PDF'
+  file: 'dummy.pdf'
+  status: 1
+  field_description: '{{TEXT}}'
+  field_include_search: 1
+document_2:
+  bundle: 'document'
+  name: 'A document with a word file and a preview image'
+  file: 'word-document.docx'
+  status: 1
+  field_description: '{{TEXT}}'
+  field_document_preview: '{{MEDIA_ID_IMAGE-image_4}}'
+  field_include_search: 1
+document_3:
+  bundle: 'document'
+  name: 'Just a word document'
+  file: 'word-document-2.docx'
+  status: 1
+  field_include_search: 1
+address_1:
+  bundle: 'address'
+  name: 'Publicplan Address'
+  field_address_address:
+    country_code: 'DE'
+    organization: 'publicplan GmbH'
+    address_line1: 'Kennedydamm 24'
+    address_line2: 'Test second address line'
+    postal_code: 40476
+    locality: 'Düsseldorf'
+  field_address_location:
+    lon: '6.7712'
+    lat: '51.2469'
+  field_address_title: 'Vivamus sagittis dolor auctor.'
+  field_address_phone: '0123456789'
+  field_address_fax: '0123456789'
+  field_address_email: 'admin@example.com'
+  status: 1
+  field_include_search: 1
+  field_address_link:
+    uri: https://example.com
+    title: Example.com
+address_2:
+  bundle: 'address'
+  name: 'GzevD Address'
+  field_address_address:
+    country_code: 'DE'
+    organization: 'GZEVD'
+    address_line1: 'Osloer Str. 16/17'
+    address_line2: ''
+    postal_code: 13359
+    locality: 'Berlin'
+  field_address_location:
+    lon: '13.384099'
+    lat: '52.5561982'
+  field_address_title: 'Vivamus sagittis dolor auctor.'
+  field_address_phone: '0123456789'
+  status: 1
+  field_include_search: 1
+  field_address_link:
+    uri: https://www.gesellschaft-zur-entwicklung-von-dingen.de
+    title: gzevd.de
+citation_1:
+  bundle: 'citation'
+  name: 'Morbi leo risus'
+  field_citation_date: '2020-01-04'
+  field_citation_image: '{{MEDIA_ID_IMAGE-image_4}}'
+  field_citation_text: '{{TEXT_PLAIN}}'
+  field_citation_title: 'Maecenas faucibus mollis interdum'
+  status: 1
+  field_include_search: 1
+  created: 1578119700
+person_1:
+  bundle: 'person'
+  name: 'Donec sed odio dui'
+  field_person_image: '{{MEDIA_ID_IMAGE-image_1}}'
+  field_person_info:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  status: 1
+  field_include_search: 1
+contact_1:
+  bundle: 'contact'
+  name: 'Kontakt von Edward'
+  field_contact_email: 'example.two@degov.org'
+  field_contact_fax: '0123456789'
+  field_contact_title: 'Edward Entwicklerson'
+  field_contact_position: 'Drupalwebseitendistributionsentwickler'
+  field_contact_tel: '0123456789'
+  status: 1
+  field_include_search: 1
+contact_2:
+  bundle: 'contact'
+  name: 'Kontakt von Bettina'
+  field_contact_email: 'example.one@degov.org'
+  field_contact_fax: '0987654321'
+  field_contact_title: 'Bettina Bebildert'
+  field_contact_image: '{{MEDIA_ID_IMAGE-image_6}}'
+  field_contact_position: 'Positionis con imaginum'
+  field_contact_tel: '0123456789'
+  status: 1
+  field_include_search: 1
+gallery_1:
+  bundle: 'gallery'
+  name: 'Image Gallery One'
+  field_description:
+    value: 'Cras justo odio, dapibus ac facilisis in descriptione.'
+    format: 'rich_html'
+  field_gallery_title: 'A preview image gallery'
+  field_sub_title: 'Vestibulum id ligula porta subtitulum.'
+  field_media_publish_date: '2018-01-01T00:00:00'
+  field_gallery_images:
+    - 'image_1'
+    - 'image_3'
+    - 'image_2'
+  status: 1
+  field_include_search: 1
+tweet_1:
+  bundle: 'tweet'
+  name: 'Tweetulum audiencium grande'
+  embed_code: '<blockquote class="twitter-tweet" data-lang="de"><p lang="de" dir="ltr">Beim 3. Anwendertag haben unser GF <a href="https://twitter.com/cknebel79?ref_src=twsrc%5Etfw">@cknebel79</a> und einer unserer <a href="https://twitter.com/hashtag/deGov?src=hash&amp;ref_src=twsrc%5Etfw">#deGov</a> Solution Architects  <a href="https://twitter.com/netzor?ref_src=twsrc%5Etfw">@netzor</a> einen Blick in die Zukunft der <a href="https://twitter.com/hashtag/Open?src=hash&amp;ref_src=twsrc%5Etfw">#Open</a>-Source-Software <a href="https://twitter.com/Drupal_deGov?ref_src=twsrc%5Etfw">@Drupal_deGov</a> für die <a href="https://twitter.com/hashtag/%C3%96ffentlicheVerwaltung?src=hash&amp;ref_src=twsrc%5Etfw">#ÖffentlicheVerwaltung</a> gewagt: <a href="https://t.co/C3c1EMnbr9">https://t.co/C3c1EMnbr9</a> <a href="https://twitter.com/hashtag/drupal?src=hash&amp;ref_src=twsrc%5Etfw">#drupal</a> <a href="https://twitter.com/hashtag/drupal4egov?src=hash&amp;ref_src=twsrc%5Etfw">#drupal4egov</a></p>&mdash; publicplan GmbH (@publicplan_GmbH) <a href="https://twitter.com/publicplan_GmbH/status/1062721818073710600?ref_src=twsrc%5Etfw">14. November 2018</a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>'
+  status: 1
+  field_include_search: 1
+instagram_1:
+  bundle: 'instagram'
+  name: 'Donec ullamcorper nulla non metus auctor'
+  embed_code: 'https://www.instagram.com/p/BY50w44FBNE/?taken-by=publicplan_gmbh'
+  status: 1
+  field_include_search: 1
+embed_1:
+  bundle: 'some_embed'
+  name: 'Integer posuere erat a ante venenatis'
+  status: 1
+  field_some_embed_code: '<blockquote class="twitter-tweet" data-lang="de"><p lang="de" dir="ltr"><a href="https://twitter.com/hashtag/Drupal?src=hash&amp;ref_src=twsrc%5Etfw">#Drupal</a> 9 soll 2020 <a href="https://twitter.com/hashtag/released?src=hash&amp;ref_src=twsrc%5Etfw">#released</a> werden, sodass <a href="https://twitter.com/hashtag/Nutzer?src=hash&amp;ref_src=twsrc%5Etfw">#Nutzer</a> ein Jahr lang Zeit haben von Drupal 8 darauf umzusteigen. Wie es mit allen Drupal Versionen weitergeht, lesen Sie hier: <a href="https://t.co/MYesgQoO33">https://t.co/MYesgQoO33</a> <a href="https://twitter.com/hashtag/CMS?src=hash&amp;ref_src=twsrc%5Etfw">#CMS</a> <a href="https://twitter.com/hashtag/developer?src=hash&amp;ref_src=twsrc%5Etfw">#developer</a> <a href="https://twitter.com/hashtag/software?src=hash&amp;ref_src=twsrc%5Etfw">#software</a></p>&mdash; publicplan GmbH (@publicplan_GmbH) <a href="https://twitter.com/publicplan_GmbH/status/1052804217973420032?ref_src=twsrc%5Etfw">18. Oktober 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>'
+  field_social_media_source: 'twitter'
+  field_include_search: 1
+video_2:
+  bundle: 'video'
+  name: 'Cras justo odio, dapibus ac facilisis in, egestas eget.'
+  field_description:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_video_caption: 'Nullam id dolor id nibh ultricies vehicula'
+  field_media_duration: '5:11'
+  field_social_media_source: 'vimeo'
+  field_media_transcription:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_sub_title: 'Vivamus sagittis lacus vel augue laoreet'
+  field_media_publish_date: '2018-01-01T00:00:00'
+  field_media_video_embed_field: 'https://vimeo.com/291514368'
+  field_video_preview: '{{MEDIA_ID_IMAGE-image_1}}'
+  status: 1
+  field_include_search: 1
+video_mobile_1:
+  bundle: 'video_mobile'
+  name: 'Nullam quis risus eget'
+  field_title: 'Cum sociis natoque penatibus'
+  files:
+    field_mobile_video_mobile_mp4: 'pexels-videos-1409899-mobile.mp4'
+    field_video_mobile_mp4: 'pexels-videos-1409899-standard.mp4'
+    field_hdready_video_mobile_mp4: 'pexels-videos-1409899-hd-ready.mp4'
+    field_fullhd_video_mobile_mp4: 'pexels-videos-1409899-full-hd.mp4'
+    field_ultrahd4k_video_mobile_mp4: 'pexels-videos-1409899-4k.mp4'
+  status: 1
+  field_media_publish_date: '2018-01-01T00:00:00'
+  field_allow_download_4k: 1
+  field_allow_download_mobile: 1
+  field_allow_download_hdready: 1
+  field_include_search: 1
+  field_video_mobile_preview: '{{MEDIA_ID_IMAGE-image_1}}'
+  field_media_transcription:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+video_1:
+  bundle: 'video'
+  name: 'Vivamus sagittis lacus laoreet'
+  field_description:
+    value: 'Vestibulum id ligula porta felis euismod semper'
+    format: 'rich_html'
+  field_video_caption: 'Praesent commodo cursus magna, vel scelerisque nisl consectetur'
+  field_media_duration: '3:16'
+  field_social_media_source: 'youtube'
+  field_media_transcription:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_sub_title: 'Etiam porta sem malesuada magna mollis'
+  field_media_publish_date: '2018-01-01T00:00:00'
+  field_media_video_embed_field: 'https://www.youtube.com/watch?v=z-qpyBRTJ2A&t=65s'
+  field_video_preview: '{{MEDIA_ID_IMAGE-image_3}}'
+  status: 1
+  field_include_search: 1

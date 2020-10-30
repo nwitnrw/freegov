@@ -1,0 +1,83 @@
+default:
+  suites:
+    default:
+      contexts:
+        - Drupal\DrupalExtension\Context\DrupalContext
+        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\DrupalExtension\Context\MessageContext
+        - Drupal\DrupalExtension\Context\DrushContext
+        - Drupal\degov\Behat\Context\DrupalContext
+        - Drupal\degov\Behat\Context\FormContext
+        - Drupal\degov\Behat\Context\BlockContext
+        - Drupal\degov\Behat\Context\DrupalIndependentContext
+        - Drupal\degov\Behat\Context\NodeContentTypeFormContext
+        - Drupal\degov\Behat\Context\ModuleContext
+        - Drupal\degov\Behat\Context\JavaScriptContext
+        - Drupal\degov_behat_extension\BehatContext\PerformanceContext
+      paths:
+        - '%paths.base%/docroot/profiles/contrib/degov/testing/behat/features'
+        - '%paths.base%/docroot/profiles/contrib/degov/modules/degov_behat_extension/tests/src/Behat/features/performance'
+      translation:
+          locale: de
+    smoke-tests:
+      contexts:
+        - Drupal\DrupalExtension\Context\DrupalContext
+        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\DrupalExtension\Context\MessageContext
+        - Drupal\DrupalExtension\Context\DrushContext
+        - Drupal\degov\Behat\Context\FormContext
+        - Drupal\degov\Behat\Context\DrupalIndependentContext
+        - Drupal\degov\Behat\Context\NodeContentTypeFormContext
+        - Drupal\degov\Behat\Context\ModuleContext
+        - Drupal\degov\Behat\Context\JavaScriptContext
+        - Drupal\degov\Behat\Context\SmokeTestContext:
+            - admin_account_credentials:
+                - admin
+                - admin
+      paths:
+        features: '%paths.base%/docroot/profiles/contrib/degov/testing/behat/features_smoke_tests'
+      translation:
+        locale: de
+    tests-with-file-upload:
+      contexts:
+        - Drupal\DrupalExtension\Context\DrupalContext
+        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\DrupalExtension\Context\MessageContext
+        - Drupal\DrupalExtension\Context\DrushContext
+        - Drupal\degov\Behat\Context\DrupalContext
+        - Drupal\degov\Behat\Context\FormContext
+        - Drupal\degov\Behat\Context\BlockContext
+        - Drupal\degov\Behat\Context\DrupalIndependentContext
+        - Drupal\degov\Behat\Context\NodeContentTypeFormContext
+        - Drupal\degov\Behat\Context\ModuleContext
+        - Drupal\degov\Behat\Context\JavaScriptContext
+      paths:
+        features: '%paths.base%/docroot/profiles/contrib/degov/testing/behat/features'
+  extensions:
+    Drupal\MinkExtension:
+      files_path: '%paths.base%/docroot/profiles/contrib/degov/modules/degov_demo_content/fixtures'
+      base_url: http://host.docker.internal
+      default_session: selenium_chrome
+      sessions:
+        selenium_chrome:
+          selenium2:
+            wd_host: http://localhost:4444/wd/hub
+            browser: chrome
+            capabilities:
+              extra_capabilities:
+                chromeOptions:
+                  args:
+                    - "--no-sandbox"
+                    - "--headless"
+                    - "--disable-gpu"
+    Drupal\DrupalExtension:
+      blackbox: ~
+      drupal:
+        drupal_root: '%paths.base%/docroot'
+      api_driver: 'drupal'
+      drush:
+        alias: 'local'
+      text:
+        username_field: "Benutzername"
+        password_field: "Passwort"
+        log_in: "Anmelden"

@@ -1,0 +1,6 @@
+services:
+  degov_config_integrity.commands:
+    class: Drupal\degov_config_integrity\Command\DegovConfigIntegrityDrushCommands
+    arguments: ['@degov_config_integrity.module_integrity_checker']
+    tags:
+      - { name: drush.command }

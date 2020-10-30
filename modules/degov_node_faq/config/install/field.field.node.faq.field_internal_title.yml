@@ -1,0 +1,21 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_internal_title
+    - node.type.faq
+  enforced:
+    module:
+      - degov_node_overrides
+id: node.faq.field_internal_title
+field_name: field_internal_title
+entity_type: node
+bundle: faq
+label: 'Interner Titel'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

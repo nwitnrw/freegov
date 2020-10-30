@@ -1,0 +1,10 @@
+langcode: de
+status: true
+id: date_medium
+label: 'Datum Mittellang'
+locked: false
+pattern: 'd. F Y'
+dependencies:
+  enforced:
+    module:
+      - degov_date_formats

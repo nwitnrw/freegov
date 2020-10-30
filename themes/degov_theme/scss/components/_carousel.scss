@@ -1,0 +1,54 @@
+.degov-carousel {
+  height: calc(100vw/2.4);
+  .carousel-control {
+    .carousel-control-icon {
+      width: 25px;
+      height: 50px;
+    }
+  }
+  .carousel-indicators {
+    display: none;
+    @include media-breakpoint-up(md) {
+      display: flex;
+    }
+  }
+  .carousel-inner {
+    img {
+      height: calc(100vw/2.4);
+    }
+    .carousel-caption {
+      padding-top: .4rem;
+      background-color: $gray;
+      opacity: .9;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      color: $gray-dark;
+      text-align: left;
+      height: calc(100%/4.2);
+      @include media-breakpoint-up(md) {
+        padding-top: 2.3rem;
+      }
+      h2::first-letter, p::first-letter {
+        text-transform: capitalize;
+      }
+      h2 {
+        margin-bottom: 0;
+        color: $gray-dark;
+        font-weight: bold;
+        font-size: 1rem;
+        @include media-breakpoint-up(md) {
+          font-size: 1.2rem;
+        }
+      }
+      p {
+        margin-bottom: 0;
+        font-size: .9rem;
+        @include media-breakpoint-up(md) {
+          font-size: $font-size-base;
+        }
+      }
+    }
+  }
+}
+

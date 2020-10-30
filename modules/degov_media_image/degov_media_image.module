@@ -1,0 +1,151 @@
+<?php
+
+/**
+ * @file
+ * Drupal hooks implementations for the degov_media_image module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\degov_common\Common;
+
+/**
+ * Implements hook_preprocess().
+ */
+function degov_media_image_preprocess(&$variables, $hook, &$info) {
+  // Add template suggestions and libraries implemented in this module.
+  Common::addThemeSuggestions($variables, $hook, $info, [
+    'module_name'       => 'degov_media_image',
+    'entity_type'       => 'media',
+    'entity_bundles'    => ['image'],
+    'entity_view_modes' => [
+      'thumbnail',
+      'usage',
+      'preview',
+      'search',
+      'embedded',
+      'full',
+      'preview_wide',
+      'citation_teaser',
+      'header_logo_slogan',
+    ],
+  ]);
+}
+
+/**
+ * Implements hook_preprocess_type().
+ */
+function degov_media_image_preprocess_media__image(&$variables) {
+  /** @var \Drupal\media\MediaInterface $media */
+  $media = $variables['elements']['#media'];
+  $variables['created'] = $media->created->value;
+  $variables['image_url'] = $media->toUrl();
+
+  // Add the download link only to full view mode.
+  if (in_array($variables['elements']['#view_mode'], ['full', 'default'])) {
+    // Add media type name to display.
+    if (isset($variables['content']['media_type_label'])) {
+      $bundle_definition = $media->getSource()->getPluginDefinition();
+      $variables['content']['media_type_label'] = $bundle_definition['label'];
+    }
+    // Check if the download of the video is allowed by media settings.
+    $download_is_allowed = FALSE;
+    if ($media->hasField('field_allow_download') && !$media->get('field_allow_download')
+      ->isEmpty()) {
+      $download_is_allowed = $media->get('field_allow_download')->value ? TRUE : FALSE;
+    }
+    // If allowed let's prepare the links.
+    if ($download_is_allowed) {
+      // First check if the image is there.
+      if (!$media->get('image')->isEmpty()) {
+        /** @var \Drupal\file\FileInterface $sourceFile */
+        $sourceFile = $media->get('image')->entity;
+        $variables['content']['download'] = degov_common_file_download_render_array($sourceFile);
+      }
+      else {
+        $variables['content']['download'] = [];
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function degov_media_image_form_alter(array &$form, FormStateInterface $form_state, string $form_id) {
+  $form_ids = [
+    'media_image_add_form',
+    'media_image_edit_form',
+    'entity_browser_media_browser_form',
+    'entity_browser_ckeditor_media_browser_form',
+  ];
+  if (\in_array($form_id, $form_ids, TRUE)) {
+    $form['#attached']['library'][] = 'degov_media_image/entity-form';
+    $form['#validate'][] = 'degov_media_image_validate';
+  }
+}
+
+/**
+ * Validation hander for entity_browser, media add/edit forms.
+ *
+ * @param array $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *
+ * @see degov_media_image_form_alter()
+ */
+function degov_media_image_validate(array &$form, FormStateInterface $form_state) {
+  switch ($form['#form_id']) {
+    case 'media_image_add_form':
+    case 'media_image_edit_form':
+      $is_royalty_free_image_value = $form_state->getValue('field_royalty_free');
+      $field_copyright_value = $form_state->getValue('field_copyright');
+      degov_media_image_validate_copyright((bool) $is_royalty_free_image_value['value'], $field_copyright_value[0]['target_id'], $form['field_copyright']['widget'][0]['target_id'], $form_state);
+      break;
+
+    case 'entity_browser_media_browser_form':
+    case 'entity_browser_ckeditor_media_browser_form':
+      $values = $form_state->getValues();
+      foreach ($values as $key => $value) {
+        if (is_array($value) && isset($value['field_copyright'], $value['field_royalty_free'])) {
+          if (isset($form['widget']['entity'])) {
+            degov_media_image_validate_copyright((bool) $value['field_royalty_free']['value'], $value['field_copyright'][0]['target_id'], $form['widget']['entity']['field_copyright']['widget'][0]['target_id'], $form_state);
+          }
+          else {
+            if (isset($form['widget']['entities'][$key])) {
+              degov_media_image_validate_copyright((bool) $value['field_royalty_free']['value'], $value['field_copyright'][0]['target_id'], $form['widget']['entities'][$key]['field_copyright']['widget'][0]['target_id'], $form_state);
+            }
+          }
+        }
+      }
+      break;
+  }
+}
+
+/**
+ * Sets an error if the copyright of a non-free image is empty.
+ *
+ * @param bool $is_royalty_free_image
+ *   The current value of the royalty-free checkbox.
+ * @param int|null $copyright_value
+ *   The current value of the copyright field.
+ * @param array $copyright_field
+ *   The copyright field we might need to apply an error to.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the media form.
+ */
+function degov_media_image_validate_copyright(bool $is_royalty_free_image, $copyright_value, array $copyright_field, FormStateInterface &$form_state) {
+  if (!$is_royalty_free_image && empty($copyright_value)) {
+    $form_state->setError($copyright_field, t('@name field is required.', ['@name' => $copyright_field['#title']]));
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ */
+function degov_media_image_media_view(array &$build, EntityInterface $entity) {
+  if ($entity->bundle() === 'image') {
+    if ((bool) $entity->field_royalty_free->value === TRUE) {
+      unset($build['field_copyright']);
+    }
+  }
+}

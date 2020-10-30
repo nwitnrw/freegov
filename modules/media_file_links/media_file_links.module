@@ -1,0 +1,222 @@
+<?php
+
+/**
+ * @file
+ * The deGov Media file links module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\link\LinkItemInterface;
+use Drupal\media\MediaInterface;
+use Drupal\menu_link_content\MenuLinkContentInterface;
+use Drupal\node\NodeInterface;
+use Drupal\paragraphs\ParagraphInterface;
+
+/**
+ * Implements hook_entity_base_field_info_alter().
+ */
+function media_file_links_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
+  if ($entity_type->id() === 'menu_link_content' && isset($fields['link'])) {
+    $fields['link'] = BaseFieldDefinition::create('media_file_link')
+      ->setLabel(t('Link'))
+      ->setDescription(t('The location this menu link points to.'))
+      ->setRequired(TRUE)
+      ->setSettings([
+        'link_type' => LinkItemInterface::LINK_GENERIC,
+        'title'     => DRUPAL_DISABLED,
+      ])
+      ->setDisplayOptions('form', [
+        'type'   => 'link_mediafilelinks',
+        'weight' => -2,
+      ])
+      ->setRevisionable(TRUE)
+      ->setProvider('menu_link_content')
+      ->setName('link')
+      ->setTargetEntityTypeId('menu_link_content')
+      ->setTargetBundle(NULL);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function media_file_links_form_menu_link_content_menu_link_content_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['link']['widget'][0]['uri']['#type'] = 'media_file_links_autocomplete';
+  if (!empty($form['link']['widget'][0]['uri']['#element_validate']) && is_array($form['link']['widget'][0]['uri']['#element_validate'])) {
+    foreach ($form['link']['widget'][0]['uri']['#element_validate'] as $key => $validator) {
+      if (is_array($validator) && in_array('validateUriElement', $validator)) {
+        unset($form['link']['widget'][0]['uri']['#element_validate'][$key]);
+      }
+    }
+    $form['link']['widget'][0]['uri']['#element_validate'][] = [
+      'Drupal\media_file_links\Plugin\Field\FieldWidget\MediaFileLinkWidget',
+      'validateUriElement',
+    ];
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function media_file_links_form_linkit_editor_dialog_form_alter(&$form, FormStateInterface $form_state) {
+  $form['#attached']['library'][] = 'media_file_links/fontawesome';
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function media_file_links_entity_insert(EntityInterface $entity) {
+  \Drupal::service('media_file_links.usage_tracker')->trackMediaUsage($entity);
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function media_file_links_entity_update(EntityInterface $entity) {
+  \Drupal::service('media_file_links.usage_tracker')->trackMediaUsage($entity);
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function media_file_links_entity_delete(EntityInterface $entity) {
+  \Drupal::service('media_file_links.usage_tracker')->deletePriorUsages($entity);
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function media_file_links_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (in_array($form_id, [
+    'media_document_delete_form',
+    'media_delete_multiple_confirm_form',
+  ])) {
+    $deleteEntitiesIds = [];
+
+    switch ($form_id) {
+      case 'media_document_delete_form':
+        $entity = \Drupal::routeMatch()->getParameter('media');
+        if ($entity instanceof MediaInterface) {
+          $deleteEntitiesIds[] = $entity->id();
+        }
+        break;
+
+      case 'media_delete_multiple_confirm_form':
+        if (!empty($form['entities']['#items'])) {
+          foreach ($form['entities']['#items'] as $itemKey => $itemTitle) {
+            if (preg_match("/^([\d]+):[a-zA-Z]+$/", $itemKey, $itemKeyParts) && count($itemKeyParts) === 2) {
+              $deleteEntitiesIds[] = $itemKeyParts[1];
+            }
+          }
+        }
+        break;
+    }
+
+    if (count($deleteEntitiesIds) > 0) {
+      $mediaUsages = \Drupal::service('media_file_links.usage_tracker')
+        ->getUsagesByMediaIds($deleteEntitiesIds);
+
+      if (!empty($mediaUsages)) {
+        foreach ($mediaUsages as $mediaUsage) {
+          $message = _media_file_links_get_usage_message($mediaUsage);
+
+          if ($message instanceof TranslatableMarkup) {
+            \Drupal::messenger()->addWarning($message);
+          }
+        }
+      }
+    }
+  }
+
+  if ($form_id === 'linkit_editor_dialog_form' && !empty($form['attributes']['href']['#description'])) {
+    $descriptionOld = $form['attributes']['href']['#description'];
+    $form['attributes']['href']['#description'] = [
+      '#theme' => 'item_list',
+      '#items' => [
+        $descriptionOld,
+        new TranslatableMarkup('Suggestions may also include files from Media entities you can link to. These will be prefixed with an icon appropriate to their file type.'),
+      ],
+    ];
+  }
+}
+
+/**
+ * @param $mediaUsage
+ *
+ * @return \Drupal\Core\StringTranslation\TranslatableMarkup|null
+ */
+function _media_file_links_get_usage_message($mediaUsage): ?TranslatableMarkup {
+  switch (TRUE) {
+    case $mediaUsage['referencing_entity'] instanceof MediaInterface:
+      return new TranslatableMarkup('The media <i>:mediaName</i> is used in a file link reference in the media <i>:referencingMediaName</i> in field <i>:referencingFieldName</i>. <a href="/media/:referencingMediaId/edit" target="_blank">Edit the reference</a> first to avoid dead links.',
+        [
+          ':mediaName'            => $mediaUsage['media_entity']->getName(),
+          ':referencingMediaName' => $mediaUsage['referencing_entity']->getName(),
+          ':referencingFieldName' => $mediaUsage['referencing_entity_field_label'],
+          ':referencingMediaId'   => $mediaUsage['referencing_entity']->id(),
+        ]
+      );
+
+    break;
+    case $mediaUsage['referencing_entity'] instanceof NodeInterface:
+      return new TranslatableMarkup('The media <i>:mediaName</i> is used in a file link reference in the node <i>:referencingNodeTitle</i> in field <i>:referencingFieldName</i>. <a href="/node/:referencingNodeId/edit" target="_blank">Edit the reference</a> first to avoid dead links.',
+        [
+          ':mediaName'            => $mediaUsage['media_entity']->getName(),
+          ':referencingNodeTitle' => $mediaUsage['referencing_entity']->getTitle(),
+          ':referencingFieldName' => $mediaUsage['referencing_entity_field_label'],
+          ':referencingNodeId'    => $mediaUsage['referencing_entity']->id(),
+        ]
+      );
+
+    break;
+    case $mediaUsage['referencing_entity'] instanceof MenuLinkContentInterface:
+      return new TranslatableMarkup('The media <i>:mediaName</i> is used in a file link reference in the menu entry <i>:referencingMenuLinkTitle</i>. <a href="/admin/structure/menu/item/:referencingMenuLinkId/edit" target="_blank">Edit the reference</a> first to avoid dead links.',
+        [
+          ':mediaName'                => $mediaUsage['media_entity']->getName(),
+          ':referencingMenuLinkTitle' => $mediaUsage['referencing_entity']->getTitle(),
+          ':referencingMenuLinkId'    => $mediaUsage['referencing_entity']->id(),
+        ]
+      );
+
+    break;
+    case $mediaUsage['referencing_entity'] instanceof ParagraphInterface:
+      do {
+        $parentEntity = $mediaUsage['referencing_entity']->getParentEntity();
+      } while ($parentEntity instanceof ParagraphInterface);
+
+      switch (TRUE) {
+        case $parentEntity instanceof MediaInterface:
+          return new TranslatableMarkup(
+            'The media <i>:mediaName</i> is used in a file link reference in a paragraph in the media <i>:parentMediaName</i>. <a href="/paragraphs_edit/media/:parentMediaId/paragraphs/:referencingParagraphId/edit?destination=/media/:parentMediaId" target="_blank">Edit the reference</a> first to avoid dead links.',
+            [
+              ':mediaName'              => $mediaUsage['media_entity']->getName(),
+              ':parentMediaName'        => $parentEntity->getName(),
+              ':parentMediaId'          => $parentEntity->id(),
+              ':referencingParagraphId' => $mediaUsage['referencing_entity']->id(),
+            ]
+          );
+
+        break;
+        case $parentEntity instanceof NodeInterface:
+          return new TranslatableMarkup(
+            'The media <i>:mediaName</i> is used in a file link reference in a paragraph in the node <i>:parentNodeName</i>. <a href="/paragraphs_edit/node/:parentNodeId/paragraphs/:referencingParagraphId/edit?destination=/node/:parentNodeId" target="_blank">Edit the reference</a> first to avoid dead links.',
+            [
+              ':mediaName'              => $mediaUsage['media_entity']->getName(),
+              ':parentNodeName'         => $parentEntity->getTitle(),
+              ':parentNodeId'           => $parentEntity->id(),
+              ':referencingParagraphId' => $mediaUsage['referencing_entity']->id(),
+            ]
+          );
+
+        break;
+      }
+
+      break;
+  }
+
+  return NULL;
+}

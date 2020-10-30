@@ -1,0 +1,20 @@
+name: 'deGov - Media Social media embed'
+description: 'This media type is used for display social media feeds'
+package: deGov
+type: module
+core: 8.x
+dependencies:
+  - degov_common
+  - degov_media
+  - degov_content_types_shared_fields
+  - degov_taxonomy_term_tags
+  - entity_browser
+  - field
+  - field_group
+  - language
+  - media
+  - media_entity_generic
+  - path
+  - taxonomy
+  - text
+  - user

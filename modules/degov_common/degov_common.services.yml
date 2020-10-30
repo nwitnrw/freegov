@@ -1,0 +1,57 @@
+services:
+  degov_common.quickedit.twig.extension:
+    class: Drupal\degov_common\Twig\Extension\FieldQuickEditAttributesExtension
+    arguments: ['@module_handler', '@current_user']
+    tags:
+      - { name: twig.extension }
+  degov_common.config_base:
+    abstract: true
+    arguments: ['@messenger', '@uuid', '@config.storage', '@event_dispatcher', '@config.manager', '@lock', '@config.typed', '@module_handler', '@module_installer', '@theme_handler', '@string_translation', '@extension.list.module']
+  degov_config.updater:
+    class: Drupal\degov_common\DegovConfigUpdate
+    parent: degov_common.config_base
+    calls:
+      - [setConfigInstaller, ['@config.installer']]
+  degov_config.block_installer:
+    class: Drupal\degov_common\DegovBlockInstaller
+    parent: degov_common.config_base
+  degov_config.module_updater:
+    class: Drupal\degov_common\DegovModuleUpdater
+    parent: config_replace.config_replacer
+    calls:
+      - [setDegovConfigUpdate, ['@degov_config.updater']]
+      - [setDegovBlockInstaller, ['@degov_config.block_installer']]
+  degov_locale.updater:
+    class: Drupal\degov_common\DegovLocaleUpdate
+    arguments: ['@module_handler']
+  degov_common.video_utils:
+    class: Drupal\degov_common\VideoUtils
+    arguments: ['@http_client', '@video_embed_field.provider_manager', '@file_system', '@logger.factory', '@messenger', '@config.factory']
+  degov_common.route_subscriber:
+    class: Drupal\degov_common\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }
+  degov_common.node:
+    class: Drupal\degov_common\Entity\NodeService
+    arguments: ['@degov_common.entity']
+  degov_common.entity:
+    class: Drupal\degov_common\Entity\EntityService
+    arguments: ['@entity_type.manager']
+  degov_common.workflow_handler:
+    class: Drupal\degov_common\Entity\WorkflowHandler
+    arguments: ['@config.factory']
+  degov_common.config_remover:
+    class: Drupal\degov_common\Entity\ConfigRemover
+    arguments: ['@config.factory']
+  degov_common.config_adder:
+    class: Drupal\degov_common\Entity\ConfigAdder
+    arguments: ['@config.factory']
+  degov_common.translation_import:
+    class: Drupal\degov_common\TranslationImport
+    arguments: [ '@language.config_factory_override', '@module_handler' ]
+  degov_common.config_storage_factory:
+    class: Drupal\degov_common\Entity\ConfigStorageFactory
+    arguments: ['@config.factory']
+  degov_common.module_mover:
+    class: Drupal\degov_common\ModuleMover
+    arguments: ['@database', '@config.factory']

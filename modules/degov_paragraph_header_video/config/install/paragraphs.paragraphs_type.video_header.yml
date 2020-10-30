@@ -1,0 +1,11 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_paragraph_header_video
+id: video_header
+label: 'Video Header'
+icon_uuid: null
+description: ''
+behavior_plugins: {  }

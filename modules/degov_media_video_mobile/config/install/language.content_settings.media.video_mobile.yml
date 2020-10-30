@@ -1,0 +1,12 @@
+status: true
+dependencies:
+  config:
+    - media.type.video_mobile
+  enforced:
+    module:
+      - degov_media_video_mobile
+id: media.video_mobile
+target_entity_type_id: media
+target_bundle: video_mobile
+default_langcode: site_default
+language_alterable: false

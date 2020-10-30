@@ -1,0 +1,21 @@
+# Schema for the configuration files of the Locale Test module.
+
+degov_paragraph_downloads_test.no_translation:
+  type: config_object
+  label: 'No traslation settings'
+  mapping:
+    test:
+      type: string
+      label: 'Test'
+      # See \Drupal\Tests\locale\Kernel\LocaleConfigSubscriberTest
+      translatable: true
+
+degov_paragraph_downloads_test.translation:
+  type: config_object
+  label: 'translation settings'
+  mapping:
+    test:
+      type: string
+      label: 'Test'
+      # See \Drupal\Tests\locale\Kernel\LocaleConfigSubscriberTest
+      translatable: true

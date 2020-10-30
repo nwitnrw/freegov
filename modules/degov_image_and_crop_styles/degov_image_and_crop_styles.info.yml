@@ -1,0 +1,13 @@
+name: 'deGov - Image And Crop Styles'
+description: 'Provides a configuration for breakpoints, responsive images, cropping and image styles'
+package: deGov
+type: module
+core: 8.x
+dependencies:
+  - config_replace
+  - crop
+  - image
+  - image_widget_crop
+  - media
+  - responsive_image
+  - degov_auto_crop

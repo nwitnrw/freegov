@@ -1,0 +1,9 @@
+name: 'deGov - Media Usage for Nodes'
+type: module
+description: Provide information about nodes that references media entities
+package: deGov
+core: 8.x
+
+dependencies:
+  - drupal:node
+  - degov:degov_media_usage

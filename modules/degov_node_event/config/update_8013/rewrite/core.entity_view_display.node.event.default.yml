@@ -1,0 +1,29 @@
+dependencies:
+  config:
+    - field.field.node.event.field_teaser_sub_title
+    - field.field.node.event.field_teaser_text
+    - field.field.node.event.field_teaser_title
+content:
+  field_teaser_sub_title:
+    type: string
+    weight: 9
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_teaser_text:
+    type: text_default
+    weight: 10
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_teaser_title:
+    type: string
+    weight: 8
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }

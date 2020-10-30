@@ -1,0 +1,39 @@
+services:
+  node_action.access_checker.publish_action:
+    class: Drupal\node_action\AccessChecker\PublishAction
+    arguments: [ '@current_user', '@messenger', '@node_action.string_translation_adapter' ]
+    calls:
+      - [ setAccessCheck, [ '@?permissions_by_term.access_check' ] ]
+  node_action.access_checker.unpublish_action:
+    class: Drupal\node_action\AccessChecker\UnpublishAction
+    arguments: [ '@current_user', '@messenger', '@node_action.string_translation_adapter' ]
+    calls:
+      - [ setAccessCheck, [ '@?permissions_by_term.access_check' ] ]
+  node_action.access_checker.change_moderation_state_action:
+    class: Drupal\node_action\AccessChecker\ChangeModerationStateAction
+    autowire: true
+    calls:
+      - [ setAccessCheck, [ '@?permissions_by_term.access_check' ] ]
+  node_action.access_checker.change_author_action:
+    class: Drupal\node_action\AccessChecker\ChangeAuthorAction
+    autowire: true
+    calls:
+      - [ setAccessCheck, [ '@?permissions_by_term.access_check' ] ]
+  node_action.string_translation_adapter:
+    class: Drupal\node_action\StringTranslationAdapter
+    arguments: []
+  node_action.redirector:
+    class: Drupal\node_action\Redirector
+    arguments: ['@messenger', '@node_action.redirect_response_factory', '@node_action.url_factory']
+  node_action.redirect_response_factory:
+    class: Drupal\node_action\RedirectResponseFactory
+    arguments: []
+  node_action.url_factory:
+    class: Drupal\node_action\UrlFactory
+    arguments: []
+  node_action.access_checker.published_state_change:
+    class: Drupal\node_action\AccessChecker\PublishedStateChange
+    arguments: ['@node_action.user_interaction_facade']
+  node_action.user_interaction_facade:
+    class: Drupal\node_action\UserInteractionFacade
+    arguments: ['@current_user', '@node_action.redirect_response_factory', '@messenger', '@node_action.string_translation_adapter', '@node_action.url_factory']

@@ -1,0 +1,27 @@
+name: 'deGov - Content Types Shared Fields'
+description: 'This module contains fields for different configuration modules.'
+package: deGov
+type: module
+core: 8.x
+dependencies:
+  - block
+  - degov_common
+  - entity_reference_revisions
+  - facets
+  - field
+  - field_group
+  - lightning_core
+  - link
+  - media
+  - media_entity_generic
+  - node
+  - paragraphs
+  - paragraphs_edit
+  - shariff
+  - system
+  - taxonomy
+  - text
+  - twig_field_value
+  - user
+  - views
+  - views_parity_row

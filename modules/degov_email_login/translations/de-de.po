@@ -1,0 +1,15 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 1\n"
+"Last-Translator: deGov <info@degov.de>\n"
+"Language-Team: DE <info@degov.de>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "Username or Email address"
+msgstr "Benutzername oder E-Mail Adresse"
+
+msgid "You can use your username or email address to login."
+msgstr "Sie können Ihren Benutzernamen oder Ihre E-Mail Adresse für die Anmeldung verwenden."

@@ -1,0 +1,4 @@
+use_menu_title_as_fallback: TRUE
+include_invalid_paths: TRUE
+excluded_paths: ''
+title_segment_as_link: FALSE

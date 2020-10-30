@@ -1,0 +1,10 @@
+content:
+  field_media_publish_date:
+    weight: 11
+    label: above
+    settings:
+      format_type: short
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content

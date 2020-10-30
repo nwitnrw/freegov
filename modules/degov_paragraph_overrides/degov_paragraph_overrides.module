@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * @file
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\degov_common\Common;
+
+/**
+ * Implements hook_modules_installed().
+ */
+function degov_paragraph_overrides_modules_installed($modules) {
+  // Check if we have a config to be installed for the module.
+  if (in_array('degov_paragraph_slideshow', $modules)) {
+    \Drupal::service('degov_config.module_updater')->onModuleInstalled('degov_paragraph_overrides', 'degov_paragraph_slideshow');
+  }
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+function degov_paragraph_overrides_preprocess(&$variables, $hook, &$info) {
+  // Add template suggestions for paragraph slideshow.
+  Common::addThemeSuggestions($variables, $hook, $info, [
+    'module_name' => 'degov_paragraph_overrides',
+    'entity_type' => 'paragraph',
+    'entity_bundles' => ['slide'],
+    'entity_view_modes' => ['default']
+  ]);
+  // Add template suggestions and libraries implemented in this module.
+  Common::addThemeSuggestions($variables, $hook, $info, [
+    'module_name' => 'degov_paragraph_overrides',
+    'entity_type' => 'paragraph',
+    'entity_bundles' => ['media_reference'],
+    'entity_view_modes' => ['default', 'preview'],
+  ]);
+}
+
+/**
+ * Implements hook_form_paragraphs_subform_alter().
+ */
+function degov_paragraph_overrides_form_paragraphs_subform_slideshow_alter(array &$subform, FormStateInterface $form_state, $delta) {
+  // Deprecates the type_3 until it is removed from config.
+  if (!empty($subform['field_slideshow_type']['widget']['#options']['type_3'])) {
+    unset($subform['field_slideshow_type']['widget']['#options']['type_3']);
+  }
+}

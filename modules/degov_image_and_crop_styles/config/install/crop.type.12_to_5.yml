@@ -1,0 +1,34 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_image_and_crop_styles
+  module:
+    - degov_auto_crop
+third_party_settings:
+  degov_auto_crop:
+    offsets:
+      landscape:
+        top: 1
+        bottom: 2
+        left: 1
+        right: 1
+      portrait:
+        top: 1
+        bottom: 2
+        left: 1
+        right: 1
+      square:
+        top: 1
+        bottom: 2
+        left: 1
+        right: 1
+label: '12 to 5'
+id: 12_to_5
+description: '12:5 cropping, for example for Full Width slider'
+aspect_ratio: '12:5'
+soft_limit_width: 480
+soft_limit_height: 200
+hard_limit_width: null
+hard_limit_height: null

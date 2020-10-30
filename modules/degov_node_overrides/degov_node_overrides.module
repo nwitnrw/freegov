@@ -1,0 +1,84 @@
+<?php
+
+/**
+ * @file
+ */
+
+use Drupal\paragraphs\Entity\Paragraph;
+
+/**
+ * Implements hook_modules_installed().
+ */
+function degov_node_overrides_modules_installed($modules) {
+  // Check if we have a config to be installed for the module.
+  if (in_array('degov_node_blog', $modules)) {
+    \Drupal::service('degov_config.module_updater')
+      ->onModuleInstalled('degov_node_overrides', 'degov_node_blog');
+  }
+  if (in_array('degov_node_event', $modules)) {
+    \Drupal::service('degov_config.module_updater')
+      ->onModuleInstalled('degov_node_overrides', 'degov_node_event');
+  }
+  if (in_array('degov_node_normal_page', $modules)) {
+    \Drupal::service('degov_config.module_updater')
+      ->onModuleInstalled('degov_node_overrides', 'degov_node_normal_page');
+  }
+  if (in_array('degov_node_press', $modules)) {
+    \Drupal::service('degov_config.module_updater')
+      ->onModuleInstalled('degov_node_overrides', 'degov_node_press');
+  }
+  if (in_array('degov_simplenews', $modules)) {
+    \Drupal::service('degov_config.module_updater')
+      ->onModuleInstalled('degov_node_overrides', 'degov_simplenews');
+  }
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+function degov_node_overrides_preprocess(&$variables, $hook, &$info) {
+  /** @var \Drupal\degov_theming\Service\Template $templateService */
+  $templateService = \Drupal::service('degov_theming.template');
+
+  $templateService->suggest($variables, $hook, $info, [
+    'module_name' => 'degov_node_overrides',
+    'entity_type' => 'node',
+    'entity_bundles' => ['blog'],
+    'entity_view_modes' => ['full', 'long_text', 'preview', 'slim', 'small_image']
+  ]);
+
+  $templateService->suggest($variables, $hook, $info, [
+    'module_name' => 'degov_node_overrides',
+    'entity_type' => 'node',
+    'entity_bundles' => ['event'],
+    'entity_view_modes' => ['full', 'latest', 'long_text', 'preview', 'slim', 'small_image']
+  ]);
+
+  $templateService->suggest($variables, $hook, $info, [
+    'module_name' => 'degov_node_overrides',
+    'entity_type' => 'node',
+    'entity_bundles' => ['normal_page'],
+    'entity_view_modes' => ['full', 'long_text', 'preview', 'slim', 'small_image']
+  ]);
+
+  $templateService->suggest($variables, $hook, $info, [
+    'module_name' => 'degov_node_overrides',
+    'entity_type' => 'node',
+    'entity_bundles' => ['press'],
+    'entity_view_modes' => ['full', 'long_text', 'preview', 'slim', 'small_image']
+  ]);
+}
+
+/**
+ * Preprocess paragraphs.
+ */
+function degov_node_overrides_preprocess_paragraph(&$variables) {
+  if (!empty($variables['paragraph'])) {
+    /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+    $paragraph = $variables['paragraph'];
+    if ($paragraph instanceof Paragraph && $paragraph->bundle() == 'image_header' && $paragraph->getParentEntity() && $paragraph->getParentEntity()
+      ->bundle() == ('normal_page' || 'press' || 'events')) {
+      unset($variables['content']['field_header_text']);
+    }
+  }
+}

@@ -1,0 +1,74 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: deGov\n"
+"Language-Team: German\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+msgid "Social Media Settings"
+msgstr "Social Media Einstellungen"
+
+msgid "Main content"
+msgstr "Haupt-Seiteninhalt"
+
+msgid "Publish content"
+msgstr "Inhalt veröffentlichen"
+
+msgid "Log in / Sign up"
+msgstr "Anmelden / Registrieren"
+
+msgid "Choose quality:"
+msgstr "Qualität auswählen:"
+
+#: degov.install:19
+msgid "deGov version"
+msgstr "deGov Version"
+
+#: degov.install:20
+msgid "Version of deGov"
+msgstr "Version von deGov"
+
+#: degov.install:21
+msgid "Version: @version"
+msgstr "Version: @version"
+
+#: degov.install:28
+msgid "Private file system"
+msgstr "Privates Dateisystem"
+
+#: degov.install:29
+msgid "Not configured"
+msgstr "Nicht konfiguriert"
+
+#: degov.install:30
+msgid "The installation profile requires the private file system to be configured. Please <a href=\":settings_howto\" target=\"_blank\">edit</a> your settings.php accordingly."
+msgstr "Das Installationsprofil setzt voraus, dass das private Dateisystem konfiguriert ist. Bitte  <a href=\":settings_howto\" target=\"_blank\">bearbeiten</a> Sie Ihre settings.php entsprechend."
+
+msgid "Google Maps"
+msgstr "Google Maps"
+
+msgid "Google Map"
+msgstr "Google Map"
+
+msgid "Content"
+msgstr "Inhalt"
+
+msgid "Paragraph"
+msgstr "Paragraph"
+
+msgid "Header"
+msgstr "Kopfzeile"
+
+msgid "Preview"
+msgstr "Vorschau"
+
+msgid "When"
+msgstr "Wann"
+
+msgid "Where"
+msgstr "Wo"
+
+msgid "to"
+msgstr "bis"

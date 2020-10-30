@@ -1,0 +1,262 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_media_image module.
+ */
+
+use Drupal\degov_common\Common;
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Implements hook_install().
+ */
+function degov_media_image_install() {
+  // Adds the image upload tab upon installation to the CKEditor media browser.
+  $ckeditorMediaBrowserConfig = \Drupal::configFactory()->getEditable('entity_browser.browser.ckeditor_media_browser');
+  if (!$ckeditorMediaBrowserConfig->isNew()) {
+    $filtersConfig = $ckeditorMediaBrowserConfig->get('widgets');
+    $partialFile = \Drupal::service('extension.list.module')->getPath('degov_media_image') . '/config/partials/entity_browser.browser.ckeditor_media_browser.yml';
+    if (file_exists($partialFile)) {
+      $filtersConfig += Yaml::parseFile($partialFile);
+      $ckeditorMediaBrowserConfig->set('widgets', $filtersConfig);
+      $ckeditorMediaBrowserConfig->save();
+    }
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_media_image_uninstall() {
+  // Remove the image bundle dependency on the entity media browser.
+  $dependencies = \Drupal::config('entity_browser.browser.media_browser')
+    ->get('dependencies.config');
+  foreach ($dependencies as $key => $dependency) {
+    if ($dependency === 'media.type.image') {
+      unset($dependencies[$key]);
+    }
+  }
+  $dependencies = array_values($dependencies);
+  \Drupal::configFactory()->getEditable('entity_browser.browser.media_browser')
+    ->set('dependencies.config', $dependencies)
+    ->save(TRUE);
+
+  // Remove the image tab from the entity media browser.
+  $key = 'cf5d9a31-e053-413a-8666-a2c3fedbc4a0';
+  $widgets = \Drupal::config('entity_browser.browser.media_browser')
+    ->get('widgets');
+  if (!empty($widgets[$key])) {
+    unset($widgets[$key]);
+    \Drupal::configFactory()
+      ->getEditable('entity_browser.browser.media_browser')
+      ->set('widgets', $widgets)
+      ->save(TRUE);
+  }
+
+  // Remove content.
+  Common::removeContent([
+    'entity_type' => 'media',
+    'entity_bundles' => ['image'],
+  ]);
+
+  /*
+   * core.entity_form_display.media.image.default is a rewrite therefore we need to delete the translations
+   * manually.
+   */
+  /** @var \Drupal\Core\Config\Config $config_translation */
+  $config_translation = \Drupal::languageManager()->getLanguageConfigOverride('de', 'core.entity_form_display.media.image.default');
+  $config_translation->delete();
+}
+
+/**
+ * Implements hook_update_dependencies().
+ */
+function degov_media_image_update_dependencies(): array {
+  $dependencies['degov_media_image'][850100] = [
+    'degov_image_and_crop_styles' => 850100,
+  ];
+  $dependencies['degov_media_image'][870201] = [
+    'degov_image_and_crop_styles' => 870201,
+  ];
+
+  return $dependencies;
+}
+
+/**
+ * Migrate image field type from image_immutable to image_image.
+ */
+function degov_media_image_update_8001() {
+  \Drupal::configFactory()
+    ->getEditable('core.entity_form_display.media.image.media_browser')
+    ->set('content.image.type', 'image_image')
+    ->save(TRUE);
+}
+
+/**
+ * Add type svg to image types.
+ */
+function degov_media_image_update_8002() {
+  \Drupal::configFactory()
+    ->getEditable('core.entity_form_display.media.image.media_browser')
+    ->set('settings.file_extensions', 'png gif jpg jpeg svg')
+    ->save(TRUE);
+}
+
+/**
+ * Add missing view mode preview wide.
+ */
+function degov_media_image_update_8003() {
+  /**
+   * @var \Drupal\degov_common\DegovModuleUpdater $degovModuleUpdater
+   */
+  $degovModuleUpdater = \Drupal::service('degov_config.module_updater');
+  $degovModuleUpdater->applyUpdates('degov_media_image', '8003');
+}
+
+/**
+ * Adds new field publish date
+ */
+function degov_media_image_update_8017() {
+  /**
+   * @var \Drupal\degov_common\DegovModuleUpdater $degovModuleUpdater
+   */
+  $degovModuleUpdater = \Drupal::service('degov_config.module_updater');
+  $degovModuleUpdater->applyUpdates('degov_media_image', '8017');
+}
+
+/**
+ * Make the copyright field required, add a royalty free checkbox.
+ */
+function degov_media_image_update_8021() {
+  /**
+   * @var \Drupal\degov_common\DegovModuleUpdater $degovModuleUpdater
+   */
+  $degovModuleUpdater = \Drupal::service('degov_config.module_updater');
+  $degovModuleUpdater->applyUpdates('degov_media_image', '8021');
+
+  // Update form display.
+  \Drupal::configFactory()
+    ->getEditable('core.entity_form_display.media.image.default')
+    ->set('third_party_settings.field_group.group_description.children', [
+      'field_image_caption',
+      'field_copyright',
+      'field_royalty_free',
+      'field_description'
+    ])->save(TRUE);
+}
+
+/**
+ * Define a default value for publish date
+ */
+function degov_media_image_update_8022() {
+  /**
+   * @var \Drupal\degov_common\DegovModuleUpdater $degovModuleUpdater
+   */
+  $degovModuleUpdater = \Drupal::service('degov_config.module_updater');
+  $degovModuleUpdater->applyUpdates('degov_media_image', '8022');
+}
+
+/**
+ * deGov Update: 5.1.0 - Add the royalty-free checkbox to the entity browser display as well., Add a new display mode with a responsive teaser image style., Add minimal size requirement for new images.
+ */
+function degov_media_image_update_850100() {
+  /**
+   * @var \Drupal\degov_common\DegovModuleUpdater $degovModuleUpdater
+   */
+  $degovModuleUpdater = \Drupal::service('degov_config.module_updater');
+  $degovModuleUpdater->applyUpdates('degov_media_image', '8023');
+  $degovModuleUpdater->applyUpdates('degov_media_image', '8024');
+
+  $editable_config = \Drupal::configFactory()->getEditable('core.entity_form_display.media.image.media_browser');
+  $dependencies = $editable_config->get('dependencies.config');
+
+  $dependencies[] = 'field.field.media.image.field_royalty_free';
+  $editable_config->set('dependencies.config', $dependencies);
+
+  $editable_config->set('third_party_settings.field_group.group_description.children', [
+    'field_image_date',
+    'field_image_caption',
+    'field_copyright',
+    'field_royalty_free',
+    'field_description',
+  ]);
+
+  $content = $editable_config->get('content');
+  $content['field_image_date']['weight'] = 10;
+  $content['field_image_caption']['weight'] = 11;
+  $content['field_copyright']['weight'] = 12;
+  $content['field_royalty_free'] = [
+    'type' => 'boolean_checkbox',
+    'weight' => 13,
+    'region' => 'content',
+    'settings' => [
+      'display_label' => TRUE
+    ],
+    'third_party_settings' => []
+  ];
+  $content['field_description']['weight'] = 14;
+  $editable_config->set('content', $content);
+
+  $editable_config->save();
+}
+
+/**
+ * deGov Update: 7.2.0
+ *  - Allows all crop-types to be used in media image.
+ */
+function degov_media_image_update_870200() {
+  /** @var \Drupal\Core\Config\ConfigFactoryInterface $configFactory */
+  $configFactory = \Drupal::configFactory();
+  $config_names = [
+    'core.entity_form_display.media.image.default',
+    'core.entity_form_display.media.image.media_browser'
+  ];
+  foreach ($config_names as $config_name) {
+    $configEditable = $configFactory->getEditable($config_name);
+    if (!$configEditable->isNew()) {
+      $crop_types = [
+        '12_to_5',
+        '16_to_9',
+        '1_to_1',
+        '2_to_1',
+        '4_to_1',
+        '8_to_3',
+        '9_to_3',
+        'freeform',
+      ];
+      $configEditable->set('content.image.settings.crop_list', $crop_types)->save();
+    }
+  }
+}
+
+/**
+ *  Add the Citation Teaser view mode for Image media.
+ */
+function degov_media_image_update_870201() {
+  /** @var \Drupal\degov_common\DegovModuleUpdater $degovModuleUpdater */
+  $degovModuleUpdater = \Drupal::service('degov_config.module_updater');
+  $degovModuleUpdater->applyUpdates('degov_media_image', '870201');
+}
+
+/**
+ * Disable "allow download" by default.
+ */
+function degov_media_image_update_870600() {
+  $config = \Drupal::configFactory()->getEditable('field.field.media.image.field_allow_download');
+  if (!$config->isNew()) {
+    $config->set('default_value', [['value' => 0]])->save();
+  }
+}
+
+/**
+ * deGov Update 8.1.0
+ *  - Import config translations forcore.entity_form_display.media.image.default.
+ */
+function degov_media_image_update_880100() {
+  /**
+   * @var \Drupal\degov_common\TranslationImport $translationImport
+   */
+  $translationImport = \Drupal::service('degov_common.translation_import');
+  $translationImport->importConfigTranslation('de', 'core.entity_form_display.media.image.default', drupal_get_path('module', 'degov_media_image') . '/config/install/language/de/core.entity_form_display.media.image.default.yml');
+}

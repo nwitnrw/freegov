@@ -1,0 +1,10 @@
+third_party_settings:
+  field_group:
+    group_description:
+      label: Beschreibung
+    group_common:
+      label: Allgemein
+    group_ima:
+      label: Details zum Bild
+    group_media:
+      label: Medien

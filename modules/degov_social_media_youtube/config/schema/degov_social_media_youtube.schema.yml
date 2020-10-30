@@ -1,0 +1,13 @@
+degov_social_media_youtube.settings:
+  type: config_object
+  label: 'deGov social media - YouTube-feed block settings'
+  mapping:
+    api_key:
+      type: string
+      label: 'Your API key'
+    channel:
+      type: string
+      label: 'Your channel name or channel Id'
+    number_of_videos:
+      type: integer
+      label: 'Number of listed videos'

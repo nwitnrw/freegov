@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_media_person module.
+ */
+
+use Drupal\degov_common\Common;
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_media_person_uninstall() {
+  // Removes all module type defined content when uninstalling the module.
+  Common::removeContent([
+    'entity_type' => 'media',
+    'entity_bundles' => ['person'],
+  ]);
+}
+
+/**
+ * Added source field to generic media type 'person'
+ */
+function degov_media_person_update_8010() {
+  \Drupal::configFactory()->getEditable('media.type.person')
+    ->set('source_configuration.source_field', 'field_media_generic_6')->save();
+}
+
+/**
+ * Moved configuration from image styles module
+ */
+function degov_media_person_update_8011() {
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_media_person', '8011');
+}
+
+/**
+ * deGov Update 8.1.0
+ *  - Import config translations for core.entity_form_display.media.person.default.
+ */
+function degov_media_person_update_880100() {
+  /**
+   * @var \Drupal\degov_common\TranslationImport $translationImport
+   */
+  $translationImport = \Drupal::service('degov_common.translation_import');
+  $translationImport->importConfigTranslation('de', 'core.entity_form_display.media.person.default', drupal_get_path('module', 'degov_media_person') . '/config/install/language/de/core.entity_form_display.media.person.default.yml');
+}

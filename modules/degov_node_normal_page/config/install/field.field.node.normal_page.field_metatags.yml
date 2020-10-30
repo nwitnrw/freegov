@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_metatags
+    - node.type.normal_page
+  enforced:
+    module:
+      - degov_node_normal_page
+  module:
+    - degov_metatags
+id: node.normal_page.field_metatags
+field_name: field_metatags
+entity_type: node
+bundle: normal_page
+label: 'Meta Tags'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 'a:0:{}'
+default_value_callback: ''
+settings: {  }
+field_type: metatag

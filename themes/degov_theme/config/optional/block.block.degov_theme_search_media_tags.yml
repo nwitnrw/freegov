@@ -1,0 +1,30 @@
+langcode: de
+status: false
+dependencies:
+  config:
+    - facets.facet.search_media_tags
+  enforced:
+    module:
+      - degov_search_media
+  module:
+    - facets
+    - system
+  theme:
+    - degov_theme
+id: degov_theme_search_media_tags
+theme: degov_theme
+region: top_header
+weight: -8
+provider: null
+plugin: 'facet_block:search_media_tags'
+settings:
+  id: 'facet_block:search_media_tags'
+  label: Schlagworte
+  provider: facets
+  label_display: visible
+visibility:
+  request_path:
+    id: request_path
+    pages: /mediathek
+    negate: false
+    context_mapping: {  }

@@ -1,0 +1,19 @@
+settings:
+  library_url: 'libraries/cropper/dist/cropper.js'
+  css_url: 'libraries/cropper/dist/cropper.css'
+  crop_preview_image_style: crop_thumbnail
+  crop_list:
+    16_to_9: 16_to_9
+    1_to_1: 1_to_1
+    2_to_1: 2_to_1
+    4_to_1: 4_to_1
+    8_to_3: 8_to_3
+    9_to_3: 9_to_3
+  warn_multiple_usages: true
+  show_default_crop: true
+  show_crop_area: true
+langcode: de
+dependencies:
+  enforced:
+    module:
+      - degov_image_and_crop_styles

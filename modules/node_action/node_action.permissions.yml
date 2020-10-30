@@ -1,0 +1,17 @@
+use node unpublish action:
+  title: 'Use node unpublish action'
+  description: 'Enables the specific role to unpublish nodes via the node unpublish action. E.g. via the content admin page.'
+  restrict access: true
+
+use node publish action:
+  title: 'Use node publish action'
+  description: 'Enables the specific role to publish nodes via the node publish action. E.g. via the content admin page.'
+  restrict access: true
+
+use change moderation state action:
+  title: 'Use change moderation state action'
+  description: 'Enables the specific role to use the moderation state action. E.g. via the content admin page.'
+
+use change author action:
+  title: 'Use change author action'
+  description: 'Enables the specific role to use the author action. E.g. via the content admin page.'

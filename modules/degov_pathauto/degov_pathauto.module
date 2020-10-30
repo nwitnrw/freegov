@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * @file
+ */
+
+use Drupal\Core\Render\BubbleableMetadata;
+
+/**
+ * Implements hook_token_info_alter().
+ */
+function degov_pathauto_token_info_alter(&$info) {
+  // We use hook_token_info_alter() rather than hook_token_info() as other
+  // modules may already have defined some field tokens.
+  $info['tokens']['node']['menu-link-title-or-node-title'] = [
+    'name' => t('Menu link title or node title'),
+    'description' => t('The menu link title or node title for this node.'),
+  ];
+}
+
+/**
+ * Implements hook_tokens().
+ */
+function degov_pathauto_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
+  $replacements = [];
+
+  // Node tokens.
+  if ($type == 'node' && !empty($data['node'])) {
+    /** @var \Drupal\node\NodeInterface $node */
+    $node = $data['node'];
+
+    foreach ($tokens as $name => $original) {
+      switch ($name) {
+        case 'menu-link-title-or-node-title':
+          // On node-form save we populate a calculated field with a menu_link
+          // references.
+          // @see token_node_menu_link_submit()
+          /** @var \Drupal\menu_link_content\MenuLinkContentInterface $menu_link */
+          if ($node->getFieldDefinition('menu_link') && $menu_link = $node->menu_link->entity) {
+            $replacements[$original] = $menu_link->getTitle();
+          }
+          else {
+            $replacements[$original] = $node->getTitle();
+          }
+          break;
+      }
+    }
+  }
+  return $replacements;
+}

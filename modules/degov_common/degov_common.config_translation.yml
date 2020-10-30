@@ -1,0 +1,5 @@
+degov_common.settings:
+  title: 'deGov - Common'
+  base_route_name: degov_common.settings
+  names:
+    - degov_common.default_settings

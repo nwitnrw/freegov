@@ -1,0 +1,233 @@
+# $Id$
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  degov_media_video_mobile.module: n/a
+#  degov_media_video_mobile.info.yml: n/a
+#  templates/media--video_mobile--default.html.twig: n/a
+#  templates/media--video_mobile--full.html.twig: n/a
+#  templates/media--video_mobile--preview.html.twig: n/a
+#  templates/media--video_mobile--preview_wide.html.twig: n/a
+#  templates/media--video_mobile--search.html.twig: n/a
+#  templates/media--video_mobile--usage.html.twig: n/a
+#  templates/media--video_mobile--reference.html.twig: n/a
+#  config/install/field.field.media.video_mobile.field_media_transcription.yml: n/a
+#  config/install/field.field.media.video_mobile.field_allow_download.yml: n/a
+#  config/install/field.field.media.video_mobile.field_copyright.yml: n/a
+#  config/install/field.field.media.video_mobile.field_description.yml: n/a
+#  config/install/field.field.media.video_mobile.field_fullhd_video_mobile_mp4.yml: n/a
+#  config/install/field.field.media.video_mobile.field_hdready_video_mobile_mp4.yml: n/a
+#  config/install/field.field.media.video_mobile.field_include_search.yml: n/a
+#  config/install/field.field.media.video_mobile.field_media_accessibility.yml: n/a
+#  config/optional/field.field.media.video_mobile.field_media_accessibility.yml: n/a
+#  config/install/field.field.media.video_mobile.field_media_duration.yml: n/a
+#  config/install/field.field.media.video_mobile.field_media_generic_9.yml: n/a
+#  config/install/field.field.media.video_mobile.field_media_in_library.yml: n/a
+#  config/install/field.field.media.video_mobile.field_media_language.yml: n/a
+#  config/optional/field.field.media.video_mobile.field_media_language.yml: n/a
+#  config/install/field.field.media.video_mobile.field_media_publish_date.yml: n/a
+#  config/install/field.field.media.video_mobile.field_mobile_video_mobile_mp4.yml: n/a
+#  config/install/field.field.media.video_mobile.field_subtitle.yml: n/a
+#  config/install/field.field.media.video_mobile.field_video_mobile_subtitle.yml: n/a
+#  config/install/field.field.media.video_mobile.field_tags.yml: n/a
+#  config/install/field.field.media.video_mobile.field_title.yml: n/a
+#  config/install/field.field.media.video_mobile.field_ultrahd4k_video_mobile_mp4.yml: n/a
+#  config/install/field.field.media.video_mobile.field_video_mobile_caption.yml: n/a
+#  config/install/field.field.media.video_mobile.field_video_mobile_mp4.yml: n/a
+#  config/install/field.field.media.video_mobile.field_video_mobile_preview.yml: n/a
+#  config/install/media.type.video_mobile.yml: n/a
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2018-12-28 12:56+0100\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: degov_media_video_mobile.module:153
+msgid "@field_name: The file format could not be determined."
+msgstr ""
+
+#: degov_media_video_mobile.module:163
+msgid "@field_name: Expected an MP4 file. Got \"@format\" instead."
+msgstr ""
+
+#: degov_media_video_mobile.module:181
+msgid "@field_name: Expected @dimensions video dimensions. Got \"@resolution_x x @resolution_y\" instead."
+msgstr ""
+
+#: degov_media_video_mobile.module:202
+msgid "@field_name: Expected aspect ratio of 16:9. Got \"16:@ratio_y\" instead."
+msgstr ""
+
+#: degov_media_video_mobile.module:221
+msgid "@field_name: Expected H.264 encoded video. Got \"@fourcc\" instead."
+msgstr ""
+
+#: degov_media_video_mobile.info.yml:0
+msgid "deGov - Media video mobile"
+msgstr ""
+
+#: degov_media_video_mobile.info.yml:0
+msgid "This media type is used for uploaded videos in different sizes."
+msgstr ""
+
+#: degov_media_video_mobile.info.yml:0
+msgid "deGov"
+msgstr ""
+
+#: templates/media--video_mobile--default.html.twig:43 templates/media--video_mobile--full.html.twig:44 templates/media--video_mobile--preview.html.twig:25 templates/media--video_mobile--preview_wide.html.twig:26 templates/media--video_mobile--search.html.twig:21 templates/media--video_mobile--usage.html.twig:29
+msgid "Video"
+msgstr ""
+
+#: templates/media--video_mobile--default.html.twig:47 templates/media--video_mobile--full.html.twig:55 templates/media--video_mobile--reference.html.twig:43 templates/media--video_mobile--usage.html.twig:40
+msgid "&copy;"
+msgstr ""
+
+#: templates/media--video_mobile--default.html.twig:79 templates/media--video_mobile--full.html.twig:87 config/install/field.field.media.video_mobile.field_media_transcription.yml:0
+msgid "Transkription"
+msgstr ""
+
+#: templates/media--video_mobile--usage.html.twig:51
+msgid "Usage"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_allow_download.yml:0
+msgid "Herunterladen zulassen"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_allow_download.yml:0
+msgid "Erlaubt"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_allow_download.yml:0
+msgid "Verboten"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_copyright.yml:0
+msgid "Copyright"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_description.yml:0
+msgid "Beschreibung"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_fullhd_video_mobile_mp4.yml:0
+msgid "Full HD Video"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_fullhd_video_mobile_mp4.yml:0
+msgid "1920 x 1080"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_hdready_video_mobile_mp4.yml:0
+msgid "HD Ready Video"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_hdready_video_mobile_mp4.yml:0
+msgid "1280 x 720"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_include_search.yml:0
+msgid "Mediathek"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_include_search.yml:0
+msgid "An"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_include_search.yml:0
+msgid "Aus"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_media_accessibility.yml:0 config/optional/field.field.media.video_mobile.field_media_accessibility.yml:0
+msgid "Barrierefreiheit"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_media_duration.yml:0
+msgid "Länge"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_media_generic_9.yml:0
+msgid "Generic media"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_media_in_library.yml:0
+msgid "Save to my media library"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_media_in_library.yml:0
+msgid "Saved to my media library"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_media_in_library.yml:0
+msgid "Not in my media library"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_media_language.yml:0 config/optional/field.field.media.video_mobile.field_media_language.yml:0
+msgid "Sprache"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_media_publish_date.yml:0
+msgid "Veröffentlichungsdatum"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_mobile_video_mobile_mp4.yml:0
+msgid "Mobiles Video"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_mobile_video_mobile_mp4.yml:0
+msgid "640 x 360"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_subtitle.yml:0 config/install/field.field.media.video_mobile.field_video_mobile_subtitle.yml:0
+msgid "Untertitel"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_tags.yml:0
+msgid "Schlagwörter"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_title.yml:0
+msgid "Öffentlicher Titel"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_ultrahd4k_video_mobile_mp4.yml:0
+msgid "Ultra HD 4K Video"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_ultrahd4k_video_mobile_mp4.yml:0
+msgid "3840 x 2160"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_video_mobile_caption.yml:0
+msgid "Videounterschrift"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_video_mobile_mp4.yml:0
+msgid "Standard Video"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_video_mobile_mp4.yml:0
+msgid "960 x 540"
+msgstr ""
+
+#: config/install/field.field.media.video_mobile.field_video_mobile_preview.yml:0
+msgid "Vorschau"
+msgstr ""
+
+#: config/install/media.type.video_mobile.yml:0
+msgid "Responsive Videos"
+msgstr ""
+
+#: config/install/media.type.video_mobile.yml:0
+msgid "Mit diesem Bundle können Video-Dateien hochgeladen werden. Für die Einbindung externe Videos (z.B. Youtube) muss das Video-Bundle benutzt werden."
+msgstr ""
+

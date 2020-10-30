@@ -1,0 +1,7 @@
+degov_devel.settings:
+  path: '/admin/config/development/dev-mode'
+  defaults:
+    _form: '\Drupal\degov_devel\Form\ModuleConfigurationForm'
+    _title: 'Development settings'
+  requirements:
+    _permission: 'administer site configuration'

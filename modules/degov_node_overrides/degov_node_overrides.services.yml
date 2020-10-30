@@ -1,0 +1,5 @@
+services:
+  degov_node_overrides.route_subscriber:
+    class: '\Drupal\degov_node_overrides\Routing\RouteSubscriber'
+    tags:
+      - { name: event_subscriber }

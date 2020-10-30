@@ -1,0 +1,15 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_media_person
+id: person
+label: Person
+description: 'Dient der Erstellung einer Person/Author.'
+source: generic
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_media_generic_6
+field_map: {  }

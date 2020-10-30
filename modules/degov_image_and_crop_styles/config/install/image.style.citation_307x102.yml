@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.9_to_3
+  module:
+    - crop
+name: citation_307x102
+label: 'Citation (307x102)'
+effects:
+  61f984a4-1eee-4174-8604-2b37ff420963:
+    uuid: 61f984a4-1eee-4174-8604-2b37ff420963
+    id: image_scale_and_crop
+    weight: -9
+    data:
+      width: 307
+      height: 102
+      anchor: center-center
+  f5f9e8cf-ee5d-4c7e-83ff-1a91e8b17705:
+    uuid: f5f9e8cf-ee5d-4c7e-83ff-1a91e8b17705
+    id: crop_crop
+    weight: -10
+    data:
+      crop_type: 9_to_3

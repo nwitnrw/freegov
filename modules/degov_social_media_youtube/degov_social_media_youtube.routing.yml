@@ -1,0 +1,7 @@
+degov_social_media_youtube.admin_settings:
+  path: '/admin/config/degov/youtube'
+  defaults:
+    _form: '\Drupal\degov_social_media_youtube\Form\ModuleConfigurationForm'
+    _title: 'Youtube Feed Block configuration screen'
+  requirements:
+    _permission: 'administer site configuration'

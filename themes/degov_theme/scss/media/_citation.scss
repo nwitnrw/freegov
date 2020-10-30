@@ -1,0 +1,90 @@
+.media-citation {
+  background-color: $gray-light;
+  &.row {
+    margin: 0;
+  }
+  .citation-image {
+    &.col-lg-6 {
+      padding: 0;
+    }
+    max-height: 307px;
+    overflow: hidden;
+
+    .image__image {
+      picture, img {
+        height: auto;
+        width: 100%;
+      }
+    }
+  }
+  blockquote.citation-content {
+    .citation-title {
+      font-weight: bold;
+      font-size: 1.375rem;
+      margin-bottom: 1.3125rem;
+      &::first-letter {
+        text-transform: uppercase;
+      }
+    }
+    .citation-text {
+      color: $gray-dark;
+      font-size: 1.25rem;
+      font-style: italic;
+      margin: 0;
+      &::first-letter {
+        text-transform: uppercase;
+      }
+      &:before {
+        content: '„';
+      }
+      &:after{
+        content: '“';
+      }
+    }
+    .blockquote-footer {
+      color: $gray-dark;
+      margin-top: 1.875rem;
+      cite.citation-source-title {
+        text-decoration: none;
+        font-style: normal;
+        &:after {
+          content: ",";
+        }
+      }
+    }
+    @include media-breakpoint-up(lg) {
+      .citation-title {
+        font-size: 1.175rem;
+        margin-top: 0 !important;
+        margin-bottom: 1rem;
+      }
+      .citation-text {
+        font-size: .85rem;
+        margin: 0;
+      }
+      .blockquote-footer {
+        font-size: .7rem;
+        margin-top: 1.5rem;
+      }
+    }
+    @include media-breakpoint-up(xl) {
+      .citation-title {
+        font-size: 1.375rem;
+        margin-bottom: 1.3125rem;
+      }
+      .citation-text {
+        font-size: 1.1rem;
+        margin: 0;
+      }
+      .blockquote-footer {
+        font-size: $font-size-base;
+        margin-top: 1.875rem;
+      }
+    }
+  }
+  @include media-breakpoint-up(lg) {
+    blockquote.citation-content {
+      margin: auto;
+    }
+  }
+}

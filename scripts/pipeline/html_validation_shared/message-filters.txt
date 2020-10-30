@@ -1,0 +1,29 @@
+#
+# The Nu Html Checker (v.Nu) Filterfile
+#
+# Each line of the file contains either a regular
+# expression or starts with "#" to indicate the line is a comment. Any error
+# message or warning message that matches a regular expression in the file is
+# filtered out (dropped/suppressed).
+#
+# See: https://validator.github.io/validator "--filterfile"
+# Lines that start with "#" (like this and the above) are ignored.
+#
+# Examples:
+#.*Authors who wish to regulate nested browsing contexts.*
+#.*deprecates “report-uri” in favour of a new “report-to” directive.*
+#.*Unknown pseudo-element or pseudo-class :focus-within.*
+#.*leader(.+)is not a content value.*
+#Bad value.+for attribute “sizes” on element “source”.+
+#
+#
+# New attribute feature <video controlsList="nodownload">
+# See: https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/controlsList
+#      https://developers.google.com/web/updates/2017/03/chrome-58-media-updates#controlslist
+Attribute “controlslist” not allowed on element “video” at this point\.
+#
+# Documented on MDN https://developer.mozilla.org/en-US/docs/Web/HTML/Element/track
+Element “track” not allowed as child of element “video” in this context.*
+#
+# Used in core/modules/media/src/Plugin/Field/FieldFormatter/OEmbedFormatter.php.
+The “frameborder” attribute on the “iframe” element is obsolete.*

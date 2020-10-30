@@ -1,0 +1,14 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_media_address
+  module:
+    - lightning_core
+    - media
+third_party_settings: { }
+id: media.default_map
+label: 'Default Map'
+targetEntityType: media
+cache: true

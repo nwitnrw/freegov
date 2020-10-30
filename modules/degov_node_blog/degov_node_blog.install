@@ -1,0 +1,163 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_node_blog module.
+ */
+
+use Drupal\degov_common\Common;
+use Drupal\language\Config\LanguageConfigOverride;
+use Drupal\block\Entity\Block;
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_node_blog_uninstall() {
+  /** @var \Drupal\degov_common\Entity\WorkflowHandler $workflowService */
+  $workflowService = \Drupal::service('degov_common.workflow_handler');
+  $workflowService->disableWorkflow('blog');
+
+  // Removes all module type defined content when uninstalling the module.
+  Common::removeContent([
+    'entity_type' => 'node',
+    'entity_bundles' => ['blog'],
+  ]);
+}
+
+/**
+ * Enable workflow for content type
+ */
+function degov_node_blog_install() {
+  /** @var \Drupal\degov_common\Entity\WorkflowHandler $workflowService */
+  $workflowService = \Drupal::service('degov_common.workflow_handler');
+  $workflowService->enableWorkflow('blog');
+}
+
+/**
+ * Enable workflow for content type
+ */
+function degov_node_blog_update_8010() {
+  \Drupal::service('module_installer')->install(['degov_users_roles']);
+  /** @var \Drupal\degov_common\Entity\WorkflowHandler $workflowService */
+  $workflowService = \Drupal::service('degov_common.workflow_handler');
+  $workflowService->enableWorkflow('blog');
+}
+
+/**
+ * Set paragraph form mode to experimental
+ */
+function degov_node_blog_update_8012() {
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_node_press', '8012');
+}
+
+/**
+ * deGov Update 5.1.0 - Apply config to use the landscape_to_squared image style., Adds missing view modes.
+ */
+function degov_node_blog_update_850100() {
+  /** @var \Drupal\degov_common\DegovModuleUpdater $deGovModuleUpdater */
+  $deGovModuleUpdater = \Drupal::service('degov_config.module_updater');
+  $deGovModuleUpdater->applyUpdates('degov_node_blog', '8011');
+  $deGovModuleUpdater->applyUpdates('degov_node_blog', '8012');
+}
+
+/**
+ * deGov Update 6.1.0 - Add missing label keys, for preventing warnings on blog node display.
+ */
+function degov_node_blog_update_860100() {
+
+  /** @var \Drupal\Core\Config\ConfigFactory $configFactory */
+  $configFactory = \Drupal::service('config.factory');
+  /** @var \Drupal\Core\Config\Config $config */
+  $config = $configFactory->getEditable('core.entity_view_display.node.blog.default');
+
+  $changes = FALSE;
+
+  $fieldInternalTitleConfig = $config->get('content.field_internal_title');
+  if (!empty($fieldInternalTitleConfig) && !array_key_exists('label', $fieldInternalTitleConfig)) {
+    $fieldInternalTitleConfig['label'] = 'hidden';
+    $config->set('content.field_internal_title', $fieldInternalTitleConfig);
+    $changes = TRUE;
+  }
+
+  $fieldTeaserSubTitleConfig = $config->get('content.field_teaser_sub_title');
+  if (!empty($fieldTeaserSubTitleConfig) && !array_key_exists('label', $fieldTeaserSubTitleConfig)) {
+    $fieldTeaserSubTitleConfig['label'] = 'hidden';
+    $config->set('content.field_teaser_sub_title', $fieldTeaserSubTitleConfig);
+    $changes = TRUE;
+  }
+
+  if ($changes) {
+    $config->save();
+  }
+}
+
+/**
+ * deGov Update 6.3.2 - Add the teaser text to the default blog display
+ */
+function degov_node_blog_update_860302() {
+  $config = \Drupal::service('config.factory')
+    ->getEditable('core.entity_view_display.node.blog.default');
+
+  $hiddenConfig = $config->get('hidden');
+  if (isset($hiddenConfig['field_teaser_text'])) {
+    unset($hiddenConfig['field_teaser_text']);
+  }
+  $config->set('hidden', $hiddenConfig);
+
+  $contentConfig = $config->get('content');
+  if (!isset($contentConfig['field_teaser_text'])) {
+    $contentConfig['field_teaser_text'] = [
+      'type'                 => 'text_trimmed',
+      'weight'               => 6,
+      'region'               => 'content',
+      'label'                => 'hidden',
+      'settings'             => [
+        'trim_length' => 600,
+      ],
+      'third_party_settings' => [],
+    ];
+    $config->set('content', $contentConfig);
+  }
+
+  $config->save();
+}
+
+/**
+ * Fix translation of labels on node blog article
+ */
+function degov_node_blog_update_870500() {
+  /** @var \Drupal\Core\Language\LanguageManagerInterface $configTranslation */
+  $configTranslation = \Drupal::languageManager()->getLanguageConfigOverride('de', 'core.entity_form_display.node.blog.default');
+  if ($configTranslation instanceof LanguageConfigOverride) {
+    $configTranslation->set('third_party_settings.field_group.group_preview.label', 'Vorschau');
+    $configTranslation->set('third_party_settings.field_group.group_header.label', 'Kopfzeile');
+    $configTranslation->set('third_party_settings.field_group.group_content.label', 'Inhalt');
+    $configTranslation->set('third_party_settings.field_group.group_right_sidebar.label', 'Seitenleiste rechts');
+    $configTranslation->set('third_party_settings.field_group.group_common.label', 'Allgemein');
+    $configTranslation->save(TRUE);
+  }
+}
+
+/**
+ * DeGov Update 8.4.0 - Fix Render author block only on blog pages.
+ */
+function degov_node_blog_update_880400() {
+  // Change visibility of author block.
+  $block = Block::load('nrw_base_theme_blog_author');
+  if ($block) {
+    $visibility = $block->getVisibility();
+    $visibility['entity_bundle:node'] = [
+      'id' => 'entity_bundle:node',
+      'bundles' => [
+        'blog' => 'blog',
+      ],
+      'negate' => FALSE,
+      'context_mapping' => [
+        'node' => '@node.node_route_context:node',
+      ],
+    ];
+    $block->setVisibilityConfig('entity_bundle:node', $visibility['entity_bundle:node']);
+    $block->save();
+  }
+}

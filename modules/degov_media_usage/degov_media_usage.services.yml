@@ -1,0 +1,28 @@
+services:
+  degov_media_usage.reference_info:
+    class: Drupal\degov_media_usage\Service\MediaUsageInfo
+    arguments:
+      - '@database'
+      - '@entity_type.manager'
+      - '@entity_type.bundle.info'
+
+  degov_media_usage.persistance:
+    class: Drupal\degov_media_usage\Service\MediaUsagePersistance
+    abstract: true
+    arguments: ['@degov_media_usage.reference_discovery', '@database']
+
+  degov_media_usage.reference_discovery:
+    class: Drupal\degov_media_usage\Service\MediaReferenceDiscovery
+    arguments: ['@entity_type.manager', '@entity_field.manager']
+
+  degov_media_usage.route_subscriber:
+    class: Drupal\degov_media_usage\Routing\RouteSubscriber
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: event_subscriber }
+
+  degov_media_usage.param_converter.media:
+    class: Drupal\degov_media_usage\ParamConverter\MediaConverter
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: paramconverter }

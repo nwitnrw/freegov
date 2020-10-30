@@ -1,0 +1,32 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - image.style.teaser_squared_1_1_120
+    - image.style.teaser_squared_1_1_180
+    - image.style.teaser_squared_1_1_240
+  enforced:
+    module:
+      - degov_image_and_crop_styles
+  module:
+    - degov_image_and_crop_styles
+id: teaser_squared
+label: 'Teaser squared'
+image_style_mappings:
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.xs
+    multiplier: 1.5x
+    image_mapping_type: image_style
+    image_mapping: teaser_squared_1_1_180
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.xs
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: teaser_squared_1_1_120
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.xs
+    multiplier: 2x
+    image_mapping_type: image_style
+    image_mapping: teaser_squared_1_1_240
+breakpoint_group: degov_image_and_crop_styles.media
+fallback_image_style: teaser_squared_1_1_120

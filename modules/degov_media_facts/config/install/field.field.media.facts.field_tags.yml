@@ -1,0 +1,29 @@
+uuid: 49dffe66-aea0-4ffa-8f70-c7a2037f731f
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_tags
+    - media.type.facts
+    - taxonomy.vocabulary.tags
+id: media.facts.field_tags
+field_name: field_tags
+entity_type: media
+bundle: facts
+label: Schlagwörter
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      tags: tags
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

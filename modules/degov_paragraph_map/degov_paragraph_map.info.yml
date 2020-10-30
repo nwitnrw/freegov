@@ -1,0 +1,15 @@
+name: 'deGov - Paragraph map'
+description: 'This paragraph can show you a map for an address.'
+package: deGov
+type: module
+core: 8.x
+dependencies:
+  - degov_content_types_shared_fields
+  - degov_media_address
+  - entity_browser
+  - entity_reference_display
+  - field
+  - link
+  - media
+  - options
+  - paragraphs

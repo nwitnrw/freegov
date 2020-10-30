@@ -1,0 +1,9 @@
+.media-gallery-wrapper {
+  width: 100%;
+  margin: 0;
+}
+
+.paragraph-media-reference-media-gallery-view-mode-preview {
+  @extend .paragraph-node-reference-node-view-mode-long-text;
+  background-color: $gray-lighter;
+}

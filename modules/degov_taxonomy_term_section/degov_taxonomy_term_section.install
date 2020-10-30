@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_taxonomy_term_section module.
+ */
+
+use Drupal\degov_common\Common;
+
+/**
+ * Implements hook_install().
+ */
+function degov_taxonomy_term_section_install() {
+  _degov_taxonomy_term_section_enable_term_restriction_for_section_vocabulary_only();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_taxonomy_term_section_uninstall() {
+  // Removes all module type defined content when uninstalling the module.
+  Common::removeContent([
+    'entity_type' => 'taxonomy_term',
+    'entity_bundles' => ['section'],
+  ]);
+}
+
+/**
+ * Enable the taxonomy term access restriction for the section vocabulary only.
+ */
+function degov_taxonomy_term_section_update_800001(): void {
+  _degov_taxonomy_term_section_enable_term_restriction_for_section_vocabulary_only();
+}
+
+function _degov_taxonomy_term_section_enable_term_restriction_for_section_vocabulary_only(): void {
+  if (\Drupal::moduleHandler()->moduleExists('permissions_by_term')) {
+    \Drupal::configFactory()->getEditable('permissions_by_term.settings')->set('target_bundles', ['section'])->save();
+  }
+}

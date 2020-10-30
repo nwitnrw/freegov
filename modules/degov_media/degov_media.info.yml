@@ -1,0 +1,7 @@
+name: 'deGov - Media'
+description: 'Provides shared functionality to all deGov Media modules.'
+type: module
+package: deGov
+core: 8.x
+dependencies:
+  - drupal:media

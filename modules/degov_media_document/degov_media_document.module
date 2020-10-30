@@ -1,0 +1,110 @@
+<?php
+
+/**
+ * @file
+ */
+
+use Drupal\degov_common\Common;
+use Drupal\degov_media_document\Helper\DocumentLinkHelper;
+use Drupal\file\Entity\File;
+use Drupal\media\Entity\Media;
+use Drupal\media\Entity\MediaType;
+
+/**
+ * Implements hook_preprocess().
+ */
+function degov_media_document_preprocess(array &$variables, string $hook, array &$info): void {
+  if ($hook === 'media') {
+    /* @var \Drupal\media\Entity\Media $media */
+    $media = $variables['elements']['#media'];
+
+    if ($media->bundle() === 'document') {
+      /* @var \Drupal\file\Entity\File $file */
+      if (!isset($media->field_document->entity)) {
+        $variables['media_url'] = '';
+        $variables['media_bytes'] = 0;
+        $variables['media_size'] = 0;
+        if (\Drupal::languageManager()->getCurrentLanguage()->getId() === 'de') {
+          $variables['media_size'] = 0;
+        }
+        $variables['media_mime'] = '';
+        $variables['media_extention'] = '';
+        $variables['media_aria_label'] = '';
+        $variables['target'] = '';
+      }
+      else {
+        $file = $media->field_document->entity;
+        $file_ext = new SplFileInfo($file->getFilename());
+        $variables['media_url'] = file_create_url($file->getFileUri());
+        $variables['media_bytes'] = $file->getSize();
+        $variables['media_size'] = format_size($file->getSize());
+        // The format_size() function does not allow for changing the
+        // decimal point, so do a simple string replace.
+        if (\Drupal::languageManager()->getCurrentLanguage()->getId() === 'de') {
+          $variables['media_size'] = str_replace('.', ',', $variables['media_size']);
+        }
+        $variables['media_mime'] = $file->getMimeType();
+        $variables['media_extention'] = $file_ext->getExtension();
+        $variables['media_aria_label'] = sprintf('%s (%s)', $file->getFilename(), $variables['media_size']);
+        $variables['target'] = DocumentLinkHelper::getTargetAttributeForFile($file);
+      }
+    }
+  }
+
+  // Add template suggestions and libraries implemented in this module.
+  Common::addThemeSuggestions($variables, $hook, $info, [
+    'module_name' => 'degov_media_document',
+    'entity_type' => 'media',
+    'entity_bundles' => ['document'],
+    'entity_view_modes' => ['usage', 'preview', 'search', 'embedded', 'content_search'],
+  ]);
+}
+
+/**
+ * Implements hook_file_download().
+ */
+function degov_media_document_file_download(string $uri): void {
+  if (\Drupal::service('module_handler')->moduleExists('permissions_by_entity')) {
+    $files = \Drupal::entityTypeManager()
+      ->getStorage('file')
+      ->loadByProperties(['uri' => $uri]);
+
+    foreach ($files as $file) {
+      $multipleMedia = \Drupal::entityTypeManager()
+        ->getStorage('media')
+        ->loadByProperties(['field_document' => $file->id()]);
+
+      $oneMedia = array_shift($multipleMedia);
+
+      if ($oneMedia instanceof Media) {
+        $accessChecker = \Drupal::service('permissions_by_entity.access_checker');
+        $accessChecker->isAccessAllowed($oneMedia);
+      }
+    }
+  }
+}
+
+/**
+ * Implements template_preprocess_media().
+ */
+function degov_media_document_preprocess_media(array &$variables): void {
+  if ($variables['view_mode'] === 'content_search') {
+    $mediaType = MediaType::load($variables['media']->bundle());
+    $variables['content']['media_bundle_label'] = $mediaType ? $mediaType->label() : '';
+
+    $documentPreview = $variables['media']->get('field_document_preview');
+    if ($documentPreview->count() > 0) {
+      $variables['attributes']['class'][] = 'preview-image';
+    }
+    else {
+      $variables['attributes']['class'][] = 'preview-icon';
+      $documentReference = $variables['media']->get('field_document')->getValue();
+      if (!empty($documentReference[0]['target_id'])) {
+        $file = File::load($documentReference[0]['target_id']);
+        if (!empty($file)) {
+          $variables['preview_icon_class'] = DocumentLinkHelper::mapFileToFaIcon($file);
+        }
+      }
+    }
+  }
+}

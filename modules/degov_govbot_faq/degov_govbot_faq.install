@@ -1,0 +1,173 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_govbot_faq module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function degov_govbot_faq_install() {
+  /**
+   * @var \Drupal\Core\Config\ConfigFactory $configFactory
+   */
+  $configFactory = \Drupal::service('config.factory');
+  /**
+   * @var Drupal\Core\Config\Config $config
+   */
+  $config = $configFactory->getEditable('core.entity_form_display.paragraph.faq.default');
+
+  $config->set('content', array_merge(
+    $config->get('content'),
+    [
+      'field_govbot_question' => [
+        'weight'               => 2,
+        'settings'             => [
+          'size'        => 60,
+          'placeholder' => '',
+        ],
+        'third_party_settings' => [],
+        'type'                 => 'string_textfield',
+        'region'               => 'content',
+      ],
+      'field_govbot_answer'   => [
+        'weight'               => 4,
+        'settings'             => [
+          'rows'        => 3,
+          'placeholder' => '',
+        ],
+        'third_party_settings' => [],
+        'type'                 => 'text_textarea',
+        'region'               => 'content',
+      ],
+    ]));
+  $config->set('hidden', array_merge(
+    $config->get('hidden'),
+    ['field_govbot_id' => TRUE]
+  ));
+  $config->set('content.field_faq_title.weight', 1);
+  $config->set('content.field_faq_text.weight', 3);
+
+  $config->save();
+
+  $config = $configFactory->getEditable('core.entity_view_display.paragraph.faq.default');
+  $config->set('hidden', array_merge(
+    $config->get('hidden'),
+    [
+      'field_govbot_answer'   => TRUE,
+      'field_govbot_question' => TRUE,
+      'field_govbot_id'       => TRUE,
+    ]
+  ));
+  $config->save();
+
+  $config = $configFactory->getEditable('search_api.index.search_content');
+  $config->set('field_settings', array_merge(
+    $config->get('field_settings'), [
+      'nested_faq_paragraphs' => [
+        'label'         => 'Nested FAQ paragraphs',
+        'property_path' => 'nested_faq_paragraphs',
+        'type'          => 'text',
+      ],
+    ]
+  ));
+
+  /**
+   * @var \Drupal\degov_common\Entity\ConfigAdder $configAdder
+   */
+  $configAdder = \Drupal::service('degov_common.config_adder');
+  $configAdder->addListItemFromConfiguration('search_api.index.search_content',
+    'datasource_settings.entity:node.bundles.selected', 'faq');
+
+  $config->set('processor_settings.html_filter', array_merge(
+    $config->get('processor_settings.html_filter'), [
+      'fields' =>
+        ['nested_faq_paragraphs'],
+    ]
+  ));
+  $config->set('processor_settings.ignorecase', array_merge(
+    $config->get('processor_settings.ignorecase'), [
+      'fields' =>
+        ['nested_faq_paragraphs'],
+    ]
+  ));
+  $config->set('processor_settings.stopwords', array_merge(
+    $config->get('processor_settings.stopwords'), [
+      'fields' =>
+        ['nested_faq_paragraphs'],
+    ]
+  ));
+  $config->set('processor_settings.tokenizer', array_merge(
+    $config->get('processor_settings.tokenizer'), [
+      'fields' =>
+        ['nested_faq_paragraphs'],
+    ]
+  ));
+  $config->save();
+
+  $index_storage = \Drupal::entityTypeManager()
+    ->getStorage('search_api_index');
+  $index = $index_storage->load('search_content');
+  $index->save();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_govbot_faq_uninstall() {
+  /**
+   * @var \Drupal\Core\Config\ConfigFactory $configFactory
+   */
+  $configFactory = \Drupal::service('config.factory');
+  /**
+   * @var Drupal\Core\Config\Config $config
+   */
+  $config = $configFactory->getEditable('core.entity_form_display.paragraph.faq.default');
+
+  $contentConfig = $config->get('content');
+
+  unset($contentConfig['field_govbot_question'], $contentConfig['field_govbot_answer']);
+
+  $hiddenConfig = $config->get('hidden');
+  unset($hiddenConfig['field_govbot_id']);
+
+  $config->set('content', $contentConfig);
+  $config->set('hidden', $hiddenConfig);
+
+  $config->set('content.field_faq_title.weight', 1);
+  $config->set('content.field_faq_text.weight', 2);
+
+  $config->save();
+
+  $config = $configFactory->getEditable('core.entity_view_display.paragraph.faq.default');
+
+  $hiddenConfig = $config->get('hidden');
+
+  unset($hiddenConfig['field_govbot_answer'], $hiddenConfig['field_govbot_question'], $hiddenConfig['field_govbot_id']);
+
+  $config->set('hidden', $hiddenConfig);
+  $config->save();
+
+  $config = $configFactory->getEditable('search_api.index.search_content');
+
+  $fieldSettings = $config->get('field_settings');
+
+  unset($fieldSettings['nested_faq_paragraphs']);
+
+  $config->set('field_settings', $fieldSettings);
+
+  $config->save();
+
+  /**
+   * @var \Drupal\degov_common\Entity\ConfigRemover $configRemover
+   */
+  $configRemover = \Drupal::service('degov_common.config_remover');
+  $configRemover->removeListItemFromConfiguration('search_api.index.search_content',
+    'datasource_settings.entity:node.bundles.selected', 'faq');
+
+  $index_storage = \Drupal::entityTypeManager()
+    ->getStorage('search_api_index');
+  $index = $index_storage->load('search_content');
+  $index->save();
+}

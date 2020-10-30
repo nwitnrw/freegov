@@ -1,0 +1,16 @@
+name: 'deGov - Content Search Solr'
+description: 'Basic configuration for content search via Apache Solr.'
+type: module
+core: 8.x
+package: deGov
+dependencies:
+  - block
+  - degov_search_base_solr
+  - facets
+  - node
+  - search_api
+  - search_api_solr
+  - search_api_sorts
+  - system
+  - views
+  - search_api_attachments

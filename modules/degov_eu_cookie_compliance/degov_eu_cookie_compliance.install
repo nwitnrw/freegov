@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_eu_cookie_compliance module.
+ */
+
+use Drupal\Core\Session\AccountInterface;
+
+/**
+ * Implements hook_install().
+ */
+function degov_eu_cookie_compliance_install() {
+  // Give anonymous the permission to view the cookie popup.
+  user_role_grant_permissions(AccountInterface::ANONYMOUS_ROLE, ['display eu cookie compliance popup']);
+}
+
+/**
+ * Change text format from restricted_html to rich_text.
+ */
+function degov_eu_cookie_compliance_update_870100() {
+  $config = \Drupal::service('config.factory')->getEditable('eu_cookie_compliance.settings');
+  if (empty($config)) {
+    return;
+  }
+
+  $withdraw_message_format = $config->get('withdraw_message.format');
+  if ($withdraw_message_format === 'restricted_html') {
+    $config->set('withdraw_message.format', 'rich_text')->save(TRUE);
+  }
+  $mobile_popup_info_format = $config->get('mobile_popup_info.format');
+  if ($mobile_popup_info_format === 'restricted_html') {
+    $config->set('mobile_popup_info.format', 'rich_text')->save(TRUE);
+  }
+}
+
+/**
+ * deGov Update 7.4.0 - Imports custom translation for eu_cookie_compliance.
+ */
+function degov_eu_cookie_compliance_update_870400() {
+  /** @var \Drupal\degov_common\TranslationImport $translation_import */
+  $translation_import = \Drupal::service('degov_common.translation_import');
+  $translation_import->import('degov_eu_cookie_compliance');
+}

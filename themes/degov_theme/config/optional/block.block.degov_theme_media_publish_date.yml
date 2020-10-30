@@ -1,0 +1,22 @@
+langcode: de
+status: false
+dependencies:
+  config:
+    - facets.facet.media_publish_date
+  module:
+    - facets
+  theme:
+    - degov_theme
+id: degov_theme_media_publish_date
+theme: degov_theme
+region: top_header
+weight: -7
+provider: null
+plugin: 'facet_block:media_publish_date'
+settings:
+  id: 'facet_block:media_publish_date'
+  label: Veröffentlichungsdatum
+  provider: facets
+  label_display: visible
+  block_id: media_publish_date
+visibility: {  }

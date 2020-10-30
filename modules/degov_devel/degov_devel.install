@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_devel module.
+ */
+
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_requirements().
+ */
+function degov_devel_requirements(string $phase) {
+  $requirements = [];
+
+  if ($phase === 'runtime') {
+    $requirements['degov_devel'] = [
+      'title' => t('deGov - Developer'),
+      'description' => t(
+        'The module <em>deGov - Developer</em> is enabled. Please make sure you <a href=":href">disable</a> it before deploying to production.',
+        [
+          ':href' => Url::fromRoute('system.modules_uninstall')
+            ->toString(),
+        ]
+      ),
+      'severity' => REQUIREMENT_WARNING,
+    ];
+  }
+
+  return $requirements;
+}
+
+/**
+ * Set the Development mode.
+ *
+ * Implements hook_update_N().
+ */
+function degov_devel_update_870300() {
+  /* @var \Drupal\degov_common\DegovModuleUpdater $updater */
+  $updater = \Drupal::service('degov_config.module_updater');
+  $updater->applyUpdates('degov_devel', '870300');
+}

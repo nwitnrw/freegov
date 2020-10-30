@@ -1,0 +1,10 @@
+content:
+  thumbnail:
+    settings:
+      image_style: teaser_landscape_2_1_480
+      link_image_to: 'content'
+  field_video_preview:
+    type: entity_reference_entity_view
+    settings:
+      view_mode: teaser_landscape_2_1
+      link: true

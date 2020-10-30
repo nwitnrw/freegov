@@ -1,0 +1,5 @@
+homepage_slider:
+  type: 'basic'
+  info: 'Homepage slideshow'
+  field_content_paragraphs:
+    - header_type1_slideshow

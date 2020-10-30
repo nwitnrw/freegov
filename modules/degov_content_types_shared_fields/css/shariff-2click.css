@@ -1,0 +1,13 @@
+.shariff-button {
+  position: relative;
+}
+.shariff-button .sharing-overlay {
+  background-color: rgba(200, 200, 200, 0.5);
+  cursor: pointer;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+}

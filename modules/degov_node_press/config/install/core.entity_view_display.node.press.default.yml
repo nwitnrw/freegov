@@ -1,0 +1,104 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.field.node.press.field_content_paragraphs
+    - field.field.node.press.field_header_paragraphs
+    - field.field.node.press.field_press_date
+    - field.field.node.press.field_sidebar_right_paragraphs
+    - field.field.node.press.field_social_media
+    - field.field.node.press.field_tags
+    - field.field.node.press.field_teaser_image
+    - field.field.node.press.field_teaser_text
+    - field.field.node.press.field_teaser_title
+    - field.field.node.press.field_teaser_sub_title
+    - node.type.press
+  enforced:
+    module:
+      - degov_node_press
+  module:
+    - datetime
+    - entity_reference_revisions
+    - user
+id: node.press.default
+targetEntityType: node
+bundle: press
+mode: default
+content:
+  field_content_paragraphs:
+    weight: 4
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    type: entity_reference_revisions_entity_view
+    region: content
+  field_header_paragraphs:
+    weight: 0
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    type: entity_reference_revisions_entity_view
+    region: content
+  field_press_date:
+    weight: 1
+    label: hidden
+    settings:
+      timezone_override: Europe/Berlin
+      date_format: d.m.Y
+    third_party_settings: {  }
+    type: datetime_custom
+    region: content
+  field_sidebar_right_paragraphs:
+    weight: 5
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    type: entity_reference_revisions_entity_view
+    region: content
+  field_tags:
+    type: taxonomy_term_search
+    weight: 2
+    region: content
+    label: hidden
+    settings:
+      route_name: view.search_content.page_1
+    third_party_settings: {  }
+  shariff_field:
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_teaser_sub_title:
+    type: string
+    weight: 3
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_teaser_text:
+    type: text_default
+    weight: 4
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_teaser_title:
+    type: string
+    weight: 2
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  field_social_media: true
+  field_teaser_image: true
+  langcode: true
+  links: true

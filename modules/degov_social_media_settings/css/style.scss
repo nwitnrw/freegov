@@ -1,0 +1,117 @@
+/*
+ * DO NOT EDIT CSS FILE DIRECTLY. USE SCSS FILE.
+*/
+//
+// Compile SCSS to CSS
+//
+//   sassc  -m --style compact style.scss style.min.css
+//
+// Requires a "--style compact" as we create a minified css file.
+//
+// Optionally use a PHPSTORM SCSS FILE WATCHER
+// Programm:               sassc
+// Arguments:              --style compact $FileName$ $FileNameWithoutExtension$.min.css
+// Output path to refresh: $FileNameWithoutExtension$.min.css:$FileNameWithoutExtension$.min.css.map
+//
+$link-color: #007bff !default;
+$white: #fff !default;
+
+.social-media-settings {
+
+  .social-media-settings__settings-list {
+    list-style-type: none;
+    margin-top: 10px;
+    margin-bottom: 0;
+    padding-left: 20px;
+
+    input {
+      margin-right: 10px;
+    }
+  }
+
+  button.btn-default {
+    &:hover, &:focus, &:active {
+      box-shadow: none;
+    }
+
+    &:focus {
+      bottom: 0;
+      background: transparent;
+    }
+  }
+
+
+  &__cancel,
+  &__save {
+    &.btn:hover {
+      // Overriding bootstrap default requires btn.
+      text-decoration: underline;
+    }
+  }
+
+  &__save {
+    background: $link-color;
+  }
+}
+
+// Social open dialoge placeholders
+.js-social-media-code__message {
+  background: #a5a8a8;
+  color: #0a0a0a;
+  margin: 20px 0;
+  padding: 20px;
+
+  a {
+    color: #0a0a0a;
+    text-decoration: underline;
+    font-weight: bold;
+  }
+}
+
+
+.social-media-read-more {
+  position:   relative;
+
+  .social-media-read-more__overlay {
+    position: absolute;
+    left: -10px;
+    right: -10px;
+    bottom: 0;
+    background: linear-gradient($white, rgba($white, 0));
+    height: 40px;
+    max-height: 40px;
+    top: -40px;
+    transition: all 0.5s ease;
+  }
+
+  .collapsing  + .social-media-read-more__overlay,
+  .collapse.in + .social-media-read-more__overlay,
+  .collapse.show + .social-media-read-more__overlay {
+    // Collapse .in -> Bootstrap 3.x .show -> 4.x
+    opacity: 0;
+  }
+
+  &__button {
+    padding: 0 1rem 1rem;
+    text-align: center;
+    font-weight: bold;
+    color: $link-color;
+    cursor: pointer;
+
+    .fa {
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    .show-less {
+      padding-top: 1rem;
+      display: inline-block;
+    }
+    &[aria-expanded="false"] .show-less {
+      display: none;
+    }
+    &[aria-expanded="true"] .show-more {
+      display: none;
+    }
+  }
+}

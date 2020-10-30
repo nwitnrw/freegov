@@ -1,0 +1,23 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_govbot_answer
+    - paragraphs.paragraphs_type.faq
+  module:
+    - text
+  enforced:
+    module:
+      - degov_govbot_faq
+id: paragraph.faq.field_govbot_answer
+field_name: field_govbot_answer
+entity_type: paragraph
+bundle: faq
+label: 'GovBot Antwortmöglichkeiten'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

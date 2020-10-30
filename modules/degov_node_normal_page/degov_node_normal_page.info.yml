@@ -1,0 +1,27 @@
+name: 'deGov - Node normal page'
+description: 'This module ships the content type \"node normal page\" and relating configuration.'
+package: deGov
+type: module
+core: 8.x
+dependencies:
+  - degov_content_types_shared_fields
+  - degov_taxonomy_term_section
+  - degov_taxonomy_term_tags
+  - degov_taxonomies
+  - degov_node_overrides
+  - degov_metatags
+  - entity_browser
+  - entity_reference_revisions
+  - field
+  - field_group
+  - language
+  - media
+  - menu_ui
+  - node
+  - paragraphs
+  - path
+  - pathauto
+  - taxonomy
+  - text
+  - user
+  - views

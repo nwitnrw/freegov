@@ -1,0 +1,32 @@
+theme-assets:
+  css:
+    theme:
+      webpack-dist/main.css: {}
+  js:
+    webpack-dist/bootstrap.bundle.min.js: {}
+    webpack-dist/main.js: {}
+  dependencies:
+    - core/jquery
+
+install-page:
+  css:
+    theme:
+      webpack-dist/install.css: {}
+  js:
+    webpack-dist/install.js: {}
+  dependencies:
+    - seven/install-page
+    - classy/progress
+    - classy/user
+
+video-control:
+  js:
+    javascript/video-control.js: {}
+
+search-sorts-improvements:
+  js:
+    javascript/search-sorts-improvements.js: {}
+
+search-form:
+  js:
+    javascript/search-form.js: {}

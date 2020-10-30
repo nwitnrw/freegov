@@ -1,0 +1,39 @@
+{#
+/**
+ * @file
+ * Default theme implementation to present a media entity.
+ *
+ * Available variables:
+ * - name: Name of the media.
+ * - content: Media content.
+ *
+ * @see template_preprocess_media()
+ *
+ * @ingroup themeable
+ */
+ #}
+
+{% set media_classes = [
+  'row',
+  'media-citation',
+  'my-5',
+] %}
+
+<article{{ attributes.addClass(media_classes) }}>
+  {{ content.contextual_links }}
+
+  <div class="citation-image col-lg-6"{{ content.field_citation_imagee|quickedit_attr }}>
+    {{ content.field_citation_image }}
+  </div>
+
+  <blockquote class="col-lg-6 citation-content blockquote px-5">
+    <h3 class="citation-title mt-4"> {{ content.field_citation_title }} </h3>
+    {% set citation_text = content.field_citation_text|render|striptags|trim %}
+    <p class="citation-text">{{ citation_text|length > 150 ? citation_text|slice(0, 150) ~ '...' : citation_text }}</p>
+    <footer class="blockquote-footer">
+      <cite class="citation-source-title" title="Source Title">{{ media.field_title.value  }}</cite>
+      <span>{{ media.field_citation_date.value|date('U')|format_date('custom', 'F y') }}</span>
+    </footer>
+  </blockquote>
+
+</article>

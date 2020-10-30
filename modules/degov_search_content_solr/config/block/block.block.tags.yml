@@ -1,0 +1,23 @@
+uuid: 4fc51c2f-bdd4-4718-abc8-cda8c5884976
+langcode: de
+status: false
+dependencies:
+  config:
+    - facets.facet.tags
+  module:
+    - facets
+  theme:
+    - nrw_base_theme
+id: tags
+theme: nrw_base_theme
+region: sidebar_first
+weight: -4
+provider: null
+plugin: 'facet_block:tags'
+settings:
+  id: 'facet_block:tags'
+  label: Schlagworte
+  provider: facets
+  label_display: visible
+  block_id: tags
+visibility: {  }

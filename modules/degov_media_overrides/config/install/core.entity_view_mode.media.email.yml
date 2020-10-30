@@ -1,0 +1,14 @@
+langcode: de
+status: true
+dependencies:
+  module:
+    - lightning_core
+    - media
+  enforced:
+    module:
+      - degov_media_overrides
+third_party_settings: { }
+id: media.email
+label: Email
+targetEntityType: media
+cache: true

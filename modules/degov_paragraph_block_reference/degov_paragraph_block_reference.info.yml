@@ -1,0 +1,17 @@
+name: 'deGov - Paragraph block reference'
+description: 'This paragraph can show a block.'
+package: deGov
+type: module
+core: 8.x
+dependencies:
+  - degov_content_types_shared_fields
+  - field
+  - link
+  - block
+  - block_field
+  - paragraphs
+  - degov_node_press
+  - degov_social_media_youtube
+  - degov_social_media_instagram
+  - degov_tweets
+  - degov_simplenews_references

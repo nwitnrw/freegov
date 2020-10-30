@@ -1,0 +1,10 @@
+name: 'deGov - Paragraph link list'
+description: 'This paragraph shows a list of links.'
+package: deGov
+type: module
+core: 8.x
+dependencies:
+  - degov_content_types_shared_fields
+  - field
+  - link
+  - paragraphs

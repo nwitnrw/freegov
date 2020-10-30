@@ -1,0 +1,28 @@
+.paragraph-media-reference-media-video-view-mode-preview {
+  @extend .paragraph-node-reference-node-view-mode-preview;
+
+  .paragraph__content {
+    .video-title {
+      font-weight: bold;
+    }
+    .video-preview {
+      position: relative;
+      .video-iframe-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        visibility: hidden;
+      }
+      .video-preview-image {
+        position: relative;
+        .play-icon {
+          .faicon {
+            font-size: 4.8rem;
+          }
+        }
+      }
+    }
+  }
+}

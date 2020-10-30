@@ -1,0 +1,7 @@
+name: 'deGov - Behat Extension'
+description: 'deGov specific extensions for Behat.'
+package: deGov
+type: module
+core: 8.x
+dependencies:
+- drupal:path_alias

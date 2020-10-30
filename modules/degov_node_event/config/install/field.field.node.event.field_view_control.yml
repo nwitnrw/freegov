@@ -1,0 +1,30 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_view_control
+    - node.type.event
+    - taxonomy.vocabulary.view_control
+  enforced:
+    module:
+      - degov_node_event
+id: node.event.field_view_control
+field_name: field_view_control
+entity_type: node
+bundle: event
+label: Ansichtssteuerung
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      view_control: view_control
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

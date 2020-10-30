@@ -1,0 +1,18 @@
+dependencies:
+  config:
+    - field.field.media.facts.field_topic
+third_party_settings:
+  field_group:
+    group_common:
+      children:
+        - field_topic
+content:
+  field_topic:
+    weight: 24
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content

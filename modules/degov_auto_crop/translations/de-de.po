@@ -1,0 +1,38 @@
+msgid ""
+msgstr ""
+
+msgid "Applies all defined crop types to all newly uploaded images"
+msgstr "Wendet alle definierten Crop-Types auf alle neu hochgeladenen Bilder an"
+
+msgid "Offset top"
+msgstr "Offset oben"
+
+msgid "Offset bottom"
+msgstr "Offset unten"
+
+msgid "Offset left"
+msgstr "Offset links"
+
+msgid "Offset right"
+msgstr "Offset rechts"
+
+msgid "Automatic offset (landscape images)"
+msgstr "Automatischer Offset (Bilder im Querformat)"
+
+msgid "Automatic offset (portrait images)"
+msgstr "Automatischer Offset (Portrait-Bilder)"
+
+msgid "Automatic offset (square images)"
+msgstr "Automatischer Offset (quadratische Bilder)"
+
+msgid "Could not find offset values in the submitted form."
+msgstr "Konnte die Offsetwerte im abgesendeten Formular nicht finden."
+
+msgid "Offset must be a positive integer."
+msgstr "Der Offsetwert muss eine positive Ganzzahl sein (1-9)."
+
+msgid "An error occured during deGov - Automatic cropping (degov_auto_crop) module installation."
+msgstr "Während der Installation von deGov - Automatic cropping (degov_auto_crop) ist ein Fehler aufgetreten."
+
+msgid "<p>On first upload of a file the crop frame will be placed automatically. Use these values to define offsets for the placement.</p><p>Example: if <code>top</code> is <code>2</code> and <code>bottom</code> is <code>1</code>, the crop will be placed twice as far from the top of the image as from the bottom.</p>"
+msgstr "<p>Beim ersten Hochladen eines Bildes wird das Ausschnittfenster automatisch platziert. Zur Anpassung der Offsets müssen diese Werte geändert werden.</p><p>Beispiel: Wenn <code>oben</code> den Wert <code>2</code> hat und <code>unten</code> den Wert <code>1</code> hat, wird der Ausschnitt zweimal so weit von oben platziert als von unten.</p>"

@@ -1,0 +1,7 @@
+content:
+  field_media_publish_date:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content

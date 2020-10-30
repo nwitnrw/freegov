@@ -1,0 +1,29 @@
+{
+  "name": "degov_theme",
+  "version": "2.1.0",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "copy-webpack-plugin": "^4.5.2",
+    "css-loader": "^0.28.11",
+    "mini-css-extract-plugin": "^0.4",
+    "node-sass": "^4.13.1",
+    "sass-loader": "^6.0.7",
+    "style-loader": "^0.20.3",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.0",
+    "webpack-dev-server": "^3.10.1",
+    "lodash": "^4.17.15"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.2.0",
+    "bootstrap": "^4.4.1"
+  },
+  "scripts": {
+    "build:prod": "webpack --config webpack.js --mode production",
+    "build": "webpack --config webpack.js --mode development"
+  },
+  "author": "deGov team",
+  "license": "GPL-3.0-or-later"
+}

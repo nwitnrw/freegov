@@ -1,0 +1,63 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.basic
+    - field.storage.block_content.field_content_paragraphs
+    - paragraphs.paragraphs_type.slideshow
+  module:
+    - entity_reference_revisions
+id: block_content.basic.field_content_paragraphs
+field_name: field_content_paragraphs
+entity_type: block_content
+bundle: basic
+label: Inhaltsbereich
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      slideshow: slideshow
+    target_bundles_drag_drop:
+      block_reference:
+        weight: 13
+        enabled: false
+      block_reference_sidebar:
+        weight: 14
+        enabled: false
+      faq:
+        weight: 15
+        enabled: false
+      faq_list:
+        weight: 16
+        enabled: false
+      image_header:
+        weight: 17
+        enabled: false
+      media_reference:
+        weight: 18
+        enabled: false
+      node_reference:
+        weight: 19
+        enabled: false
+      slide:
+        weight: 20
+        enabled: false
+      slideshow:
+        enabled: true
+        weight: 21
+      text:
+        weight: 22
+        enabled: false
+      video_subtitle:
+        weight: 23
+        enabled: false
+      webform:
+        weight: 24
+        enabled: false
+field_type: entity_reference_revisions

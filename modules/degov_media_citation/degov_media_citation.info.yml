@@ -1,0 +1,23 @@
+name: 'deGov - Media citation'
+description: 'Contains the citation media type with optional image.'
+type: module
+core: 8.x
+package: deGov
+dependencies:
+  - datetime
+  - degov_common
+  - degov_media
+  - degov_content_types_shared_fields
+  - degov_taxonomy_term_tags
+  - degov_image_and_crop_styles
+  - entity_browser
+  - field
+  - field_group
+  - file
+  - image
+  - language
+  - media
+  - media_entity_generic
+  - path
+  - taxonomy
+  - user

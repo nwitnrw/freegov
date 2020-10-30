@@ -1,0 +1,54 @@
+.block--degov-social-media-youtube {
+  @extend .paragraph-node-reference-node-view-mode-small-image;
+
+  .paragraph__content {
+    .js-social-media-settings-open {
+      color: #1060b1;
+    }
+
+    .teaser-social-media-youtube {
+      .teaser-image {
+        min-height: 120px;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        @include media-breakpoint-up(md) {
+          width: 255px;
+        }
+
+        &:before {
+          position: absolute;
+          content: '';
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          background-color: rgba($black, .3);
+          transition: background-color .3s;
+        }
+
+        &:hover:before {
+          background-color: rgba($black, .2);
+        }
+      }
+
+      .teaser-content {
+        background-color: $porcelaint;
+        font-size: .8rem;
+        @include media-breakpoint-up(md) {
+          font-size: $font-size-base
+        }
+      }
+
+      .learn-more {
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: $blue;
+        color: $white;
+      }
+    }
+  }
+}

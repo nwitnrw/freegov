@@ -1,0 +1,11 @@
+langcode: en
+status: true
+name: Synonyms
+vid: synonyms
+description: ''
+hierarchy: 0
+weight: 0
+dependencies:
+  enforced:
+    module:
+      - degov_taxonomy_term_synonyms

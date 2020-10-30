@@ -1,0 +1,27 @@
+name: 'deGov - Media video upload'
+description: 'This media type is used for uploaded videos.'
+package: deGov
+type: module
+core: 8.x
+dependencies:
+  - degov_common
+  - degov_media
+  - degov_content_types_shared_fields
+  - degov_paragraph_video_subtitle
+  - degov_taxonomy_term_copyright
+  - degov_taxonomy_term_tags
+  - degov_image_and_crop_styles
+  - dropzonejs_eb_widget
+  - entity_browser
+  - entity_reference_revisions
+  - degov_media_overrides
+  - field
+  - field_group
+  - file
+  - image
+  - language
+  - media
+  - paragraphs
+  - path
+  - taxonomy
+  - text

@@ -1,0 +1,29 @@
+{%
+  set classes = [
+  'block',
+  'block-' ~ configuration.provider|clean_class,
+  'block-' ~ plugin_id|clean_class,
+]
+%}
+<div{{ attributes.addClass(classes) }}>
+{% block content %}
+  {{ subject }}
+  <div class="block--degov-social-media-instagram">
+    <div class="container">
+      <div class="paragraph__header skin--font-secondary mb-5">
+        <h2>
+          {{ "Teaser social media"|t }}
+        </h2>
+        <h3 class="sub-title">{{ "Instagram Teaser"|t }}</h3>
+        <div class="under-teasers-header-line mt-4"></div>
+      </div>
+
+      <div class="js-social-media-code paragraph__content row">
+        {% if content %}
+          {{ content }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+</div>

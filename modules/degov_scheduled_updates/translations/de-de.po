@@ -1,0 +1,368 @@
+# $Id$
+#
+# German translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  scheduled_publish.module: n/a
+#  scheduled_publish.info.yml: n/a
+#  src/Plugin/Field/FieldWidget/ScheduledPublishWidget.php: n/a
+#  src/Form/MultipleUpdatesForm.php: n/a
+#  scheduled_publish.links.task.yml: n/a
+#  scheduled_publish.routing.yml: n/a
+#  src/Plugin/Field/FieldType/ScheduledPublish.php: n/a
+#  config/optional/views.view.scheduled_publish.yml: n/a
+#  scheduled_publish.permissions.yml: n/a
+#  config/schema/scheduled_publish.schema.yml: n/a
+#  src/Plugin/Field/FieldFormatter/ScheduledPublishGenericFormatter.php: n/a
+#  src/Commands/ScheduledPublishCommands.php: n/a
+#  src/Controller/ScheduledPublishListing.php: n/a
+#  src/Form/DeleteUpdateForm.php: n/a
+#  src/Form/EditUpdateForm.php: n/a
+#  src/Service/ScheduledPublishCron.php: n/a
+#  config/optional/ultimate_cron.job.scheduled_publish_cron.yml: n/a
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2019-11-20 13:27+0100\n"
+"PO-Revision-Date: 2019-11-20 13:56+0100\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: German <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: de\n"
+"X-Generator: Poedit 2.2.4\n"
+
+#: scheduled_publish.module:24
+msgid "About"
+msgstr "Über"
+
+#: scheduled_publish.module:25 scheduled_publish.info.yml:0
+msgid "This module allows the user to create a scheduler for content moderation"
+msgstr "Dieses Modul erlaubt es Benutzer_innen, zeitgesteuerte Inhaltsmoderation durchzuführen"
+
+#: scheduled_publish.module:170
+msgid "- Any -"
+msgstr "- Alle -"
+
+#: scheduled_publish.info.yml:0
+#: src/Plugin/Field/FieldWidget/ScheduledPublishWidget.php:12
+msgid "Scheduled Publish"
+msgstr "Scheduled Publish"
+
+#: scheduled_publish.info.yml:0 src/Form/MultipleUpdatesForm.php:89
+msgid "Content"
+msgstr "Inhalt"
+
+#: scheduled_publish.links.task.yml:0 scheduled_publish.routing.yml:0
+#: src/Plugin/Field/FieldType/ScheduledPublish.php:11;11
+#: config/optional/views.view.scheduled_publish.yml:0;0
+msgid "Scheduled publish"
+msgstr "Scheduled publish"
+
+#: scheduled_publish.permissions.yml:0
+msgid "Access Scheduled Publish pages"
+msgstr "Auf Seiten für zeitgesteuerte Veröffentlichung zugreifen"
+
+#: scheduled_publish.routing.yml:0
+msgid "Add scheduled publish"
+msgstr "Zeitgesteuerte Veröffentlichung hinzufügen"
+
+#: scheduled_publish.routing.yml:0
+msgid "Edit scheduled publish"
+msgstr "Zeitgesteuerte Veröffentlichung bearbeiten"
+
+#: scheduled_publish.routing.yml:0
+msgid "Delete scheduled publish"
+msgstr "Zeitgesteuerte Veröffentlichung löschen"
+
+#: config/schema/scheduled_publish.schema.yml:0
+msgid "Datetime settings"
+msgstr "Datetime Einstellungen"
+
+#: config/schema/scheduled_publish.schema.yml:0
+msgid "Date type"
+msgstr "Datumstyp"
+
+#: config/schema/scheduled_publish.schema.yml:0;0
+msgid "Generic formatter"
+msgstr "Generischer Formater"
+
+#: config/schema/scheduled_publish.schema.yml:0
+#: src/Plugin/Field/FieldFormatter/ScheduledPublishGenericFormatter.php:106
+msgid "Text replace pattern"
+msgstr "Textmuster ersetzen"
+
+#: src/Commands/ScheduledPublishCommands.php:36
+msgid "Scheduled publish updates done."
+msgstr "Aktualisierungen zeitgesteuerter Veröffentlichungen erledigt."
+
+#: src/Controller/ScheduledPublishListing.php:28
+msgid "A scheduled publish field has to be added to a content type before this functionality can be used."
+msgstr "Ein Feld für zeitgesteuerte Veröffentlichungen muss einem Inhaltstypen hinzugefügt werden, bevor diese Funktionalität genutzt werden kann."
+
+#: src/Form/DeleteUpdateForm.php:67
+msgid "Are you sure you want to delete \"@state on @date\" status update for the \"@node\" node?"
+msgstr "Sind Sie sicher, dass sie das Statusupdate \"@state am @date\" für den Inhalt \"@node\" löschen wollen?"
+
+#: src/Form/DeleteUpdateForm.php:85 src/Form/EditUpdateForm.php:34
+msgid "A valid entity and field delta must be provided."
+msgstr "Eine gültige Entität und ein Feld-Delta müssen angegeben werden."
+
+#: src/Form/DeleteUpdateForm.php:96 src/Form/EditUpdateForm.php:45
+msgid "This status update does not exist."
+msgstr "Dieses Status-Update existiert nicht."
+
+#: src/Form/DeleteUpdateForm.php:103
+msgid "If this state deletion invalidates any existing transitions those will be deleted as well."
+msgstr "Falls das Löschen dieses Status existierende Statuswechsel ungültig macht, werden diese ebenfalls gelöscht."
+
+#: src/Form/DeleteUpdateForm.php:219
+msgid "Status update deleted."
+msgstr "Statuswechsel gelöscht."
+
+#: src/Form/EditUpdateForm.php:56
+msgid "Edit status update for the \"@node\" node"
+msgstr "Statuswechsel für Inhalt \"@node\" bearbeiten"
+
+#: src/Form/EditUpdateForm.php:59
+msgid "If this state change invalidates any existing transitions those will be deleted."
+msgstr "Falls das Ändern dieses Status existierende Statuswechsel ungültig macht, werden diese gelöscht."
+
+#: src/Form/EditUpdateForm.php:74 src/Form/MultipleUpdatesForm.php:170;294
+#: src/Plugin/Field/FieldWidget/ScheduledPublishWidget.php:95;251
+msgid "Moderation state"
+msgstr "Moderationsstatus"
+
+#: src/Form/EditUpdateForm.php:83 src/Form/MultipleUpdatesForm.php:176;301
+#: src/Plugin/Field/FieldWidget/ScheduledPublishWidget.php:101;258
+msgid "Scheduled date"
+msgstr "Geplanter Ausführungszeitpunkt"
+
+#: src/Form/EditUpdateForm.php:84 src/Form/MultipleUpdatesForm.php:177
+#: src/Plugin/Field/FieldWidget/ScheduledPublishWidget.php:102
+msgid "The datetime of the scheduled publish"
+msgstr "Der Zeitpunkt der Veröffentlichung"
+
+#: src/Form/EditUpdateForm.php:97 src/Form/MultipleUpdatesForm.php:201;314
+#: src/Plugin/Field/FieldWidget/ScheduledPublishWidget.php:271
+msgid "Save"
+msgstr "Speichern"
+
+#: src/Form/EditUpdateForm.php:115 src/Form/MultipleUpdatesForm.php:325;363
+#: src/Plugin/Field/FieldWidget/ScheduledPublishWidget.php:283;323
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: src/Form/EditUpdateForm.php:232
+msgid "Status update changed."
+msgstr "Statuswechsel aktualisiert."
+
+#: src/Form/MultipleUpdatesForm.php:46
+msgid "No content moderation workflows found."
+msgstr "Es wurden keine Workflows für die Inhaltsmoderation gefunden."
+
+#: src/Form/MultipleUpdatesForm.php:54
+msgid "Upon saving all existing scheduled publishing entries for the selected entities will be removed and new ones added.<br>The first entity is used to determine valid state changes. Invalid options for any following entities will not be saved."
+msgstr "Beim Speichern werden alle zeitgesteuerten Veröffentlichungen für die ausgewählten Inhalte durch die neuen Einträge ersetzt.<br>Der erste Inhalt wird herangezogen um gültige Statuswechsel zu bestimmen. Ungültige Wechsel werden für keinen der Inhalt gespeichert."
+
+#: src/Form/MultipleUpdatesForm.php:73
+msgid "Workflow"
+msgstr "Arbeitsablauf"
+
+#: src/Form/MultipleUpdatesForm.php:75
+msgid "Entities will be limited to the selected workflow."
+msgstr "Inhalte werden auf die ausgewählten Workflows beschränkt."
+
+#: src/Form/MultipleUpdatesForm.php:120
+msgid "Select content"
+msgstr "Inhalt auswählen"
+
+#: src/Form/MultipleUpdatesForm.php:132
+msgid "States"
+msgstr "Status"
+
+#: src/Form/MultipleUpdatesForm.php:139
+msgid "Add at least one entity to be able to add status updates."
+msgstr "Wählen Sie mindestens einen Inhalt aus, um Statuswechsel anlegen zu können."
+
+#: src/Form/MultipleUpdatesForm.php:184
+#: src/Plugin/Field/FieldWidget/ScheduledPublishWidget.php:109
+msgid "Add status update"
+msgstr "Statuswechsel hinzufügen"
+
+#: src/Form/MultipleUpdatesForm.php:262
+#: src/Plugin/Field/FieldWidget/ScheduledPublishWidget.php:215
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: src/Form/MultipleUpdatesForm.php:273;352
+#: src/Plugin/Field/FieldWidget/ScheduledPublishWidget.php:227;311
+msgid "Remove"
+msgstr "Entfernen"
+
+#: src/Form/MultipleUpdatesForm.php:342
+msgid "Are you sure you want to remove \"%shceduling_option\"?"
+msgstr "Sind Sie sicher, dass Sie \"%shceduling_option\" entfernen wollen?"
+
+#: src/Form/MultipleUpdatesForm.php:394;413
+#: src/Plugin/Field/FieldWidget/ScheduledPublishWidget.php:387;406
+msgid "All fields need to be filled"
+msgstr "Alle Felder müssen ausgefüllt werden"
+
+#: src/Form/MultipleUpdatesForm.php:615
+msgid "Nothing to update. Add at least one entity and state."
+msgstr "Nichts zu aktualisieren. Fügen Sie mindestens einen Inhalt und Ziel-Status hinzu."
+
+#: src/Form/MultipleUpdatesForm.php:666
+msgid "No entities were updated as there were no valid state changes for any of them."
+msgstr "Keine Inhalte wurden aktualisiert, da keine gültigen Statuswechsel vorlagen."
+
+#: src/Form/MultipleUpdatesForm.php:673
+msgid "Added scheduled publishing entries for the following entities:"
+msgstr "Zeitgesteuerte Veröffentlichungen für die folgenden Inhalte hinzugefügt:"
+
+#: src/Plugin/Field/FieldFormatter/ScheduledPublishGenericFormatter.php:100
+msgid "Date format"
+msgstr "Datumsformat"
+
+#: src/Plugin/Field/FieldFormatter/ScheduledPublishGenericFormatter.php:118
+msgid "Displays date in a custom format"
+msgstr ""
+
+#: src/Plugin/Field/FieldFormatter/ScheduledPublishGenericFormatter.php:18
+msgid "Scheduled publish generic formatter"
+msgstr ""
+
+#: src/Plugin/Field/FieldType/ScheduledPublish.php:44
+msgid "Date value"
+msgstr "Datumswert"
+
+#: src/Plugin/Field/FieldType/ScheduledPublish.php:48
+msgid "Computed date"
+msgstr "Errechnetes Datum"
+
+#: src/Plugin/Field/FieldType/ScheduledPublish.php:49
+msgid "The computed DateTime object."
+msgstr "Das errechnete Datetime-Objekt."
+
+#: src/Plugin/Field/FieldType/ScheduledPublish.php:55
+msgid "The moderation state."
+msgstr "Der Moderationsstatus."
+
+#: src/Plugin/Field/FieldWidget/ScheduledPublishWidget.php:56
+msgid "Scheduled moderation"
+msgstr "Zeitgesteuerte Veröffentlichung"
+
+#: src/Plugin/Field/FieldWidget/ScheduledPublishWidget.php:57
+msgid "Scheduled change of the moderation state e.g (draft => published)"
+msgstr "Zeitgesteuerter Wechsel des Moderationsstatus, z.B. Entwurf => Veröffentlicht"
+
+#: src/Plugin/Field/FieldWidget/ScheduledPublishWidget.php:301
+msgid "Are you sure you want to remove \"%scheduling_option\"?"
+msgstr "Sind Sie sicher, dass Sie \"%scheduling_option\" entfernen wollen?"
+
+#: src/Service/ScheduledPublishCron.php:223
+msgid "The moderation state of @entity was changed from @orig_status to @current_status"
+msgstr "Der Moderationsstatus von @entity wurde geändert von @orig_status auf @current_status"
+
+#: config/optional/ultimate_cron.job.scheduled_publish_cron.yml:0
+msgid "Default cron handler"
+msgstr "Standardverarbeitungsroutine für Cron"
+
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "Master"
+msgstr "Master"
+
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "Apply"
+msgstr "Anwenden"
+
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "Sort by"
+msgstr "Sortieren nach"
+
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "Asc"
+msgstr "Aufsteigend"
+
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "Desc"
+msgstr "Absteigend"
+
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "‹‹"
+msgstr "‹‹"
+
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "››"
+msgstr "››"
+
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "Items per page"
+msgstr "Elemente pro Seite"
+
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "- All -"
+msgstr "- Alle -"
+
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "Offset"
+msgstr "Versatz"
+
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "« First"
+msgstr "« Anfang"
+
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "Last »"
+msgstr "Ende »"
+
+#: config/optional/views.view.scheduled_publish.yml:0;0;0;0
+msgid ", "
+msgstr ", "
+
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "1"
+msgid_plural "@count"
+msgstr[0] "1"
+msgstr[1] "@count"
+
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "Global: Custom text (edit link)"
+msgstr ""
+
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "Global: Custom text (delete link)"
+msgstr ""
+
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "Delete"
+msgstr "Löschen"
+
+#: config/optional/views.view.scheduled_publish.yml:0;0
+msgid "Title"
+msgstr "Titel"
+
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "Execution time"
+msgstr "Ausführungszeitpunkt"
+
+#: config/optional/views.view.scheduled_publish.yml:0;0
+msgid "Future moderation state"
+msgstr "Zukünftiger Moderationsstatus"
+
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "Operations"
+msgstr "Aktionen"
+
+#: config/optional/views.view.scheduled_publish.yml:0
+msgid "Block"
+msgstr "Block"

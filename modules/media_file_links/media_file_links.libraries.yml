@@ -1,0 +1,5 @@
+fontawesome:
+  css:
+    component:
+      libraries/fontawesome-free-5.7.2-web/css/all.css:
+        minified: true

@@ -1,0 +1,8 @@
+name: 'deGov - HTML Mail'
+description: 'Common configuration for html emails.'
+package: deGov
+type: module
+core: 8.x
+dependencies:
+  - swiftmailer
+  - mailsystem

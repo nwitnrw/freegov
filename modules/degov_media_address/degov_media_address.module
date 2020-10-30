@@ -1,0 +1,143 @@
+<?php
+
+/**
+ * @file
+ * Drupal hooks implementations for the degov_media_address module.
+ */
+
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\media\MediaInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function degov_media_address_theme($existing, $type, $theme, $path) {
+  return [
+    'media__address__default' => [
+      'template' => 'media--address--default',
+      'base hook' => 'media',
+    ],
+    'media__address__default_map' => [
+      'template' => 'media--address--default_map',
+      'base hook' => 'media',
+    ],
+    'media__address__embedded' => [
+      'template' => 'media--address--embedded',
+      'base hook' => 'media',
+    ],
+    'media__address__osm_map' => [
+      'template' => 'media--address--osm_map',
+      'base hook' => 'media',
+    ],
+    'media__address__preview' => [
+      'template' => 'media--address--preview',
+      'base hook' => 'media',
+    ],
+    'media__address__search' => [
+      'template' => 'media--address--search',
+      'base hook' => 'media',
+    ],
+    'media__address__usage' => [
+      'template' => 'media--address--usage',
+      'base hook' => 'media',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for media templates.
+ */
+function degov_media_address_preprocess_media(&$variables) {
+  if (isset($variables['view_mode']) && $variables['view_mode'] === 'default_map') {
+    $variables['#attached']['library'][] = 'degov_media_address/address_popup';
+  }
+}
+
+/**
+ * Convert a set of address entity fields into js settings.
+ *
+ * @param \Drupal\media\MediaInterface $entity
+ *
+ * @return array
+ */
+function degov_media_address_get_js_fields(MediaInterface $entity) {
+  $js_settings = [
+    'title' => $entity->getName(),
+  ];
+  $data = $entity->toArray();
+  $media_entity_address_fields = [
+    // js-setting, field-name, value.
+    ['organization', 'field_address_address', 'organization'],
+    ['address_line1', 'field_address_address', 'address_line1'],
+    ['address_line2', 'field_address_address', 'address_line2'],
+    ['postal_code', 'field_address_address', 'postal_code'],
+    ['locality', 'field_address_address', 'locality'],
+    ['phone_number', 'field_address_phone', 'value'],
+    ['fax_number', 'field_address_fax', 'value'],
+    ['email', 'field_address_email', 'value'],
+    ['link_uri', 'field_address_link', 'uri'],
+    ['link_title', 'field_address_link', 'title'],
+  ];
+  foreach ($media_entity_address_fields as $x) {
+    if (!empty($data[$x[1]]['0'][$x[2]]) && trim($data[$x[1]]['0'][$x[2]])) {
+      $js_settings += [
+        $x[0] => $data[$x[1]]['0'][$x[2]],
+      ];
+    }
+  }
+
+  return $js_settings;
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function degov_media_address_preprocess_paragraph__map(&$variables) {
+  // Pass map arguments for the rendered map through javascript.
+  /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
+  $paragraph = $variables['paragraph'];
+  $hasMap = $paragraph->hasField('field_map_address_reference') && !$paragraph->get('field_map_address_reference')->isEmpty();
+  if ($hasMap) {
+    /** @var $address_reference \Drupal\media\Entity\Media */
+    $address_reference = $paragraph->get('field_map_address_reference')->entity;
+    if (!empty($address_reference)) {
+      /** @var $location \Drupal\Core\Field\FieldItemList */
+      $location = $address_reference->get('field_address_location');
+      if (!$location->isEmpty()) {
+        $elements_cache = &$variables['elements']['#cache'];
+        $elements_cache['contexts'] = Cache::mergeContexts($elements_cache['contexts'], ['url.path']);
+        $cache_tags = $paragraph->getCacheTags();
+        $cache_tags[] = $paragraph->getEntityTypeId() . '_view';
+        $elements_cache['tags'] = Cache::mergeTags($elements_cache['tags'], $cache_tags);
+        $parentEntity = $paragraph->getParentEntity();
+        if ($parentEntity && $parentEntity instanceof ContentEntityInterface) {
+          $cache_tags = $parentEntity->getCacheTags();
+          $cache_tags[] = $parentEntity->getEntityTypeId() . '_view';
+          $elements_cache['tags'] = Cache::mergeTags($elements_cache['tags'], $cache_tags);
+        }
+        if (empty($variables['#cache']['tags'])) {
+          $variables['#cache']['tags'] = [];
+        }
+        $variables['#cache']['tags'] = Cache::mergeTags($variables['#cache']['tags'], $elements_cache['tags']);
+        $field_render = &$variables['content']['field_map_address_reference'];
+
+        // Override map rendering based on view mode selection.
+        if (!empty($field_render[0]['#view_mode'])
+          && !$paragraph->get('field_map_address_view_mode')
+            ->isEmpty()
+        ) {
+          $field_render['#cache']['tags'] = Cache::mergeTags($field_render['#cache']['tags'], $elements_cache['tags']);
+          $address_render = &$field_render[0];
+          $view_mode = $paragraph->field_map_address_view_mode->value;
+          $address_render['#view_mode'] = $view_mode;
+          $address_render['#cache']['contexts'] = Cache::mergeContexts($address_render['#cache']['contexts'], ['url.path']);
+          // Override cache keys. Default is entity_view:media:ID:default_map.
+          // Could be the same address but different map-ids, view modes and paragraphs (settings).
+          $address_render['#cache']['keys'] = ['entity_view', 'paragraph', $paragraph->id(), $view_mode];
+          $address_render['#cache']['tags'] = Cache::mergeTags($address_render['#cache']['tags'], $elements_cache['tags']);
+        }
+      }
+    }
+  }
+}

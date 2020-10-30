@@ -1,0 +1,97 @@
+<?php
+
+/**
+ * @file
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\degov_common\Common;
+use Drupal\node\Entity\Node;
+
+/**
+ * Implements hook_modules_installed().
+ */
+function degov_taxonomies_modules_installed($modules) {
+  // Check if we have a config to be installed for the module.
+  if (in_array('degov_node_blog', $modules)) {
+    \Drupal::service('degov_config.module_updater')->onModuleInstalled('degov_taxonomies', 'degov_node_blog');
+  }
+  if (in_array('degov_node_event', $modules)) {
+    \Drupal::service('degov_config.module_updater')->onModuleInstalled('degov_taxonomies', 'degov_node_event');
+  }
+  if (in_array('degov_node_normal_page', $modules)) {
+    \Drupal::service('degov_config.module_updater')->onModuleInstalled('degov_taxonomies', 'degov_node_normal_page');
+  }
+  if (in_array('degov_node_press', $modules)) {
+    \Drupal::service('degov_config.module_updater')->onModuleInstalled('degov_taxonomies', 'degov_node_press');
+  }
+  if (in_array('degov_media_facts', $modules)) {
+    \Drupal::service('degov_config.module_updater')->onModuleInstalled('degov_taxonomies', 'degov_media_facts');
+  }
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+function degov_taxonomies_preprocess(&$variables, $hook, &$info) {
+  // Add template suggestions for blog.
+  Common::addThemeSuggestions($variables, $hook, $info, [
+    'module_name' => 'degov_taxonomies',
+    'entity_type' => 'node',
+    'entity_bundles' => ['blog'],
+    'entity_view_modes' => ['teaser']
+  ]);
+  // Add template suggestions for event.
+  Common::addThemeSuggestions($variables, $hook, $info, [
+    'module_name' => 'degov_taxonomies',
+    'entity_type' => 'node',
+    'entity_bundles' => ['event'],
+    'entity_view_modes' => ['long_text', 'preview', 'slim', 'small_image', 'teaser']
+  ]);
+  // Add template suggestions for blog.
+  Common::addThemeSuggestions($variables, $hook, $info, [
+    'module_name' => 'degov_taxonomies',
+    'entity_type' => 'node',
+    'entity_bundles' => ['normal_page'],
+    'entity_view_modes' => ['long_text', 'preview', 'slim', 'small_image', 'teaser']
+  ]);
+  // Add template suggestions for press.
+  Common::addThemeSuggestions($variables, $hook, $info, [
+    'module_name' => 'degov_taxonomies',
+    'entity_type' => 'node',
+    'entity_bundles' => ['press'],
+    'entity_view_modes' => ['long_text', 'preview', 'slim', 'small_image', 'teaser']
+  ]);
+  // Add template suggestions for press.
+  Common::addThemeSuggestions($variables, $hook, $info, [
+    'module_name' => 'degov_taxonomies',
+    'entity_type' => 'media',
+    'entity_bundles' => ['facts'],
+    'entity_view_modes' => ['usage', 'preview', 'search', 'embedded']
+  ]);
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function degov_taxonomies_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (!empty($form['field_content_type'])) {
+    if (empty($form['field_content_type']['widget']['#default_value']) || !is_numeric($form['field_content_type']['widget']['#default_value'][0])) {
+      $content_type_name = '';
+      $build_info = $form_state->getBuildInfo();
+      if (!empty($build_info['callback_object'])) {
+        /** @var \Drupal\node\NodeForm $callback_object */
+        $callback_object = $build_info['callback_object'];
+        $node = $callback_object->getEntity();
+        if ($node instanceof Node) {
+          $content_type_name = $node->type->entity->label();
+        }
+      }
+
+      $key = array_search($content_type_name, $form['field_content_type']['widget']['#options']);
+      if ($key) {
+        $form['field_content_type']['widget']['#default_value'] = [0 => $key];
+      }
+    }
+  }
+}

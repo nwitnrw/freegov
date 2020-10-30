@@ -1,0 +1,5 @@
+services:
+  degov_media_usage_node.persistance:
+    class: Drupal\degov_media_usage_node\Service\NodePersistance
+    parent: degov_media_usage.persistance
+    arguments: ['degov_media_usage_node']

@@ -1,0 +1,184 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_media_usage module.
+ */
+
+use Drupal\language\Config\LanguageConfigOverride;
+
+function degov_media_usage_schema() {
+  $schema['degov_media_usage'] = [
+    'description' => 'Stores information about media entity usage',
+    'fields' => [
+      'mid' => [
+        'description' => 'Media entity ID',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'entity_type' => [
+        'description' => 'Referencing entity type',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+      ],
+      'bundle_name' => [
+        'description' => 'Referencing entity bundle name',
+        'type' => 'varchar_ascii',
+        'length' => 32,
+        'not null' => TRUE,
+      ],
+      'eid' => [
+        'description' => 'Referencing entity ID',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'langcode' => [
+        'description' => 'Referencing entity language',
+        'type' => 'varchar_ascii',
+        'length' => 12,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'submodule' => [
+        'description' => 'Submodule that inserted record',
+        'type' => 'varchar_ascii',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+    ],
+    'indexes' => [
+      'media' => ['mid'],
+      'referer' => ['eid'],
+      'entity_type' => ['entity_type'],
+      'bundle_name' => ['bundle_name'],
+      'submodule' => ['submodule'],
+    ],
+    'unique keys' => [
+      'media_reference' => [
+        'mid',
+        'entity_type',
+        'bundle_name',
+        'eid',
+        'langcode',
+        'submodule',
+      ],
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ */
+function degov_media_usage_install() {
+  _install_media_overview_field();
+  _install_file_overview_field();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_media_usage_uninstall() {
+  // Remove fields from views.
+  _remove_media_overview_field();
+  _remove_file_overview_field();
+
+  \Drupal::database()->schema()->dropTable('degov_media_usage');
+}
+
+function _install_media_overview_field() {
+  $mediaView = \Drupal::configFactory()->getEditable('views.view.media');
+  $base = 'display.media_page_list.display_options.fields';
+
+  // Remove operations field temporary.
+  $operations = $mediaView->get($base . '.operations');
+  $mediaView->clear($base . '.operations');
+
+  // Add media_usage field.
+  $mediaView->set($base . '.media_usage.id', 'media_usage');
+  $mediaView->set($base . '.media_usage.table', 'media');
+  $mediaView->set($base . '.media_usage.field', 'media_usage');
+  $mediaView->set($base . '.media_usage.plugin_id', 'media_usage');
+  $mediaView->set($base . '.media_usage.label', 'Used in');
+  $mediaView->set($base . '.media_usage.entity_type', 'media');
+  $mediaView->set($base . '.media_usage.element_label_colon', FALSE);
+  $mediaView->set($base . '.media_usage.empty', '-');
+  $mediaView->set($base . '.media_usage.empty_zero', TRUE);
+
+  // Readd operations field to be at the last position.
+  $mediaView->set($base . '.operations', $operations);
+
+  $mediaView->save(TRUE);
+
+  $configTranslation = \Drupal::languageManager()->getLanguageConfigOverride('de', 'views.view.media');
+  if ($configTranslation instanceof LanguageConfigOverride) {
+    $configTranslation->set($base . '.media_usage.label', 'Verwendet in');
+    $configTranslation->save(TRUE);
+  }
+}
+
+function _remove_media_overview_field() {
+  $mediaView = \Drupal::configFactory()->getEditable('views.view.media');
+  $base = 'display.media_page_list.display_options.fields';
+
+  $fields = $mediaView->get($base);
+  if (array_key_exists('media_usage', $fields)) {
+    $mediaView->clear($base . '.media_usage');
+  }
+
+  $mediaView->save(TRUE);
+}
+
+function _install_file_overview_field() {
+  $fileView = \Drupal::configFactory()->getEditable('views.view.files');
+  $base = 'display.page_1.display_options.fields';
+
+  // Hide current 'count' field.
+  $fileView->set($base . '.count.exclude', TRUE);
+
+  // Remove dropbutton field temporary.
+  $operations = $fileView->get($base . '.dropbutton');
+  $fileView->clear($base . '.dropbutton');
+
+  // Add file_usage field.
+  $fileView->set($base . '.file_usage.id', 'file_usage');
+  $fileView->set($base . '.file_usage.table', 'views');
+  $fileView->set($base . '.file_usage.field', 'file_usage');
+  $fileView->set($base . '.file_usage.plugin_id', 'file_usage');
+  $fileView->set($base . '.file_usage.label', 'Used in');
+  $fileView->set($base . '.file_usage.element_label_colon', FALSE);
+  $fileView->set($base . '.file_usage.empty', '-');
+  $fileView->set($base . '.file_usage.empty_zero', TRUE);
+
+  // Readd dropbutton field to be at the last position.
+  $fileView->set($base . '.dropbutton', $operations);
+
+  $fileView->save(TRUE);
+
+  $configTranslation = \Drupal::languageManager()->getLanguageConfigOverride('de', 'views.view.files');
+  if ($configTranslation instanceof LanguageConfigOverride) {
+    $configTranslation->set($base . '.file_usage.label', 'Verwendet in');
+    $configTranslation->save(TRUE);
+  }
+}
+
+function _remove_file_overview_field() {
+  $fileView = \Drupal::configFactory()->getEditable('views.view.files');
+  $base = 'display.page_1.display_options.fields';
+
+  // Show 'count' field.
+  $fileView->set($base . '.count.exclude', FALSE);
+
+  // Remove column in file overview view.
+  $fields = $fileView->get($base);
+  if (array_key_exists('file_usage', $fields)) {
+    $fileView->clear($base . '.file_usage');
+  }
+
+  $fileView->save(TRUE);
+}

@@ -1,0 +1,12 @@
+dependencies:
+  config:
+    - field.field.media.image.field_royalty_free
+content:
+  field_copyright:
+    type: entity_reference_label
+    weight: 2
+    region: content
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }

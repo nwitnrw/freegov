@@ -1,0 +1,22 @@
+langcode: de
+status: false
+dependencies:
+  config:
+    - facets.facet.content_bundles
+  module:
+    - facets
+  theme:
+    - nrw_base_theme
+id: content_bundles
+theme: nrw_base_theme
+region: sidebar_first
+weight: -7
+provider: null
+plugin: 'facet_block:content_bundles'
+settings:
+  id: 'facet_block:content_bundles'
+  label: Inhaltstyp
+  provider: facets
+  label_display: visible
+  block_id: content_bundles
+visibility: {  }

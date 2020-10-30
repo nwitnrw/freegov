@@ -1,0 +1,36 @@
+dependencies:
+  config:
+    - field.field.node.press.field_teaser_sub_title
+    - field.field.node.press.field_teaser_title
+content:
+  field_press_date:
+    settings:
+      format_type: date_medium
+  field_teaser_sub_title:
+    type: string
+    weight: 3
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_teaser_text:
+    type: text_default
+    weight: 4
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_teaser_title:
+    type: string
+    weight: 2
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  shariff_field:
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }

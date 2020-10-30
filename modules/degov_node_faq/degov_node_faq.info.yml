@@ -1,0 +1,19 @@
+name: 'deGov - FAQ'
+description: 'This content type is used for FAQs.'
+package: deGov
+type: module
+core: 8.x
+dependencies:
+  - degov_content_types_shared_fields
+  - degov_paragraph_faq
+  - entity_reference_revisions
+  - degov_taxonomy_term_section
+  - field
+  - language
+  - menu_ui
+  - node
+  - paragraphs
+  - path
+  - user
+  - views
+  - degov_metatags

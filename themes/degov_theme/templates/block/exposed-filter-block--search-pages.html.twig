@@ -1,0 +1,31 @@
+{#
+/**
+ * @file
+ * This file is include for
+ * block--views-exposed-filter-block--search-content-page-1.html.twig.
+ */
+#}
+
+{%
+  set classes = [
+  'block',
+  'block-' ~ configuration.provider|clean_class,
+  'block-' ~ plugin_id|clean_class,
+  'container',
+  'block-full-text-search-page',
+]
+%}
+
+<div{{ attributes.addClass(classes) }}>
+  {{ title_prefix }}
+  <div class="paragraph__header skin--font-secondary mb-5">
+    <h2{{ title_attributes }}>{{ pageTitle }}</h2>
+    <h3 class="sub-title"}> {{ pageSubTitle }}</h3>
+    <div class="under-teasers-header-line mt-4"></div>
+  </div>
+  {{ title_suffix }}
+
+  {% block content %}
+    {{ content }}
+  {% endblock %}
+</div>

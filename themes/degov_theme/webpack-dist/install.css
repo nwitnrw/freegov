@@ -1,0 +1,64 @@
+.install-page {
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover; }
+
+.layout-container {
+  background-color: rgba(255, 255, 255, 0.975); }
+
+.page-title {
+  display: block; }
+  .page-title img {
+    height: auto;
+    width: 35%; }
+  .page-title .site-version {
+    color: #154575; }
+
+/* Forms */
+.form-required::after {
+  content: "*";
+  color: #dc3545;
+  margin-left: 0.5em; }
+
+fieldset legend {
+  font-weight: bold;
+  padding: 0; }
+
+fieldset .fieldset-wrapper {
+  padding: 0 0 0 4px; }
+
+[class*='form-type-radio'] label, [class*='form-type-checkbox'] label {
+  display: inline;
+  font-weight: normal; }
+
+.form-item > label {
+  text-transform: uppercase; }
+
+details {
+  border: 1px solid #cccccc;
+  margin: 1ch 0;
+  padding: 0 1em; }
+  details [role="button"] {
+    cursor: pointer;
+    padding-left: 0;
+    padding-right: 0; }
+
+input[type="submit"] {
+  background-color: #154575;
+  background-image: none;
+  border-radius: 0;
+  color: #ffffff;
+  padding: 1ch 1em;
+  text-shadow: none; }
+  input[type="submit"], input[type="submit"]:hover, input[type="submit"]:active, input[type="submit"]:focus {
+    background-image: none;
+    border-color: #154575; }
+  input[type="submit"]:hover, input[type="submit"]:focus {
+    background-color: #2578cb;
+    box-shadow: 0 2px 4px rgba(204, 204, 204, 0.5); }
+  input[type="submit"]:active {
+    background-color: #19528b;
+    box-shadow: 0 0 2px rgba(204, 204, 204, 0.75); }
+
+
+/*# sourceMappingURL=install.css.map*/

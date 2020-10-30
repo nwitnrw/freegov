@@ -1,0 +1,17 @@
+uuid: ee469984-a8fb-4a70-b6e8-2033f1f83648
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.9_to_3
+  module:
+    - crop
+name: crop_9_to_3
+label: 'Cropped: 9 zu 3'
+effects:
+  21eb5793-6524-44e3-92d5-f70e2a8075d3:
+    uuid: 21eb5793-6524-44e3-92d5-f70e2a8075d3
+    id: crop_crop
+    weight: null
+    data:
+      crop_type: 9_to_3

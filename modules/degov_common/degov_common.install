@@ -1,0 +1,332 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_common module.
+ */
+
+use Drupal\user\UserInterface;
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Implements hook_install().
+ */
+function degov_common_install():void {
+  // Set the admin theme.
+  \Drupal::configFactory()
+    ->getEditable('system.theme')
+    ->set('admin', 'seven')
+    ->save();
+
+  // Enable the admin theme.
+  \Drupal::configFactory()
+    ->getEditable('node.settings')
+    ->set('use_admin_theme', TRUE)
+    ->save(TRUE);
+
+  // Restrict user registration to admin role creation.
+  \Drupal::configFactory()
+    ->getEditable('user.settings')
+    ->set('register', UserInterface::REGISTER_ADMINISTRATORS_ONLY)
+    ->save(TRUE);
+
+  // We do not want that the degov profile depends on degov_common, therefore we
+  // import the translations here.
+  /** @var \Drupal\degov_common\TranslationImport $translation_import */
+  $translation_import = \Drupal::service('degov_common.translation_import');
+  $translation_import->import('degov', 'profile');
+
+  // Set the first day of the week to Monday.
+  \Drupal::configFactory()->getEditable('system.date')->set('first_day', 1)->save();
+
+  // Disable Webform CDN and SPAM protection warnings in the status overview page.
+  if (\Drupal::moduleHandler()->moduleExists('webform')) {
+    \Drupal::configFactory()->getEditable('webform.settings')
+      ->set('requirements.cdn', FALSE)
+      ->set('requirements.bootstrap', FALSE)
+      ->set('requirements.spam', FALSE)
+      ->save(TRUE);
+  }
+}
+
+/**
+ * Implement hook_uninstall().
+ */
+function degov_common_uninstall():void {
+  \Drupal::configFactory()
+    ->getEditable('degov_common.default_settings')
+    ->delete();
+}
+
+/**
+ * Implements hook_update_dependencies().
+ */
+function degov_common_update_dependencies(): array {
+  $dependencies['degov'][8450] = [
+    'degov_common' => 8032,
+  ];
+
+  return $dependencies;
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function degov_common_requirements(string $phase): array {
+  $requirements = [];
+
+  if (\Drupal::moduleHandler()->moduleExists('workbench_access') || \Drupal::moduleHandler()->moduleExists('degov_workbench_access')) {
+    $requirements['degov_integrity_access_modules_issue_1'] = [
+      'title'       => t('Content access issue'),
+      'description' => t("The Workbench Access module is being used in this Drupal instance. It's discouraged to use the Workbench Access module. The preferred module is Permissions by Term. Uninstall the Workbench Access and deGov Workbench Access modules. Add your settings into the Permissions by Term configuration."),
+      'severity'    => REQUIREMENT_ERROR,
+      'value'       => t('Usage of module without a stable release, which is deprecated in deGov'),
+    ];
+
+    if (\Drupal::moduleHandler()->moduleExists('permissions_by_term')) {
+      $requirements['degov_integrity_access_modules_issue_2'] = [
+        'title'       => t('Content access issue'),
+        'description' => t("The Workbench Access module AND the Permissions by Term module are installed. They do pretty much the same thing and can interfere. It's recommended to use the Permissions by Term module only."),
+        'severity'    => REQUIREMENT_ERROR,
+        'value'       => t('Duplication of content access modules'),
+      ];
+    }
+  }
+  return $requirements;
+}
+
+function degov_common_update_8016() {
+  $query = \Drupal::database()->delete('key_value');
+  $query->condition('collection', 'system.schema');
+  $query->condition('name', 'degov_paragraph_webformular');
+  $query->execute();
+
+  \Drupal::configFactory()->getEditable('core.entity_form_display.paragraph.webformular.default')->delete();
+  \Drupal::configFactory()->getEditable('core.entity_view_display.paragraph.webformular.default')->delete();
+  \Drupal::configFactory()->getEditable('core.entity_view_display.paragraph.webformular.preview')->delete();
+  \Drupal::configFactory()->getEditable('field.field.paragraph.webformular.field_sub_title')->delete();
+  \Drupal::configFactory()->getEditable('field.field.paragraph.webformular.field_title')->delete();
+  \Drupal::configFactory()->getEditable('field.field.paragraph.webformular.field_webform_form')->delete();
+  \Drupal::configFactory()->getEditable('paragraphs.paragraphs_type.webformular')->delete();
+  \Drupal::configFactory()->getEditable('paragraphs.paragraphs_type.webform')->delete();
+  \Drupal::configFactory()->getEditable('paragraphs.paragraphs_type.webform_form')->delete();
+  \Drupal::configFactory()->getEditable('field.storage.paragraph.field_webform_form')->delete();
+
+  \Drupal::service('module_installer')->install(['degov_paragraph_webform']);
+}
+
+/**
+ * Added default URL settings for configuration
+ */
+function degov_common_update_8017() {
+  \Drupal::configFactory()->getEditable('degov_common.default_settings')
+    ->set('netiquette_url', '/netiquette')
+    ->set('privacy_url', '/datenschutzhinweise')
+    ->save();
+}
+
+/**
+ * Installs the degov_theming module for decoupling degov_common modules theming functionality.
+ */
+function degov_common_update_8018() {
+  \Drupal::service('module_installer')->install(['degov_theming']);
+}
+
+/**
+ * Installs the config_replace module as a replacement for config_rewrite. Mainly because config_replace does not apply config rewrites for not existing original config and config_rewrite is unmaintained since a long time. config_replace will be removed from composer.json at 27.08.2018.
+ */
+function degov_common_update_8020() {
+  /**
+   * @var Drupal\Core\Extension\ModuleInstaller $moduleInstaller
+   */
+  $moduleInstaller = \Drupal::service('module_installer');
+  $moduleInstaller->uninstall(['config_rewrite']);
+  $moduleInstaller->install(['config_replace']);
+}
+
+/**
+ * Remove entity_reference_integrity module
+ */
+function degov_common_update_8021() {
+  \Drupal::service('module_installer')->uninstall(['entity_reference_integrity']);
+}
+
+/**
+ * Remove lightning_workflow module
+ */
+function degov_common_update_8023() {
+  \Drupal::service('module_installer')->uninstall(['lightning_workflow']);
+}
+
+/**
+ * Remove workbench moderation keys form configuration
+ */
+function degov_common_update_8026() {
+  // Remove workbench_moderation dependency from configuration.
+  $mediaBundleInfo = \Drupal::service('entity_type.bundle.info')
+    ->getBundleInfo('media');
+  $nodeBundleInfo = \Drupal::service('entity_type.bundle.info')
+    ->getBundleInfo('node');
+  $paragraphBundleInfo = \Drupal::service('entity_type.bundle.info')
+    ->getBundleInfo('paragraph');
+
+  $types['media'] = array_keys($mediaBundleInfo);
+  $types['node'] = array_keys($nodeBundleInfo);
+  $types['paragraph'] = array_keys($paragraphBundleInfo);
+
+  /** @var \Drupal\degov_common\Entity\ConfigRemover $configRemover */
+  $configRemover = \Drupal::service('degov_common.config_remover');
+
+  $viewModes = \Drupal::entityQuery('entity_view_display')->execute();
+  $formModes = \Drupal::entityQuery('entity_form_display')->execute();
+
+  // Remove dependency from content type view modes.
+  foreach ($viewModes as $viewMode) {
+    $configRemover->removeListItemFromConfiguration('core.entity_view_display.' . $viewMode, 'dependencies.module', 'workbench_moderation');
+  }
+  // Remove dependency from form modes.
+  foreach ($formModes as $formMode) {
+    $configRemover->removeListItemFromConfiguration('core.entity_form_display.' . $formMode, 'dependencies.module', 'workbench_moderation');
+  }
+  // Remove 3. party settings.
+  foreach (['media', 'node', 'paragraph'] as $type) {
+    foreach ($types[$type] as $nodeType) {
+      $configRemover->removeListItemFromConfiguration($type . '.type.' . $nodeType, 'dependencies.module', 'workbench_moderation');
+      $configRemover->removeValueFromConfiguration($type . '.type.' . $nodeType, 'third_party_settings', 'workbench_moderation');
+    }
+  }
+  // Disable workbench_moderation.
+  \Drupal::service('module_installer')->uninstall(['workbench_moderation']);
+  \Drupal::service('module_installer')->install(['content_moderation', 'workflows', 'degov_users_roles']);
+
+}
+
+/**
+ * Updated media browser view
+ */
+function degov_common_update_8028() {
+  $replace = Yaml::parse(file_get_contents(drupal_get_path('module', 'degov_common') . '/config/rewrite/views.view.media' . '.yml'));
+  \Drupal::configFactory()
+    ->getEditable('views.view.media')
+    ->setData($replace)
+    ->save(TRUE);
+}
+
+/**
+ * Updated latest media browser view
+ */
+function degov_common_update_8030() {
+  /**
+   * @var $moduleUpdater \Drupal\degov_common\DegovModuleUpdater
+   */
+  $moduleUpdater = \Drupal::service('degov_config.module_updater');
+  $moduleUpdater->reImport('views.view.latest_media', 'degov_content_types_shared_fields', 'install');
+}
+
+/**
+ * Updated media browser view
+ */
+function degov_common_update_8031() {
+  /**
+   * @var $moduleUpdater \Drupal\degov_common\DegovModuleUpdater
+   */
+  $moduleUpdater = \Drupal::service('degov_config.module_updater');
+  $moduleUpdater->reImport('views.view.media', 'degov_common', 'rewrite');
+}
+
+/**
+ * Install node overrides module
+ */
+function degov_common_update_8032() {
+  if (!\Drupal::moduleHandler()->moduleExists('degov_node_overrides')) {
+    \Drupal::service('module_installer')->install(['degov_node_overrides']);
+  }
+}
+
+/**
+ * Disable Webform CDN and SPAM protection warnings in the status overview page.
+ */
+function degov_common_update_862000() {
+  if (\Drupal::moduleHandler()->moduleExists('webform')) {
+    \Drupal::configFactory()->getEditable('webform.settings')
+      ->set('requirements.cdn', FALSE)
+      ->set('requirements.bootstrap', FALSE)
+      ->set('requirements.spam', FALSE)
+      ->save(TRUE);
+  }
+}
+
+/**
+ * Replace the CKEditor entity browser settings with the default media browser.
+ */
+function degov_common_update_862001() {
+  $mediaBrowserConfig = \Drupal::config('entity_browser.browser.media_browser')->getRawData();
+  $mediaBrowserCkeditorConfig = \Drupal::configFactory()->getEditable('entity_browser.browser.ckeditor_media_browser');
+  if (!$mediaBrowserCkeditorConfig->isNew()) {
+    // Override individual settings for the CKEditor entity browser.
+    unset($mediaBrowserConfig['langcode'], $mediaBrowserConfig['_core']);
+    $mediaBrowserCkeditorConfig->setData($mediaBrowserConfig);
+    $mediaBrowserCkeditorConfig->set('name', 'ckeditor_media_browser');
+    $mediaBrowserCkeditorConfig->set('label', 'CKEditor Media Browser');
+    $mediaBrowserCkeditorConfig->set('display', 'iframe');
+    $mediaBrowserCkeditorConfig->set('display_configuration.auto_open', TRUE);
+    $mediaBrowserCkeditorConfig->set('display_configuration.width', '100%')->save();
+    $mediaBrowserCkeditorConfig->set('display_configuration.height', '640')->save();
+    $mediaBrowserCkeditorConfig->save(TRUE);
+  }
+}
+
+/**
+ * Update translations.
+ */
+function degov_common_update_860100() {
+  /** @var \Drupal\degov_common\TranslationImport $translation_import */
+  $translation_import = \Drupal::service('degov_common.translation_import');
+  $translation_import->import('degov', 'profile');
+}
+
+/**
+ * Replace the filter bundle with entity_browser_bundle in view media.
+ */
+function degov_common_update_880100() {
+  $configFS = Yaml::parseFile(drupal_get_path('module', 'degov_common') . '/config/rewrite/views.view.media.yml');
+  $configDB = \Drupal::configFactory()->getEditable('views.view.media');
+  $dependenciesConfig = $configDB->get('dependencies.config');
+  foreach ($dependenciesConfig as $key => $configName) {
+    if ($configName === 'media.type.image') {
+      unset($dependenciesConfig[$key]);
+      $configDB->set('dependencies.config', $dependenciesConfig);
+      break;
+    }
+  }
+  $displayConfig = $configDB->get('display');
+  $displays = ['entity_browser_1', 'entity_browser_2'];
+  foreach ($displays as $display) {
+    $newFilters = [];
+    foreach ($displayConfig[$display]['display_options']['filters'] as $filterName => $filterConfig) {
+      if ($filterName === 'bundle') {
+        // With this way we can keep the order.
+        $filterName = 'entity_browser_bundle';
+        $filterConfig = $configFS['display'][$display]['display_options']['filters']['entity_browser_bundle'];
+      }
+      $newFilters[$filterName] = $filterConfig;
+    }
+    $displayConfig[$display]['display_options']['filters'] = $newFilters;
+  }
+  $configDB->set('display', $displayConfig);
+  $configDB->save();
+}
+
+/**
+ * deGov 8.1.1 - Set the correct media library view for the CKEditor entity browser.
+ */
+function degov_common_update_880101() {
+  $mediaBrowserConfig = \Drupal::configFactory()->getEditable('entity_browser.browser.ckeditor_media_browser');
+  $widgets = $mediaBrowserConfig->get('widgets');
+  foreach ($widgets as $widgetKey => $widget) {
+    if ($widget['id'] === 'view' && !empty($widget['settings']['view_display'])) {
+      $widgets[$widgetKey]['settings']['view_display'] = 'entity_browser_1';
+    }
+  }
+  $mediaBrowserConfig->set('widgets', $widgets)->save(TRUE);
+}

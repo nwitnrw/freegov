@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.1_to_1
+  module:
+    - crop
+name: teaser_squared_1_1_427
+label: 'Teaser squared (1:1) 427'
+effects:
+  22e99be7-0052-4ecd-aa5f-3077f3a9e1e4:
+    uuid: 22e99be7-0052-4ecd-aa5f-3077f3a9e1e4
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: 1_to_1
+  cedb7d4b-6d77-4c3b-b72b-a28f98d4a30c:
+    uuid: cedb7d4b-6d77-4c3b-b72b-a28f98d4a30c
+    id: image_scale
+    weight: 2
+    data:
+      width: 427
+      height: null
+      upscale: false

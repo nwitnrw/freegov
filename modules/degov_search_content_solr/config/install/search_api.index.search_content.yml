@@ -1,0 +1,928 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_search_content_solr
+  module:
+    - search_api_solr
+    - node
+    - search_api
+    - search_api_attachments
+    - media
+  config:
+    - field.storage.node.field_press_date
+    - field.storage.node.field_section
+    - field.storage.node.field_teaser_text
+    - field.storage.node.field_teaser_title
+    - field.storage.node.field_topic
+    - search_api.server.degov
+    - core.entity_view_mode.media.content_search
+third_party_settings:
+  search_api_solr:
+    finalize: false
+    commit_before_finalize: false
+    commit_after_finalize: false
+    multilingual:
+      limit_to_content_language: false
+      include_language_independent: true
+    highlighter:
+      maxAnalyzedChars: 51200
+      fragmenter: gap
+      regex:
+        slop: 0.5
+        pattern: blank
+        maxAnalyzedChars: 10000
+      usePhraseHighlighter: true
+      highlightMultiTerm: true
+      preserveMulti: false
+      highlight:
+        mergeContiguous: false
+        requireFieldMatch: false
+        snippets: 3
+        fragsize: 0
+    advanced:
+      index_prefix: ''
+_core:
+  default_config_hash: fqPjn_vWfMSxhc5Lfahw_34NOdAd5qW5QHSGEYCHtGM
+id: search_content
+name: Inhaltssuche
+description: ''
+read_only: false
+field_settings:
+  changed:
+    label: Änderungsdatum
+    property_path: aggregated_field
+    type: date
+    configuration:
+      type: union
+      fields:
+        - 'entity:media/changed'
+        - 'entity:node/changed'
+  content_bundles:
+    label: 'Content bundles'
+    property_path: aggregated_field
+    type: string
+    configuration:
+      type: concat
+      fields:
+        - 'entity:media/bundle'
+        - 'entity:node/type'
+  field_press_date:
+    label: 'Pressemitteilung Datum'
+    datasource_id: 'entity:node'
+    property_path: field_press_date
+    type: date
+    dependencies:
+      config:
+        - field.storage.node.field_press_date
+  field_section:
+    label: Bereich
+    datasource_id: 'entity:node'
+    property_path: field_section
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_section
+  field_teaser_text:
+    label: 'Vorschau Text'
+    datasource_id: 'entity:node'
+    property_path: field_teaser_text
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_teaser_text
+  field_teaser_title:
+    label: 'Vorschau Titel'
+    datasource_id: 'entity:node'
+    property_path: field_teaser_title
+    type: text
+    boost: !!float 2
+    dependencies:
+      config:
+        - field.storage.node.field_teaser_title
+  field_topic:
+    label: Thema
+    datasource_id: 'entity:node'
+    property_path: field_topic
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_topic
+  node_grants:
+    label: 'Node access information'
+    property_path: search_api_node_grants
+    type: string
+    indexed_locked: true
+    type_locked: true
+    hidden: true
+  rendered_item:
+    label: 'Rendered HTML output'
+    property_path: rendered_item
+    type: text
+    boost: 0.5
+    configuration:
+      roles:
+        anonymous: anonymous
+      view_mode:
+        'entity:media':
+          document: content_search
+        'entity:node':
+          blog: default
+          event: default
+          normal_page: default
+          press: default
+  saa_field_document:
+    label: 'Search api attachments: Datei'
+    property_path: saa_field_document
+    type: text
+  status:
+    label: status
+    datasource_id: 'entity:node'
+    property_path: status
+    type: boolean
+    indexed_locked: true
+    type_locked: true
+    dependencies:
+      module:
+        - node
+  tags:
+    label: Tags
+    property_path: aggregated_field
+    type: integer
+    configuration:
+      type: union
+      fields:
+        - 'entity:media/field_tags'
+        - 'entity:node/field_tags'
+  title:
+    label: Titel
+    datasource_id: 'entity:node'
+    property_path: title
+    type: text
+    boost: !!float 3
+    dependencies:
+      module:
+        - node
+  type:
+    label: Inhaltstyp
+    datasource_id: 'entity:node'
+    property_path: type
+    type: string
+    dependencies:
+      module:
+        - node
+  uid:
+    label: uid
+    datasource_id: 'entity:node'
+    property_path: uid
+    type: integer
+    indexed_locked: true
+    type_locked: true
+    dependencies:
+      module:
+        - node
+datasource_settings:
+  'entity:media':
+    bundles:
+      default: false
+      selected:
+        - document
+    languages:
+      default: true
+      selected: {  }
+  'entity:node':
+    bundles:
+      default: false
+      selected:
+        - blog
+        - event
+        - normal_page
+        - press
+    languages:
+      default: true
+      selected: {  }
+processor_settings:
+  add_url: {  }
+  aggregated_field: {  }
+  content_access:
+    weights:
+      preprocess_query: -30
+  entity_status: {  }
+  file_attachments:
+    excluded_extensions: 'aif art avi bmp gif ico mov oga ogv png psd ra ram rgb flv'
+    number_indexed: 0
+    number_first_bytes: '0'
+    max_filesize: '0'
+    excluded_private: 0
+    excluded_mimes: 'audio/x-aiff image/x-jg video/x-msvideo image/x-ms-bmp image/gif image/vnd.microsoft.icon video/quicktime audio/ogg video/ogg image/png image/x-photoshop audio/x-realaudio audio/x-pn-realaudio image/x-rgb video/x-flv'
+  highlight:
+    highlight: always
+    highlight_partial: false
+    excerpt: true
+    excerpt_length: 256
+    exclude_fields: {  }
+    prefix: '<strong>'
+    suffix: '</strong>'
+    weights:
+      postprocess_query: 0
+  html_filter:
+    all_fields: true
+    fields:
+      - content_bundles
+      - field_teaser_text
+      - field_teaser_title
+      - field_topic
+      - rendered_item
+      - saa_field_document
+      - title
+      - type
+    title: true
+    alt: true
+    tags:
+      b: 2
+      h1: 5
+      h2: 3
+      h3: 2
+      strong: 2
+    weights:
+      preprocess_index: -15
+      preprocess_query: -15
+  ignore_character:
+    ignorable: '[''¿¡!?,.:;]'
+    ignorable_classes:
+      - Pc
+      - Pd
+      - Pe
+      - Pf
+      - Pi
+      - Po
+      - Ps
+    all_fields: false
+    fields:
+      - field_teaser_text
+      - field_teaser_title
+      - rendered_item
+      - title
+    weights:
+      preprocess_index: -10
+      preprocess_query: -10
+  ignorecase:
+    all_fields: true
+    fields:
+      - content_bundles
+      - field_teaser_text
+      - field_teaser_title
+      - field_topic
+      - rendered_item
+      - saa_field_document
+      - title
+      - type
+    weights:
+      preprocess_index: -20
+      preprocess_query: -20
+  rendered_item: {  }
+  solr_date_range:
+    weights:
+      preprocess_index: 0
+  stopwords:
+    all_fields: true
+    fields:
+      - field_teaser_text
+      - field_teaser_title
+      - rendered_item
+      - saa_field_document
+      - title
+    stopwords:
+      - ab
+      - aber
+      - alle
+      - allein
+      - allem
+      - allen
+      - aller
+      - allerdings
+      - allerlei
+      - alles
+      - allmählich
+      - allzu
+      - als
+      - alsbald
+      - also
+      - am
+      - an
+      - and
+      - ander
+      - andere
+      - anderem
+      - anderen
+      - anderer
+      - andererseits
+      - anderes
+      - anderm
+      - andern
+      - andernfalls
+      - anders
+      - anstatt
+      - auch
+      - auf
+      - aus
+      - ausgenommen
+      - ausser
+      - ausserdem
+      - außer
+      - außerdem
+      - außerhalb
+      - bald
+      - bei
+      - beide
+      - beiden
+      - beiderlei
+      - beides
+      - beim
+      - beinahe
+      - bereits
+      - besonders
+      - besser
+      - beträchtlich
+      - bevor
+      - bezüglich
+      - bin
+      - bis
+      - bisher
+      - bislang
+      - bist
+      - bloß
+      - bsp.
+      - bzw
+      - ca
+      - ca.
+      - content
+      - da
+      - dabei
+      - dadurch
+      - dafür
+      - dagegen
+      - daher
+      - dahin
+      - damals
+      - damit
+      - danach
+      - daneben
+      - dann
+      - daran
+      - darauf
+      - daraus
+      - darin
+      - darum
+      - darunter
+      - darüber
+      - darüberhinaus
+      - das
+      - dass
+      - dasselbe
+      - davon
+      - davor
+      - dazu
+      - daß
+      - dein
+      - deine
+      - deinem
+      - deinen
+      - deiner
+      - deines
+      - dem
+      - demnach
+      - demselben
+      - den
+      - denen
+      - denn
+      - dennoch
+      - denselben
+      - der
+      - derart
+      - derartig
+      - derem
+      - deren
+      - derer
+      - derjenige
+      - derjenigen
+      - derselbe
+      - derselben
+      - derzeit
+      - des
+      - deshalb
+      - desselben
+      - dessen
+      - desto
+      - deswegen
+      - dich
+      - die
+      - diejenige
+      - dies
+      - diese
+      - dieselbe
+      - dieselben
+      - diesem
+      - diesen
+      - dieser
+      - dieses
+      - diesseits
+      - dir
+      - direkt
+      - direkte
+      - direkten
+      - direkter
+      - doch
+      - dort
+      - dorther
+      - dorthin
+      - drauf
+      - drin
+      - drunter
+      - drüber
+      - du
+      - dunklen
+      - durch
+      - durchaus
+      - eben
+      - ebenfalls
+      - ebenso
+      - eher
+      - eigenen
+      - eigenes
+      - eigentlich
+      - ein
+      - eine
+      - einem
+      - einen
+      - einer
+      - einerseits
+      - eines
+      - einfach
+      - einführen
+      - einführte
+      - einführten
+      - eingesetzt
+      - einig
+      - einige
+      - einigem
+      - einigen
+      - einiger
+      - einigermaßen
+      - einiges
+      - einmal
+      - eins
+      - einseitig
+      - einseitige
+      - einseitigen
+      - einseitiger
+      - einst
+      - einstmals
+      - einzig
+      - entsprechend
+      - entweder
+      - er
+      - erst
+      - es
+      - etc
+      - etliche
+      - etwa
+      - etwas
+      - euch
+      - euer
+      - eure
+      - eurem
+      - euren
+      - eurer
+      - eures
+      - falls
+      - fast
+      - ferner
+      - folgende
+      - folgenden
+      - folgender
+      - folgendes
+      - folglich
+      - fuer
+      - für
+      - gab
+      - ganze
+      - ganzem
+      - ganzen
+      - ganzer
+      - ganzes
+      - gar
+      - gegen
+      - gemäss
+      - ggf
+      - gleich
+      - gleichwohl
+      - gleichzeitig
+      - glücklicherweise
+      - gänzlich
+      - hab
+      - habe
+      - haben
+      - haette
+      - hast
+      - hat
+      - hatte
+      - hatten
+      - hattest
+      - hattet
+      - heraus
+      - herein
+      - hier
+      - hier
+      - hiermit
+      - hiesige
+      - hin
+      - hinein
+      - hinten
+      - hinter
+      - hinter
+      - hinterher
+      - http
+      - hätt
+      - hätte
+      - hätten
+      - höchstens
+      - ich
+      - igitt
+      - ihm
+      - ihn
+      - ihnen
+      - ihr
+      - ihre
+      - ihrem
+      - ihren
+      - ihrer
+      - ihres
+      - im
+      - immer
+      - immerhin
+      - in
+      - indem
+      - indessen
+      - infolge
+      - innen
+      - innerhalb
+      - ins
+      - insofern
+      - inzwischen
+      - irgend
+      - irgendeine
+      - irgendwas
+      - irgendwen
+      - irgendwer
+      - irgendwie
+      - irgendwo
+      - ist
+      - ja
+      - je
+      - jed
+      - jede
+      - jedem
+      - jeden
+      - jedenfalls
+      - jeder
+      - jederlei
+      - jedes
+      - jedoch
+      - jemand
+      - jene
+      - jenem
+      - jenen
+      - jener
+      - jenes
+      - jenseits
+      - jetzt
+      - jährig
+      - jährige
+      - jährigen
+      - jähriges
+      - kam
+      - kann
+      - kannst
+      - kaum
+      - kein
+      - keine
+      - keinem
+      - keinen
+      - keiner
+      - keinerlei
+      - keines
+      - keineswegs
+      - klar
+      - klare
+      - klaren
+      - klares
+      - klein
+      - kleinen
+      - kleiner
+      - kleines
+      - koennen
+      - koennt
+      - koennte
+      - koennten
+      - komme
+      - kommen
+      - kommt
+      - konkret
+      - konkrete
+      - konkreten
+      - konkreter
+      - konkretes
+      - können
+      - könnt
+      - künftig
+      - leider
+      - machen
+      - man
+      - manche
+      - manchem
+      - manchen
+      - mancher
+      - mancherorts
+      - manches
+      - manchmal
+      - mehr
+      - mehrere
+      - mein
+      - meine
+      - meinem
+      - meinen
+      - meiner
+      - meines
+      - mich
+      - mir
+      - mit
+      - mithin
+      - muessen
+      - muesst
+      - muesste
+      - muss
+      - musst
+      - musste
+      - mussten
+      - muß
+      - mußt
+      - müssen
+      - müsste
+      - müssten
+      - müßt
+      - müßte
+      - nach
+      - nachdem
+      - nachher
+      - nachhinein
+      - nahm
+      - natürlich
+      - neben
+      - nebenan
+      - nehmen
+      - nein
+      - nicht
+      - nichts
+      - nie
+      - niemals
+      - niemand
+      - nirgends
+      - nirgendwo
+      - noch
+      - nun
+      - nur
+      - nächste
+      - nämlich
+      - nötigenfalls
+      - ob
+      - oben
+      - oberhalb
+      - obgleich
+      - obschon
+      - obwohl
+      - oder
+      - oft
+      - per
+      - plötzlich
+      - schließlich
+      - schon
+      - sehr
+      - sehrwohl
+      - seid
+      - sein
+      - seine
+      - seinem
+      - seinen
+      - seiner
+      - seines
+      - seit
+      - seitdem
+      - seither
+      - selber
+      - selbst
+      - sich
+      - sicher
+      - sicherlich
+      - sie
+      - sind
+      - so
+      - sobald
+      - sodass
+      - sodaß
+      - soeben
+      - sofern
+      - sofort
+      - sogar
+      - solange
+      - solch
+      - solche
+      - solchem
+      - solchen
+      - solcher
+      - solches
+      - soll
+      - sollen
+      - sollst
+      - sollt
+      - sollte
+      - sollten
+      - solltest
+      - somit
+      - sondern
+      - sonst
+      - sonstwo
+      - sooft
+      - soviel
+      - soweit
+      - sowie
+      - sowohl
+      - tatsächlich
+      - tatsächlichen
+      - tatsächlicher
+      - tatsächliches
+      - trotzdem
+      - ueber
+      - um
+      - umso
+      - unbedingt
+      - und
+      - unmöglich
+      - unmögliche
+      - unmöglichen
+      - unmöglicher
+      - uns
+      - unser
+      - unser
+      - unsere
+      - unsere
+      - unserem
+      - unseren
+      - unserer
+      - unseres
+      - unter
+      - usw
+      - viel
+      - viele
+      - vielen
+      - vieler
+      - vieles
+      - vielleicht
+      - vielmals
+      - vom
+      - von
+      - vor
+      - voran
+      - vorher
+      - vorüber
+      - völlig
+      - wann
+      - war
+      - waren
+      - warst
+      - warum
+      - was
+      - weder
+      - weil
+      - weiter
+      - weitere
+      - weiterem
+      - weiteren
+      - weiterer
+      - weiteres
+      - weiterhin
+      - weiß
+      - welche
+      - welchem
+      - welchen
+      - welcher
+      - welches
+      - wem
+      - wen
+      - wenig
+      - wenige
+      - weniger
+      - wenigstens
+      - wenn
+      - wenngleich
+      - wer
+      - werde
+      - werden
+      - werdet
+      - weshalb
+      - wessen
+      - wichtig
+      - wie
+      - wieder
+      - wieso
+      - wieviel
+      - wiewohl
+      - will
+      - willst
+      - wir
+      - wird
+      - wirklich
+      - wirst
+      - wo
+      - wodurch
+      - wogegen
+      - woher
+      - wohin
+      - wohingegen
+      - wohl
+      - wohlweislich
+      - womit
+      - woraufhin
+      - woraus
+      - worin
+      - wurde
+      - wurden
+      - während
+      - währenddessen
+      - wär
+      - wäre
+      - wären
+      - würde
+      - würden
+      - z.B.
+      - zB
+      - zahlreich
+      - zeitweise
+      - zu
+      - zudem
+      - zuerst
+      - zufolge
+      - zugleich
+      - zuletzt
+      - zum
+      - zumal
+      - zur
+      - zurück
+      - zusammen
+      - zuviel
+      - zwar
+      - zwischen
+      - ähnlich
+      - übel
+      - über
+      - überall
+      - überallhin
+      - überdies
+      - übermorgen
+      - übrig
+      - übrigens
+    weights:
+      preprocess_index: -5
+      preprocess_query: -2
+  tokenizer:
+    all_fields: true
+    fields:
+      - field_teaser_text
+      - field_teaser_title
+      - rendered_item
+      - saa_field_document
+      - title
+    spaces: ''
+    overlap_cjk: 1
+    minimum_word_size: '3'
+    weights:
+      preprocess_index: -6
+      preprocess_query: -6
+  transliteration:
+    all_fields: false
+    fields:
+      - field_teaser_text
+      - field_teaser_title
+      - rendered_item
+      - title
+    weights:
+      preprocess_index: -20
+      preprocess_query: -20
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  index_directly: true
+  cron_limit: 50
+server: degov

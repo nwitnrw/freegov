@@ -1,0 +1,21 @@
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_allow_download_4k
+    - media.type.video_mobile
+id: media.video_mobile.field_allow_download_4k
+field_name: field_allow_download_4k
+entity_type: media
+bundle: video_mobile
+label: 'Herunterladen zulassen (Ultra HD 4K)'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Erlaubt
+  off_label: Verboten
+field_type: boolean

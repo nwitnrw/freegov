@@ -1,0 +1,17 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_media_facts
+  module:
+    - media_entity_generic
+id: facts
+label: Fakten
+description: 'Ein Media-Bundle für Zahlen, Daten, Fakten.'
+source: generic
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_media_generic_4
+field_map: {  }

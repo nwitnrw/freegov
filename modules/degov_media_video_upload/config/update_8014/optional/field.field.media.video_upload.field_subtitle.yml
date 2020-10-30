@@ -1,0 +1,23 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_subtitle
+    - media.type.video_upload
+  enforced:
+    module:
+      - degov_media_overrides
+      - degov_media_video_upload
+third_party_settings: {  }
+id: media.video_upload.field_subtitle
+field_name: field_subtitle
+entity_type: media
+bundle: video_upload
+label: Untertitel
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

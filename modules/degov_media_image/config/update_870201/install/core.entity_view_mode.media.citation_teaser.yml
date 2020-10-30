@@ -1,0 +1,13 @@
+langcode: de
+status: true
+dependencies:
+  module:
+    - lightning_core
+    - media
+third_party_settings:
+  lightning_core:
+    description: ''
+id: media.citation_teaser
+label: 'Citation Teaser'
+targetEntityType: media
+cache: true

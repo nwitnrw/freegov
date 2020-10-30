@@ -1,0 +1,15 @@
+name: 'deGov - Paragraph node reference'
+description: 'This paragraph shows a list of teasers for nodes.'
+type: module
+package: deGov
+core: 8.x
+dependencies:
+  - degov_content_types_shared_fields
+  - degov_node_press
+  - entity_reference_display
+  - field
+  - link
+  - node
+  - paragraphs
+
+configure: degov_paragraph_node_reference.settings

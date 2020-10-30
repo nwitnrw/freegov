@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_paragraph_node_reference module.
+ */
+
+use Drupal\degov_common\Common;
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_paragraph_node_reference_uninstall() {
+  // Removes all module type defined content when uninstalling the module.
+  Common::removeContent([
+    'entity_type' => 'paragraph',
+    'entity_bundles' => ['node_reference'],
+  ]);
+}
+
+/**
+ * Adds reference to press node content type in node reference paragraph type. Adds view modes.
+ */
+function degov_paragraph_node_reference_update_8002() {
+  /** @var \Drupal\degov_common\DegovModuleUpdater $degovModuleUpdater */
+  $degovModuleUpdater = \Drupal::service('degov_config.module_updater');
+  $degovModuleUpdater->applyUpdates('degov_paragraph_node_reference', '8001');
+
+  /** @var \Drupal\Core\Config\ConfigFactory $configFactory */
+  $configFactory = \Drupal::service('config.factory');
+  $config = $configFactory->getEditable('field.field.paragraph.node_reference.field_node_reference_viewmode');
+  $config->set('settings.exclude', [
+    'small_image' => 'small_image',
+    'long_text'   => 'long_text',
+    'slim'        => 'slim',
+    'preview'     => 'preview',
+  ]);
+  $config->save();
+  $config->set('settings.negate', TRUE)->save();
+}

@@ -1,0 +1,120 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_media_audio module.
+ */
+
+use Drupal\degov_common\Common;
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Implements hook_install().
+ */
+function degov_media_audio_install() {
+  // Adds the audio tab upon installation to the CKEditor media browser.
+  $ckeditorMediaBrowserConfig = \Drupal::configFactory()->getEditable('entity_browser.browser.ckeditor_media_browser');
+  if (!$ckeditorMediaBrowserConfig->isNew()) {
+    $filtersConfig = $ckeditorMediaBrowserConfig->get('widgets');
+    $partialFile = \Drupal::service('extension.list.module')->getPath('degov_media_audio') . '/config/partials/entity_browser.browser.ckeditor_media_browser.yml';
+    if (file_exists($partialFile)) {
+      $filtersConfig += Yaml::parseFile($partialFile);
+      $ckeditorMediaBrowserConfig->set('widgets', $filtersConfig);
+      $ckeditorMediaBrowserConfig->save();
+    }
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_media_audio_uninstall() {
+  // Removes all module type defined content when uninstalling the module.
+  Common::removeContent([
+    'entity_type' => 'media',
+    'entity_bundles' => ['audio'],
+  ]);
+
+  // Remove the audio bundle dependency on the entity media browser.
+  $dependencies = \Drupal::config('entity_browser.browser.media_browser')
+    ->get('dependencies.config');
+  foreach ($dependencies as $key => $dependency) {
+    if ($dependency === 'media.type.audio') {
+      unset($dependencies[$key]);
+    }
+  }
+  $dependencies = array_values($dependencies);
+  \Drupal::configFactory()->getEditable('entity_browser.browser.media_browser')
+    ->set('dependencies.config', $dependencies)
+    ->save(TRUE);
+
+  // Remove the audio tab from the entity media browser.
+  $key = "0858526f-05e0-4b00-b8db-e9283a437a1c";
+  $widgets = \Drupal::config("entity_browser.browser.media_browser")
+    ->get("widgets");
+  if (!empty($widgets[$key])) {
+    unset($widgets[$key]);
+    \Drupal::configFactory()->getEditable("entity_browser.browser.media_browser")
+      ->set("widgets", $widgets)
+      ->save(TRUE);
+  }
+}
+
+/**
+ * Added source field to generic media type 'audio'
+ */
+function degov_media_audio_update_8010() {
+  \Drupal::configFactory()->getEditable('media.type.audio')
+    ->set('source_configuration.source_field', 'field_media_generic_1')->save();
+}
+
+/**
+ * Moved configuration from image styles module
+ */
+function degov_media_audio_update_8011() {
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_media_audio', '8011');
+}
+
+/**
+ * Add missing view mode preview wide
+ */
+function degov_media_audio_update_8012() {
+  /**
+   * @var \Drupal\degov_common\DegovModuleUpdater $degovModuleUpdater
+   */
+  $degovModuleUpdater = \Drupal::service('degov_config.module_updater');
+  $degovModuleUpdater->applyUpdates('degov_media_audio', '8012');
+}
+
+/**
+ * Add new field publish date
+ */
+function degov_media_audio_update_8013() {
+  /**
+   * @var \Drupal\degov_common\DegovModuleUpdater $degovModuleUpdater
+   */
+  $degovModuleUpdater = \Drupal::service('degov_config.module_updater');
+  $degovModuleUpdater->applyUpdates('degov_media_audio', '8013');
+}
+
+/**
+ * Define a default value for publish date
+ */
+function degov_media_audio_update_8014() {
+  /**
+   * @var \Drupal\degov_common\DegovModuleUpdater $degovModuleUpdater
+   */
+  $degovModuleUpdater = \Drupal::service('degov_config.module_updater');
+  $degovModuleUpdater->applyUpdates('degov_media_audio', '8014');
+}
+
+/**
+ * Disable "allow download" by default.
+ */
+function degov_media_audio_update_870600() {
+  $config = \Drupal::configFactory()->getEditable('field.field.media.audio.field_allow_download');
+  if (!$config->isNew()) {
+    $config->set('default_value', [['value' => 0]])->save();
+  }
+}

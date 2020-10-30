@@ -1,0 +1,27 @@
+{#
+  link: @string - The url to the post
+  caption: @string - The caption for the psots
+
+#}
+<div class="row">
+  <div class="slick-slide">
+    <a href="{{ link }}">
+      <img src="{{ imageUrl }}" title="{{ caption }}" alt="{{ caption }}"/>
+
+      <div class="info">
+        {% if views %}
+          <span class="views">{{ views }}</span>
+        {% endif %}
+        <span class="likes">{{ likes }}</span>
+        <span class="comments">{{ comments }}</span>
+      </div>
+    </a>
+    <span class="caption">{{ caption }}</span>
+    <a href="{{ link }}">
+      <span class="link">{{ link_display }}</span>
+    </a>
+    <div class="date">{{ date }}</div>
+  </div>
+</div>
+
+

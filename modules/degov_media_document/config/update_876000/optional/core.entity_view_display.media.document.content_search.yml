@@ -1,0 +1,63 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.content_search
+    - field.field.media.document.field_description
+    - field.field.media.document.field_document
+    - field.field.media.document.field_document_preview
+    - field.field.media.document.field_include_search
+    - field.field.media.document.field_media_in_library
+    - field.field.media.document.field_section
+    - field.field.media.document.field_tags
+    - field.field.media.document.field_title
+    - media.type.document
+  module:
+    - text
+id: media.document.content_search
+targetEntityType: media
+bundle: document
+mode: content_search
+content:
+  field_description:
+    type: text_default
+    weight: 2
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_document_preview:
+    type: entity_reference_entity_view
+    weight: 3
+    region: content
+    label: hidden
+    settings:
+      view_mode: teaser_landscape_squared
+      link: false
+    third_party_settings: {  }
+  field_tags:
+    type: entity_reference_label
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+  field_title:
+    type: string
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_document: true
+  field_include_search: true
+  field_media_in_library: true
+  field_section: true
+  langcode: true
+  name: true
+  thumbnail: true
+  uid: true

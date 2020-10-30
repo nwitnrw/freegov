@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * Drupal hooks implementations for the degov_demo_content module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+// TODO: refactor: move all definitions to GeneratorInterface.
+define('DEGOV_DEMO_CONTENT_TAGS_VOCABULARY_NAME', 'tags');
+define('DEGOV_DEMO_CONTENT_COPYRIGHT_VOCABULARY_NAME', 'copyright');
+define('DEGOV_DEMO_CONTENT_TAG_NAME', 'degov_demo_content');
+define('DEGOV_DEMO_CONTENT_TAG_SYNONYM_VOCABULARY_NAME', 'synonyms');
+define('DEGOV_DEMO_CONTENT_TAG_SYNONYM_NAME', 'degov_demo_content_synonym');
+// Berlin time zone: Donnerstag, 2. Januar 2020 03:47:40 GMT+01:00.
+define('DEGOV_DEMO_CONTENT_CREATED_TIMESTAMP', 1577933260);
+
+/**
+ * Implements hook_help().
+ */
+function degov_demo_content_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the degov_demo_content module.
+    case 'help.page.degov_demo_content':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Generates a predefined set of media and node entities for a quick demo setup') . '</p>';
+      return $output;
+
+    default:
+  }
+}

@@ -1,0 +1,4 @@
+services:
+  degov_social_media_instagram.instagram:
+    class: Drupal\degov_social_media_instagram\Instagram
+    arguments: ['@config.factory', '@messenger', '@logger.factory']

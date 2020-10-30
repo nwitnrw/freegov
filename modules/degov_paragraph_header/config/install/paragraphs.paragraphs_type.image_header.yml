@@ -1,0 +1,11 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_paragraph_header
+id: image_header
+label: Banner
+icon_uuid: null
+description: null
+behavior_plugins: {  }

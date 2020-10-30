@@ -1,0 +1,30 @@
+{#
+/**
+* @file
+* Default theme implementation to display media-copyright computed field..
+*
+* @ingroup themeable
+*/
+#}
+{%
+  set classes = [
+  'media-copyright',
+  'media-copyright--' ~ media_type|clean_class
+]
+%}
+{% if copyright or caption %}
+<div {{ attributes.addClass(classes) }}>
+    <span>{% spaceless %}
+      {% if caption %}{{ caption }}{% endif %}{% if caption and copyright %}&nbsp;&nbsp;/ {% endif %}{% if copyright %}<span class="media-copyright--copyright-label">&copy;</span>{{ copyright }}{% endif %}
+{% endspaceless %}
+    </span>
+
+</div>
+{% endif %}
+
+{#{% set debugCaption = {#}
+{#  '#caption': caption,#}
+{#  '#copyright': copyright,#}
+{#  '#media_type': media_type,#}
+{#} %}#}
+{#{{ dump(debugCaption) }}#}

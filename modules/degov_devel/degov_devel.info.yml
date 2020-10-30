@@ -1,0 +1,10 @@
+name: 'deGov - Devel'
+type: module
+description: 'Enables development tools for deGov.'
+core: 8.x
+package: 'deGov'
+
+dependencies:
+- devel:devel
+- devel:webprofiler
+- error_log:error_log

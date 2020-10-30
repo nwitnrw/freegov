@@ -1,0 +1,8 @@
+name: 'deGov - GovBot FAQ'
+description: 'Extends deGov Paragraph FAQ by GovBot related fields and functionality.'
+type: module
+package: deGov
+core: 8.x
+dependencies:
+  - degov:degov_paragraph_faq
+  - degov:degov_node_faq

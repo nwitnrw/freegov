@@ -1,0 +1,93 @@
+@import "variables";
+
+.install-page {
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+.layout-container {
+  background-color: rgba($white, 0.975);
+}
+
+.page-title {
+  display: block;
+
+  img {
+    height: auto;
+    width: 35%;
+  }
+
+  .site-version {
+    color: $blue;
+  }
+}
+
+/* Forms */
+.form-required {
+  &::after {
+    content: "*";
+    color: $red;
+    margin-left: 0.5em;
+  }
+}
+
+fieldset {
+  legend {
+    font-weight: bold;
+    padding: 0;
+  }
+
+  .fieldset-wrapper {
+    padding: 0 0 0 4px;
+  }
+}
+
+[class*='form-type-radio'], [class*='form-type-checkbox'] {
+  label {
+    display: inline;
+    font-weight: normal;
+  }
+}
+
+.form-item {
+  > label {
+    text-transform: uppercase;
+  }
+}
+
+details {
+  border: 1px solid #cccccc;
+  margin: 1ch 0;
+  padding: 0 1em;
+
+  [role="button"] {
+    cursor: pointer;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+input[type="submit"] {
+  background-color: $blue;
+  background-image: none;
+  border-radius: 0;
+  color: #ffffff;
+  padding: 1ch 1em;
+  text-shadow: none;
+
+  &, &:hover, &:active, &:focus {
+    background-image: none;
+    border-color: $blue;
+  }
+
+  &:hover, &:focus {
+    background-color: lighten($blue, 20%);
+    box-shadow: 0 2px 4px rgba($gray, 0.5);
+  }
+
+  &:active {
+    background-color: lighten($blue, 5%);
+    box-shadow: 0 0 2px rgba($gray, 0.75);
+  }
+}

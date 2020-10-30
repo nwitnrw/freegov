@@ -1,0 +1,7 @@
+name: 'deGov - Automatic cropping'
+description: 'Applies all defined crop types to all newly uploaded images'
+type: module
+package: deGov
+core: 8.x
+dependencies:
+  - crop:crop

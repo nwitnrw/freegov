@@ -1,0 +1,8 @@
+name: 'deGov - Configuration Integrity Check'
+type: module
+description: 'Provides tools to check your configuration for missing entries.'
+core: 8.x
+package: 'deGov'
+
+dependencies:
+- drupal:config

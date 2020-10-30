@@ -1,0 +1,25 @@
+.footer-bottom-wrapper {
+  min-height: $font-size-base * 4;
+  background-color: $gray-lighter;
+  .block {
+    ul {
+      margin: 0;
+      li.nav-item {
+        display: inline-block;
+        a.nav-link {
+          color: $gray-dark;
+          font-size: $font-size-base;
+          line-height: 1.94;
+          padding: ($nav-link-padding-y / 2) $nav-link-padding-x;
+          @include media-breakpoint-up(md) {
+            font-size: $font-size-base * 1.125;
+            padding: $nav-link-padding-y $nav-link-padding-x;
+          }
+          &:before {
+            content: '';
+          }
+        }
+      }
+    }
+  }
+}

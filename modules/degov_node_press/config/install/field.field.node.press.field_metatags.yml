@@ -1,0 +1,28 @@
+uuid: 74fd1835-0177-4359-87d4-4a53cd4a8be2
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_metatags
+    - node.type.press
+  enforced:
+    module:
+      - degov_metatags
+  module:
+    - metatag
+_core:
+  default_config_hash: pguhhcGdkD70D-dF1BqpdZVNUZDedcx0jwQS4Vvjm88
+id: node.press.field_metatags
+field_name: field_metatags
+entity_type: node
+bundle: press
+label: 'Meta Tags'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 'a:0:{}'
+default_value_callback: ''
+settings: {  }
+field_type: metatag

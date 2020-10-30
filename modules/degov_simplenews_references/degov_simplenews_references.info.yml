@@ -1,0 +1,12 @@
+name: 'deGov - Simplenews References'
+description: 'Contains fields to link Simplenews issues to other content'
+package: deGov
+type: module
+core: 8.x
+dependencies:
+  - simplenews
+  - degov_simplenews
+  - degov_content_types_shared_fields
+  - degov_html_mail
+  - degov_taxonomy_term_section
+  - degov_node_press

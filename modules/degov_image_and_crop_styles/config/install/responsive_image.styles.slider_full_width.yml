@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - image.style.slider_full_width_1440
+    - image.style.slider_full_width_1920
+    - image.style.slider_full_width_480
+    - image.style.slider_full_width_960
+  enforced:
+    module:
+      - degov_image_and_crop_styles
+id: slider_full_width
+label: 'Slider full width'
+image_style_mappings:
+  -
+    breakpoint_id: responsive_image.viewport_sizing
+    multiplier: 1x
+    image_mapping_type: sizes
+    image_mapping:
+      sizes: 100vw
+      sizes_image_styles:
+        - slider_full_width_1440
+        - slider_full_width_1920
+        - slider_full_width_480
+        - slider_full_width_960
+breakpoint_group: responsive_image
+fallback_image_style: slider_full_width_480

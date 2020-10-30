@@ -1,0 +1,56 @@
+crop_type.third_party.degov_auto_crop:
+  type: mapping
+  label: 'Degov Auto Crop settings'
+  mapping:
+    offsets:
+      type: mapping
+      label: 'Offsets'
+      mapping:
+        landscape:
+          type: mapping
+          label: 'The offsets for landscape images'
+          mapping:
+            top:
+              type: integer
+              label: 'Top'
+            bottom:
+              type: integer
+              label: 'Bottom'
+            left:
+              type: integer
+              label: 'Left'
+            right:
+              type: integer
+              label: 'Right'
+        portrait:
+          type: mapping
+          label: 'The offsets for portrait images'
+          mapping:
+            top:
+              type: integer
+              label: 'Top'
+            bottom:
+              type: integer
+              label: 'Bottom'
+            left:
+              type: integer
+              label: 'Left'
+            right:
+              type: integer
+              label: 'Right'
+        square:
+          type: mapping
+          label: 'The offsets for square images'
+          mapping:
+            top:
+              type: integer
+              label: 'Top'
+            bottom:
+              type: integer
+              label: 'Bottom'
+            left:
+              type: integer
+              label: 'Left'
+            right:
+              type: integer
+              label: 'Right'

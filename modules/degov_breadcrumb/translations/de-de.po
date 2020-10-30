@@ -1,0 +1,5 @@
+msgid ""
+msgstr ""
+
+msgid "Contains default settings for the breadcrumb."
+msgstr "Enthält Standardeinstellungen zum Breadcrumb."

@@ -1,0 +1,30 @@
+name: 'deGov - Node press'
+description: 'This module ships the content type \"press\".'
+type: module
+package: deGov
+core: 8.x
+dependencies:
+  - block
+  - datetime
+  - calendar
+  - degov_content_types_shared_fields
+  - degov_taxonomy_term
+  - degov_taxonomy_term_section
+  - degov_taxonomy_term_tags
+  - degov_metatags
+  - entity_browser
+  - entity_reference_revisions
+  - field
+  - field_group
+  - language
+  - lightning_core
+  - menu_ui
+  - node
+  - paragraphs
+  - path
+  - taxonomy
+  - text
+  - user
+  - views
+  - simplenews
+  - degov_node_overrides

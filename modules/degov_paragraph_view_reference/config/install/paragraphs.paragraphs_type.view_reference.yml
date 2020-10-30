@@ -1,0 +1,9 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_paragraph_view_reference
+id: view_reference
+label: Ansichtsreferenz
+behavior_plugins: {  }

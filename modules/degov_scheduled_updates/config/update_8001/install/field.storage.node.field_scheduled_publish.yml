@@ -1,0 +1,22 @@
+status: true
+dependencies:
+  module:
+    - node
+    - scheduled_publish
+    - degov_scheduled_updates
+  enforced:
+    module:
+      - degov_scheduled_updates
+id: node.field_scheduled_publish
+field_name: field_scheduled_publish
+entity_type: node
+type: scheduled_publish
+settings:
+  datetime_type: datetime
+module: scheduled_publish
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

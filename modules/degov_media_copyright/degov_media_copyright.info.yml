@@ -1,0 +1,11 @@
+name: 'deGov - Media Copyright'
+type: module
+description: 'Provide a common copyright sting across all media types'
+package: deGov
+core_version_requirement: '^8 || ^9'
+dependencies:
+  - degov_common
+  - degov_media
+  - degov_content_types_shared_fields
+  - degov_taxonomy_term_copyright
+  - taxonomy

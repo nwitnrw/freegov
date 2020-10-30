@@ -1,0 +1,36 @@
+@mixin sort_bar {
+  .sorts-current-search-wrapper {
+    @extend .bg-blue;
+    color: $white;
+    a {
+      color: $white;
+    }
+    h2 {
+      @extend .d-inline, .pr-3;
+      font-size: 1.2rem;
+      font-weight: 900;
+    }
+    .search-sorts {
+      a.dropdown-title-holder {
+        background-color: $white;
+        text-decoration: none;
+        color: $gray-dark;
+        position: relative;
+        .fas {
+          position: absolute;
+          right: 15px;
+          top: 9px;
+        }
+        @include media-breakpoint-down(md) {
+          width: 100%;
+        }
+      }
+      .search-api-sorts {
+        color: $gray-dark;
+        a {
+          color: $gray-dark;
+        }
+      }
+    }
+  }
+}

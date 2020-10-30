@@ -1,0 +1,7 @@
+block.settings.degov_copyright_block:
+  type: block_settings
+  label: 'deGov - copyright block'
+  mapping:
+    copyright_text:
+      type: string
+      label: 'Copyright text'

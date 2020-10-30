@@ -1,0 +1,32 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - degov_tweets
+    - system
+  theme:
+    - degov_theme
+id: twitterblock
+theme: degov_theme
+region: content
+weight: 6
+provider: null
+plugin: degov_twitter_block
+settings:
+  id: degov_twitter_block
+  label: 'Teaser social media'
+  provider: degov_tweets
+  label_display: visible
+  access_token: ''
+  token_secret: ''
+  consumer_key: ''
+  consumer_secret: ''
+  tweets_username: ''
+  tweets_limit: '4'
+  tweets_update_every: '7200'
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+    context_mapping: {  }

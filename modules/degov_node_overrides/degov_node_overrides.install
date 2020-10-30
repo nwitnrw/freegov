@@ -1,0 +1,147 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_node_overrides module.
+ */
+
+declare(strict_types=1);
+
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Implements hook_install().
+ */
+function degov_node_overrides_install() {
+  // View modes to update.
+  $view_mode_ids = [
+    'node.long_text',
+    'node.preview',
+    'node.slim',
+    'node.small_image',
+    'node.default',
+  ];
+  foreach ($view_mode_ids as $view_mode_id) {
+    $view_mode = \Drupal::configFactory()->getEditable('core.entity_view_mode.' . $view_mode_id);
+    if ($view_mode->get('label') != '') {
+      // Change the enforced dependency for all view modes.
+      $view_mode->set('dependencies.enforced.module', ['degov_overrides_install']);
+      $view_mode->save(TRUE);
+    }
+  }
+
+  // Content types provided by deGov.
+  $content_types = [
+    'blog',
+    'event',
+    'normal_page',
+    'press',
+  ];
+  // Change enforced dependencies for all view displays.
+  foreach ($content_types as $content_type) {
+    foreach ($view_mode_ids as $view_mode_id) {
+      $display_id = str_replace('node.', 'node.' . $content_type, $view_mode_id);
+      $display = \Drupal::configFactory()->getEditable('core.entity_view_display.' . $display_id);
+      if ($display->get('label') != '') {
+        $display->set('dependencies.enforced.module', ['degov_overrides_install', 'degov_node_' . $content_type]);
+        $display->save(TRUE);
+      }
+    }
+  }
+}
+
+/**
+ * Set the correct nrw_base_theme default tooltip_html setting.
+ */
+function degov_node_overrides_update_8013() {
+  \Drupal::configFactory()->getEditable('nrw_base_theme.settings')->set('tooltip_html', 1)->save(TRUE);
+}
+
+/**
+ * Uninstall lightning_workflow module and remove its dependency.
+ */
+function degov_node_overrides_update_8014() {
+  /** @var \Drupal\degov_common\Entity\ConfigRemover $configRemover */
+  $configRemover = \Drupal::service('degov_common.config_remover');
+  $configRemover->removeListItemFromConfiguration('views.view.content', 'dependencies.module', 'lightning_workflow');
+
+  /** @var \Drupal\Core\Extension\ModuleInstaller $moduleInstallerService */
+  $moduleInstallerService = \Drupal::service('module_installer');
+  $moduleInstallerService->uninstall(['lightning_workflow']);
+}
+
+/**
+ * Updating content view.
+ */
+function degov_node_overrides_update_8015() {
+  /**
+   * @var \Drupal\degov_common\DegovModuleUpdater $moduleUpdater
+   */
+  $moduleUpdater = \Drupal::service('degov_config.module_updater');
+  $moduleUpdater->applyUpdates('degov_node_overrides', '8015');
+}
+
+/**
+ * #Issue-2998749 - Re-Import admin content view.
+ */
+function degov_node_overrides_update_8016() {
+  /** @var \Drupal\degov_common\DegovModuleUpdater $moduleUpdater */
+  $moduleUpdater = \Drupal::service('degov_config.module_updater');
+  $moduleUpdater->reImport('views.view.content', 'degov_node_overrides', 'rewrite');
+}
+
+/**
+ * Update items on content view per page to 100, if hasn't been changed already.
+ */
+function degov_node_overrides_update_860100() {
+  /** @var \Drupal\Core\Config\ConfigFactory $configFactory */
+  $configFactory = \Drupal::service('config.factory');
+  /** @var Drupal\Core\Config\Config $config */
+  $config = $configFactory->getEditable('views.view.content');
+
+  if ($config->get('display.default.display_options.pager.options.items_per_page') === 50) {
+    $config->set('display.default.display_options.pager.options.items_per_page', 100);
+    $config->save(TRUE);
+  }
+
+}
+
+/**
+ * deGov Update 860200 - Add author filter to content admin view.
+ */
+function degov_node_overrides_update_860200() {
+  $viewConfig = \Drupal::configFactory()->getEditable('views.view.content');
+  if (!$viewConfig->isNew()) {
+    $filtersConfig = $viewConfig->get('display.default.display_options.filters');
+    if (empty($filtersConfig['uid'])) {
+      $partialFile = drupal_get_path('module', 'degov_node_overrides') . '/config/update_860200/partial/views.view.content.default.filters.uid.yml';
+      if (file_exists($partialFile)) {
+        $filtersConfig += Yaml::parseFile($partialFile);
+        $viewConfig->set('display.default.display_options.filters', $filtersConfig)
+          ->save();
+      }
+    }
+  }
+}
+
+/**
+ * Fix grouping options of status filter and remove empty filter groups in views.view.content.
+ */
+function degov_node_overrides_update_880400(): string {
+  /** @var \Drupal\Core\Config\ConfigFactory $configFactory */
+  $configFactory = \Drupal::service('config.factory');
+  /** @var Drupal\Core\Config\Config $config */
+  $config = $configFactory->getEditable('views.view.content');
+  if (!$config->isNew()) {
+    $config->clear('core');
+    $configFile = drupal_get_path('module', 'degov_node_overrides') . '/config/rewrite/views.view.content.yml';
+    if (file_exists($configFile)) {
+      $configFromFile = Yaml::parseFile($configFile);
+      $config->set('display.default.display_options.filters.status', $configFromFile['display']['default']['display_options']['filters']['status']);
+      $config->set('display.default.display_options.filter_groups', $configFromFile['display']['default']['display_options']['filter_groups']);
+      $config->save();
+      return 'Fixed grouping options of status filter and removed filter groups in view views.view.content.';
+    }
+  }
+  return 'Skipped';
+}

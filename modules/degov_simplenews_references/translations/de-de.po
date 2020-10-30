@@ -1,0 +1,39 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 2\n"
+"Last-Translator: deGov <info@degov.de>\n"
+"Language-Team: DE <info@degov.de>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "I have read and accepted the @privacy_policy."
+msgstr "Ich habe die @privacy_policy gelesen und akzeptiert."
+
+msgid "privacy policy"
+msgstr "Datenschutzhinweise"
+
+msgid "Simplenews settings"
+msgstr ""
+
+msgid "Privacy policy page (@langcode)"
+msgstr ""
+
+msgid "I hereby agree that my personal data transmitted with the contact information may be saved and processed. I confirm to be at least 16 years of age or have made available authorisation from the custodian(s) permitting the use of the contact information and dissemination of the data. I have read the @privacy_policy. The right of withdrawal is known to me."
+msgstr "Ich willige hiermit ein (Art. 6 Abs. 1 lit. a DSGVO), dass meine mit dem Kontakt übermittelten persönlichen Daten gespeichert und verarbeitet werden dürfen.\nIch versichere, dass ich über 16 Jahre alt bin bzw. die Zustimmung der / des Sorgeberechtigten zur Nutzung des Kontaktes und Weitergabe der Daten vorliegt.\n\nDie @privacy_policy habe ich gelesen. Das Recht des Widerrufs ist mir bekannt."
+
+msgid "Data protection regulations"
+msgstr "Datenschutzbestimmungen"
+
+msgid "Has accepted the data protection regulations at @date @time."
+msgstr "Hat den Datenschutzbestimmungen am @date um @time Uhr zugestimmt."
+
+msgid "The user has not yet accepted the data protection regulations."
+msgstr "Der Benutzer hat den Datenschutzbestimmungen noch nicht zugestimmt."
+
+msgid "Forename"
+msgstr "Vorname"
+
+msgid "Surname"
+msgstr "Nachname"

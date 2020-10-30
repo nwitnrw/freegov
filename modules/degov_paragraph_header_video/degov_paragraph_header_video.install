@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_paragraph_header_video module.
+ */
+
+use Drupal\degov_common\Common;
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_paragraph_header_video_uninstall() {
+  // Removes header video paragraph when module is uninstalled.
+  Common::removeContent([
+    'entity_type' => 'paragraph',
+    'entity_bundles' => ['video_header'],
+  ]);
+}

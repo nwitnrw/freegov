@@ -1,0 +1,32 @@
+{#
+/**
+ * @file
+ * Theme override to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ */
+#}
+{% if title %}
+  <h3>{{ title }}</h3>
+{% endif %}
+<div class="container degov-media-search-results pt-5">
+  <div class="row justify-content-center">
+    {% for row in rows %}
+      <div class="flex-grow-0 col-12 col-sm-6 col-md-4 col-xl-3 pb-5 text-center">
+        <div class="d-inline-block">
+          {{- row.content -}}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+

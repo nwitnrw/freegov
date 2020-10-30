@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * @file
+ */
+
+/**
+ * Implements hook_cron().
+ */
+function entity_reference_timer_cron() {
+  \Drupal::service('entity_reference_timer.cron_service')->clearExpiredCaches();
+}
+
+/**
+ * Implements template_preprocess_paragraph().
+ */
+function entity_reference_timer_preprocess_paragraph(&$variables) {
+  if ($variables['paragraph']->getType() === 'node_reference') {
+    $entries = 0;
+    foreach ($variables['content']['field_node_reference_nodes'] as $key => $value) {
+      if (is_numeric($key)) {
+        $entries++;
+      }
+    }
+    $variables['content_is_empty'] = ($entries === 0);
+  }
+}

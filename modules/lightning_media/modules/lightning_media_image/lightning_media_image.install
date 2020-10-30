@@ -1,0 +1,71 @@
+<?php
+
+/**
+ * @file
+ * Contains install and update routines for Lightning Media Image.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function lightning_media_image_install() {
+  // Don't do anything during config sync.
+  if (\Drupal::isConfigSyncing()) {
+    return;
+  }
+
+  $module_exists = [\Drupal::moduleHandler(), 'moduleExists'];
+
+  // Grants image browser access to the creator content role and the
+  // media_creator and media_manager roles.
+  if ($module_exists('lightning_roles')) {
+    lightning_media_image_modules_installed(['lightning_roles']);
+  }
+
+  if ($module_exists('image_widget_crop')) {
+    // Use the cropping widgets for every form display of the Image media type.
+    $form_displays = \Drupal::entityTypeManager()
+      ->getStorage('entity_form_display')
+      ->loadByProperties([
+        'targetEntityType' => 'media',
+        'bundle' => 'image',
+      ]);
+
+    /** @var \Drupal\Core\Entity\Display\EntityFormDisplayInterface $form_display */
+    foreach ($form_displays as $form_display) {
+      $component = $form_display->getComponent('image');
+
+      if ($component && $component['type'] === 'image_image') {
+        $component['type'] = 'image_widget_crop';
+        $component['settings']['crop_list'] = ['freeform'];
+        $component['settings']['show_crop_area'] = TRUE;
+        $form_display->setComponent('image', $component)->save();
+      }
+    }
+
+    // Try to use a local copy of Cropper over the CDN-hosted fallback.
+    $lib = 'libraries/cropper/dist';
+    $lib = [
+      $lib,
+      drupal_get_path('module', \Drupal::installProfile()) . "/$lib",
+    ];
+    $lib = array_filter($lib, 'is_dir');
+
+    if ($lib) {
+      $lib = reset($lib);
+
+      \Drupal::configFactory()
+        ->getEditable('image_widget_crop.settings')
+        ->set('settings.library_url', "$lib/cropper.min.js")
+        ->set('settings.css_url', "$lib/cropper.min.css")
+        ->save();
+    }
+  }
+}
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function lightning_media_image_update_last_removed() {
+  return 8007;
+}

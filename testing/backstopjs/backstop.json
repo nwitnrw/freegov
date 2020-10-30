@@ -1,0 +1,150 @@
+{
+  "id": "backstop_default",
+  "viewports": [
+    {
+      "label": "phone",
+      "width": 320,
+      "height": 480
+    },
+    {
+      "label": "tablet",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "label": "desktop",
+      "width": 1280,
+      "height": 768
+    }
+  ],
+  "onBeforeScript": "puppet/onBefore.js",
+  "onReadyScript": "puppet/onReady.js",
+  "disableJavascript": false,
+  "scenarios": [
+    {
+      "label": "deGov Frontpage",
+      "cookiePath": "backstop_data/engine_scripts/cookies.json",
+      "url": "http://host.docker.internal:80",
+      "referenceUrl": "",
+      "readyEvent": "",
+      "readySelector": "#degov-slider .carousel-item:nth-child(2).active",
+      "delay": 3000,
+      "hideSelectors": [],
+      "removeSelectors": [
+        ".alert-dismissible"
+      ],
+      "hoverSelector": "",
+      "clickSelector": "",
+      "selectors": [
+
+      ],
+      "selectorExpansion": true,
+      "expect": 0,
+      "misMatchThreshold": 5,
+      "requireSameDimensions": false
+    },
+    {
+      "label": "deGov video embed, no cookies",
+      "url": "http://host.docker.internal:80/degov-demo-content/page-video-header",
+      "referenceUrl": "",
+      "readyEvent": "",
+      "readySelector": ".js-social-media-code",
+      "delay": 600,
+      "hideSelectors": [],
+      "hoverSelector": "",
+      "clickSelector": "",
+      "selectors": [],
+      "selectorExpansion": true,
+      "expect": 0,
+      "misMatchThreshold": 5,
+      "requireSameDimensions": false
+    },
+    {
+      "label": "deGov video embed, cookies accepted, no social media",
+      "cookiePath": "backstop_data/engine_scripts/cookies-no-social-media.json",
+      "url": "http://host.docker.internal:80/degov-demo-content/page-video-header",
+      "referenceUrl": "",
+      "readyEvent": "",
+      "readySelector": ".js-social-media-code",
+      "delay": 600,
+      "hideSelectors": [],
+      "hoverSelector": "",
+      "clickSelector": "",
+      "selectors": [],
+      "selectorExpansion": true,
+      "expect": 0,
+      "misMatchThreshold": 5,
+      "requireSameDimensions": false
+    },
+    {
+      "label": "Social Media Settings popup",
+      "cookiePath": "backstop_data/engine_scripts/cookies.json",
+      "url": "http://host.docker.internal:80/?_debugDisplaySocialMediaSettings",
+      "referenceUrl": "",
+      "readyEvent": "",
+      "readySelector": "#social-media-settings",
+      "delay": 1000,
+      "hideSelectors": [],
+      "hoverSelector": "",
+      "clickSelector": "",
+      "selectors": [ "#social-media-settings" ],
+      "selectorExpansion": true,
+      "expect": 0,
+      "misMatchThreshold": 5,
+      "requireSameDimensions": false,
+      "skipValidation": true
+    },
+    {
+      "label": "deGov page-map-paragraph",
+      "_comment": "Google and OSM maps (and dismiss google dev banner 2x)",
+      "url": "http://host.docker.internal:80/degov-demo-content/page-map-paragraph",
+      "delay": 4000,
+      "clickSelectors": [
+        ".normal-page__content-paragraphs>div:nth-child(2) .styled-google-map .dismissButton",
+        ".normal-page__content-paragraphs>div:nth-child(4) .styled-google-map .dismissButton"
+      ],
+      "postInteractionWait": 500,
+      "removeSelectors": [
+        ".header-wrapper",
+        ".footer-wrapper",
+        ".eu-cookie-compliance-banner"
+      ],
+      "misMatchThreshold": 5
+    },
+    {
+      "label": "Admin Cookie",
+      "url": "http://host.docker.internal:80/admin/people/roles",
+      "_comment": "View people/roles which is only visible for Admin users",
+      "delay": 4000,
+      "removeSelectors": [
+        "#toolbar-administration",
+        ".sf-toolbarreset",
+        ".sf-minitoolbar",
+        "[data-drupal-messages]"
+      ],
+      "cookiePath": "tmp/cookiesAdmin.json",
+      "skipValidation": true
+    }
+  ],
+  "paths": {
+    "bitmaps_reference": "backstop_data/bitmaps_reference",
+    "bitmaps_test": "backstop_data/bitmaps_test",
+    "engine_scripts": "backstop_data/engine_scripts",
+    "html_report": "backstop_data/html_report",
+    "ci_report": "backstop_data/ci_report"
+  },
+  "report": [
+    "browser"
+  ],
+  "engine": "puppeteer",
+  "engineOptions": {
+    "args": [
+      "--no-sandbox"
+    ],
+    "chromeFlags": ["--disable-gpu", "--force-device-scale-factor=1"]
+  },
+  "asyncCaptureLimit": 2,
+  "asyncCompareLimit": 50,
+  "debug": true,
+  "debugWindow": false
+}

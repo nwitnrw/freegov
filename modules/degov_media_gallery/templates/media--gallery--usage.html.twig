@@ -1,0 +1,20 @@
+{#
+/**
+ * @file
+ * Default theme implementation to present a media entity.
+ *
+ * Available variables:
+ * - name: Name of the media.
+ * - content: Media content.
+ *
+ * @see template_preprocess_media()
+ *
+ * @ingroup themeable
+ */
+#}
+{% extends  "@degov_media_gallery/media--gallery--default.html.twig" %}
+
+{% block field_usage_block %}
+  {% set show_field_usage_block = true %}
+  {{ parent() }}
+{% endblock %}

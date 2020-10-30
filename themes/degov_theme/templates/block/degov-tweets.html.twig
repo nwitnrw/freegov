@@ -1,0 +1,54 @@
+{% if items %}
+  {% for tweet in items %}
+    {% set parity = cycle(['odd', 'even'], loop.index0) %}
+    <div class="tweet col-md-12 col-xl-6 {{ parity }}">
+      <div class="top d-flex">
+        <div class="tweet__avatar py-3 pl-3">
+          <a href="https://twitter.com/{{ tweet.screen_name }}"
+             title="{{ tweet.username }}">
+            <img alt="{{ tweet.username }}" src="{{ tweet.avatar }}">
+          </a>
+        </div>
+        <div class="tweet__content pt-3 px-3 pb-1">
+          <div class="tweet__name font-weight-bold d-inline">
+            <a
+              href="https://twitter.com/{{ tweet.screen_name }}">{{ tweet.username }}</a>
+          </div>
+          <div class="tweet__handle d-inline">
+            <a
+              href="https://twitter.com/{{ tweet.screen_name }}">@{{ tweet.screen_name }}</a>
+          </div>
+          <div class="tweet__timestamp d-md-inline">
+            <a
+              href="https://twitter.com/{{ tweet.screen_name }}/status/{{ tweet.id }}"
+              title="{{ tweet.time }}">
+              {{ tweet.time_ago }} {{ 'ago'|t }}
+            </a>
+          </div>
+          <div class="tweet__text pt-2">
+            {{ tweet.text }}
+          </div>
+        </div>
+      </div>
+      <div class="bottom">
+        <ul class="tweet__actions list-inline py-1 pr-4 pr-md-5 text-right">
+          <li class="list-inline-item pl-3"><a
+              href="https://twitter.com/intent/tweet?in_reply_to={{ tweet.id }}">
+              {{ tweet.followers_count }} <i class="fas fa-comment"></i>
+            </a>
+          </li>
+          <li class="list-inline-item pl-3"><a
+              href="https://twitter.com/intent/favorite?tweet_id={{ tweet.id }}">
+              {{ tweet.favourites_count }} <i class="fas fa-heart"></i>
+            </a>
+          </li>
+          <li class="list-inline-item pl-3"><a
+              href="https://twitter.com/intent/retweet?tweet_id={{ tweet.id }}">
+              {{ tweet.retweet_count }} <i class="fas fa-retweet"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  {% endfor %}
+{% endif %}

@@ -1,0 +1,49 @@
+content:
+  field_content_paragraphs:
+    type: paragraphs
+    third_party_settings: {  }
+    settings:
+     title: Paragraph
+     title_plural: Paragraphs
+     edit_mode: closed
+     autocollapse: none
+     add_mode: modal
+     form_display_mode: default
+     default_paragraph_type: _none
+     features:
+       duplicate: duplicate
+       collapse_edit_all: collapse_edit_all
+       add_above: add_above
+    region: content
+  field_header_paragraphs:
+    type: paragraphs
+    third_party_settings: {  }
+    settings:
+     title: Paragraph
+     title_plural: Paragraphs
+     edit_mode: closed
+     autocollapse: none
+     add_mode: modal
+     form_display_mode: default
+     default_paragraph_type: _none
+     features:
+       duplicate: duplicate
+       collapse_edit_all: collapse_edit_all
+       add_above: add_above
+    region: content
+  field_sidebar_right_paragraphs:
+    type: paragraphs
+    third_party_settings: {  }
+    settings:
+     title: Paragraph
+     title_plural: Paragraphs
+     edit_mode: closed
+     autocollapse: none
+     add_mode: modal
+     form_display_mode: default
+     default_paragraph_type: _none
+     features:
+       duplicate: duplicate
+       collapse_edit_all: collapse_edit_all
+       add_above: add_above
+    region: content

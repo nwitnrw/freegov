@@ -1,0 +1,43 @@
+{#
+  link: @string - The url to the post
+  caption: @string - The caption for the psots
+
+#}
+
+{%
+  set classes = [
+  'col-sm-12',
+  'col-md-6',
+  'col-lg-3',
+  'mb-4'
+]
+%}
+
+<article class="{{ classes|join(' ') }}">
+  <a class="img-top" href="{{ link }}" target="_blank" rel="bookmark">
+    <div class="teaser-image">
+      <img class="img-fluid" src="{{ imageUrl }}" title="{{ caption }}" alt="{{ caption }}"/>
+    </div>
+  </a>
+
+  <div class="teaser-content p-3">
+    <div class="normal-page__teaser-text">
+      <a href="{{ link }}" target="_blank" rel="bookmark">
+        {% autoescape false %}
+          <span class="instagram-user-name">{{ instagramUser }} </span> {{ caption }}
+        {% endautoescape %}
+      </a>
+    </div>
+  </div>
+
+  <a href="{{ link }}" target="_blank" rel="bookmark">
+    <div class="learn-more bg-blue text-align-center p-2">
+      <span class="likes"><span class="likes-text">{{ likes }}</span><i class="fas fa-heart" aria-hidden="true"></i></span>
+      <span class="views pl-4"><span class="views-text">{{ comments }}</span><i class="fas fa-comment" aria-hidden="true"></i></span>
+    </div>
+  </a>
+
+</article>
+
+
+

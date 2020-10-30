@@ -1,0 +1,4 @@
+hidden:
+  field_content_type: true
+  field_topic: true
+  field_view_control: true

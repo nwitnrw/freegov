@@ -1,0 +1,12 @@
+third_party_settings:
+  field_group:
+    group_common:
+      label: Allgemein
+    group_preview:
+      label: Vorschau
+    group_right_sidebar:
+      label: 'Seitenleiste rechts'
+    group_content:
+      label: Inhalt
+    group_header:
+      label: Kopfzeile

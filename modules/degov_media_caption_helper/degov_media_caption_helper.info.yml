@@ -1,0 +1,5 @@
+name: 'Media Caption Helper'
+description: 'Override image caption'
+type: module
+package: deGov
+core: 8.x

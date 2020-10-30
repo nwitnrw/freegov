@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Preprocess for the degov_node_external_teaser module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_alter().
+ */
+function degov_node_external_teaser_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if ($form_id === 'node_external_teaser_form' && isset($form['actions'])) {
+    foreach (array_keys($form['actions']) as $action) {
+      if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+        $form['actions'][$action]['#submit'][] = 'degov_node_external_teaser_submit';
+      }
+    }
+  }
+}
+
+/**
+ * Redirect after edit.
+ */
+function degov_node_external_teaser_submit($form, FormStateInterface $form_state) {
+  $form_state->setRedirect('system.admin_content');
+}

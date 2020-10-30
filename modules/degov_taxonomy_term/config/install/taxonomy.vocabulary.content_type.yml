@@ -1,0 +1,7 @@
+langcode: de
+status: true
+name: Inhaltstyp
+vid: content_type
+description: ''
+hierarchy: 0
+weight: 0

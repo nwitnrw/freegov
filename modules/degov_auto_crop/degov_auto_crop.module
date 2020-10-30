@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * Module file for deGov - Automatic cropping.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\degov_auto_crop\Form\CropOffsetForm;
+
+/**
+ * Implements hook_entity_insert().
+ */
+function degov_auto_crop_entity_insert(EntityInterface $entity) {
+  if ($entity->bundle() === 'file') {
+    if (preg_match("/^image\//", $entity->getMimeType())) {
+      \Drupal::service('degov_auto_crop.auto_cropper')
+        ->applyImageCrops($entity);
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function degov_auto_crop_entity_type_alter(array &$entity_types) {
+  $entity_types['crop_type']->setHandlerClass('form', [
+    'add'  => CropOffsetForm::class,
+    'edit' => CropOffsetForm::class,
+  ]);
+}

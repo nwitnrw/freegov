@@ -1,0 +1,47 @@
+.degov-navbar-wrapper {
+  min-height: $font-size-base * 3.5;
+  background-color: $gray-light;
+  color: $gray-dark;
+  border-bottom: $alto 2px solid;
+
+  .navbar {
+    padding-right: 0;
+    padding-left: 0;
+
+    .navbar-toggler {
+      color: $navbar-light-color;
+      border-color: $navbar-light-toggler-border-color;
+
+      .navbar-toggler-icon {
+        background-image: $navbar-light-toggler-icon-bg;
+      }
+    }
+
+    .navbar-nav.col-12 {
+      padding-right: 0;
+      padding-left: 0;
+
+      .nav-item {
+        a.nav-link {
+          color: $gray-dark;
+        }
+
+        &:first-child a.nav-link {
+          padding-left: 0;
+        }
+
+        &:last-child a.nav-link {
+          padding-right: 0;
+        }
+
+        .dropdown-toggle {
+          white-space: normal;
+          &::after {
+            content: none;
+          }
+        }
+      }
+    }
+  }
+}
+

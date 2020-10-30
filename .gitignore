@@ -1,0 +1,44 @@
+# IDE and editor specific files #
+#################################
+nbproject
+.idea
+.buildpath
+.project
+.settings
+.vagrant
+.tags
+.tags1
+tags
+!.gitkeep
+playbook.retry
+js/node_modules
+npm-debug.log
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+console
+
+# deGov
+/docroot
+/vendor
+/bin
+phpunit.xml
+/composer.lock
+testing/backstopjs/backstop_data/bitmaps_test
+testing/backstopjs/backstop_data/html_report
+testing/behat/behat.yml
+testing/behat/behat-no-drupal.yml
+testing/lfs_data
+/test-reports
+tmp/
+!testing/backstopjs/tmp/.htaccess
+.sass-cache/
+scripts/pipeline/html_validation_results
+.cidfile

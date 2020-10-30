@@ -1,0 +1,65 @@
+<?php
+
+/**
+ * @file
+ * Drupal hooks implementations for the degov_media_usage_node module.
+ */
+
+declare(strict_types=1);
+
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function degov_media_usage_node_node_insert(NodeInterface $entity): void {
+  static $handled = [];
+
+  /** @var \Drupal\degov_media_usage_node\Service\NodePersistance $persistance */
+  $persistance = \Drupal::service('degov_media_usage_node.persistance');
+  if ($persistance->canHandle($entity) && !in_array($entity->id(), $handled, TRUE)) {
+    $media = $persistance->getMedia($entity);
+    if (!$media) {
+      return;
+    }
+    $persistance->store($entity, $media);
+    $handled[] = $entity->id();
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function degov_media_usage_node_node_update(NodeInterface $entity): void {
+  static $handled = [];
+
+  /** @var \Drupal\degov_media_usage_node\Service\NodePersistance $persistance */
+  $persistance = \Drupal::service('degov_media_usage_node.persistance');
+  $id = $entity->id();
+
+  if ($persistance->canHandle($entity) && !in_array($id, $handled, TRUE)) {
+    $persistance->purge($entity);
+    $media = $persistance->getMedia($entity);
+    if (!$media) {
+      return;
+    }
+    $persistance->store($entity, $media);
+    $handled[] = $id;
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function degov_media_usage_node_node_delete(NodeInterface $entity): void {
+  static $handled = [];
+
+  /** @var \Drupal\degov_media_usage_node\Service\NodePersistance $persistance */
+  $persistance = \Drupal::service('degov_media_usage_node.persistance');
+  $id = $entity->id();
+
+  if ($persistance->canHandle($entity) && !in_array($id, $handled, TRUE)) {
+    $persistance->purge($entity);
+    $handled[] = $id;
+  }
+}

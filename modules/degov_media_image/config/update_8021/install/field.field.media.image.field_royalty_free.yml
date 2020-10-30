@@ -1,0 +1,22 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_royalty_free
+    - media.type.image
+id: media.image.field_royalty_free
+field_name: field_royalty_free
+entity_type: media
+bundle: image
+label: 'Bild ist frei'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: An
+  off_label: Aus
+field_type: boolean

@@ -1,0 +1,14 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_image_and_crop_styles
+  module:
+    - lightning_core
+    - media
+third_party_settings: { }
+id: media.teaser_landscape_squared
+label: 'Teaser landscape to squared'
+targetEntityType: media
+cache: true

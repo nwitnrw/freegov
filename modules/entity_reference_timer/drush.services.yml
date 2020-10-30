@@ -1,0 +1,6 @@
+services:
+  entity_reference_timer.commands:
+    class: Drupal\entity_reference_timer\Command\EntityReferenceTimerDrushCommands
+    arguments: []
+    tags:
+      - { name: drush.command }

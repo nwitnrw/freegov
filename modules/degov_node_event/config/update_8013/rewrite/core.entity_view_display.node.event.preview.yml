@@ -1,0 +1,5 @@
+content:
+  field_teaser_image:
+    type: degov_preview_image
+    settings:
+      view_mode: teaser_squared_1_1

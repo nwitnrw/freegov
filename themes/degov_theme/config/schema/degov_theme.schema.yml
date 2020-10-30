@@ -1,0 +1,16 @@
+degov_theme.settings:
+  type: theme_settings
+  label: 'Theme settings'
+  mapping:
+    social-icons:
+      type: sequence
+      label: 'Social icons'
+      sequence:
+        type: mapping
+        mapping:
+          font-awesome-classes:
+            type: label
+            label: 'Font awesome classes'
+          url:
+            type: label
+            label: 'Social network url'

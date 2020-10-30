@@ -1,0 +1,81 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_social_media_youtube module.
+ */
+
+use Drupal\Core\Link;
+
+/**
+ * Add youtube block, set youtube account to fetch feed from.
+ */
+function degov_social_media_youtube_update_870200() {
+  /* @var \Drupal\degov_common\DegovModuleUpdater $updater */
+  $updater = \Drupal::service('degov_config.module_updater');
+  $updater->applyUpdates('degov_social_media_youtube', '870200');
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function degov_social_media_youtube_requirements(string $phase): array {
+  $requirements = [];
+  if ($phase === 'runtime') {
+    $degov_devel_settings = Drupal::config('degov_devel.settings');
+    if ($degov_devel_settings->get('dev_mode')) {
+      // Nothing to do here. In Dev-Mode we use fixtures.
+      return $requirements;
+    }
+
+    $degov_social_media_youtube = Drupal::config('degov_social_media_youtube.settings');
+    $api_key = trim($degov_social_media_youtube->get('api_key'));
+    $requirements['degov_social_media_youtube'] = [
+      'title' => t('deGov Social Media YouTube'),
+    ];
+    if (empty($api_key)) {
+      $requirements['degov_social_media_youtube'] += [
+        'value' => t('API key is empty. Enter one in the %settings.',
+          ['%settings' => Link::createFromRoute(t('settings'), 'degov_social_media_youtube.admin_settings')->toString()]),
+        'severity' => REQUIREMENT_WARNING,
+      ];
+      return $requirements;
+    }
+    $channelName = trim($degov_social_media_youtube->get('channel'));
+    if (empty($channelName)) {
+      $requirements['degov_social_media_youtube'] += [
+        'value' => t('Channel name or channel ID is empty. Enter one in the %settings.',
+          ['%settings' => Link::createFromRoute(t('settings'), 'degov_social_media_youtube.admin_settings')->toString()]),
+        'severity' => REQUIREMENT_WARNING,
+      ];
+      return $requirements;
+    }
+    $numberOfVideos = $degov_social_media_youtube->get('number_of_videos');
+    try {
+      /** @var \Drupal\degov_social_media_youtube\Youtube $youtube */
+      $youtube = Drupal::service('degov_social_media_youtube.youtube');
+      $channelID = $youtube->getChannelByName($channelName)->id ?? $channelName;
+      $videos = $youtube->searchChannelVideos('', $channelID, $numberOfVideos,
+        'date');
+
+      if (empty($videos)) {
+        $requirements['degov_social_media_youtube'] += [
+          'value' => t('Could not find any videos with channel %channel',
+            ['%channel' => $channelID]),
+          'severity' => REQUIREMENT_WARNING,
+        ];
+        return $requirements;
+      }
+    }
+    catch (\Exception $exception) {
+      $requirements['degov_social_media_youtube'] += [
+        'value' => t('There are some problems. Review the %settings. %error', [
+          '%settings' => Link::createFromRoute(t('settings'), 'degov_social_media_youtube.admin_settings')->toString(),
+          '%error' => $exception->getMessage()
+        ]),
+        'severity' => REQUIREMENT_ERROR,
+      ];
+    }
+  }
+  return $requirements;
+}

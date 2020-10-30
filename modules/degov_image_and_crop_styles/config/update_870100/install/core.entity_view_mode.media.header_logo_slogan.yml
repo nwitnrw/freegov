@@ -1,0 +1,16 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_image_and_crop_styles
+  module:
+    - lightning_core
+    - media
+third_party_settings:
+  lightning_core:
+    description: ''
+id: media.header_logo_slogan
+label: 'Header Logo oder Slogan'
+targetEntityType: media
+cache: true

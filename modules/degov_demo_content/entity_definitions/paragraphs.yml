@@ -1,0 +1,485 @@
+teaser_small_image:
+  type: 'node_reference'
+  field_title: 'Teaser - Small Image'
+  field_sub_title: 'All teasers in view mode small image'
+  field_node_reference_viewmode: 'small_image'
+  field_node_reference_nodes: '{{NIDS}}'
+teaser_long_text:
+  type: 'node_reference'
+  field_title: 'Teaser - Long Text'
+  field_sub_title: 'All teasers in view mode long text'
+  field_node_reference_viewmode: 'long_text'
+  field_node_reference_nodes: '{{NIDS}}'
+teaser_preview:
+  type: 'node_reference'
+  field_title: 'Teaser - Preview'
+  field_sub_title: 'All teasers in view mode Preview'
+  field_node_reference_viewmode: 'preview'
+  field_node_reference_nodes: '{{NIDS}}'
+teaser_slim:
+  type: 'node_reference'
+  field_title: 'Teaser - Slim'
+  field_sub_title: 'All teasers in view mode Slim'
+  field_node_reference_viewmode: 'slim'
+  field_node_reference_nodes: '{{NIDS}}'
+teaser_slide:
+  type: 'node_reference__slideshow'
+  field_node_reference_viewmode: 'slide'
+  field_node_reference_nodes: '{{NIDS}}'
+header_banner:
+  type: 'image_header'
+  field_override_caption: 'Amet Pharetra Fusce'
+  field_header_media: '{{MEDIA_ID_IMAGE-image_3}}'
+header_type1_slideshow:
+  type: 'slideshow'
+  field_slideshow_slides:
+    - 'paragraph_reference_slide_1'
+    - 'paragraph_reference_slide_2'
+    - 'paragraph_reference_slide_3'
+    - 'paragraph_reference_slide_video_1'
+    - 'paragraph_reference_slide_video_2'
+    - 'paragraph_reference_slide_video_3'
+    - 'paragraph_reference_slide_video_4'
+    - 'paragraph_reference_slide_video_5'
+  field_slideshow_type: 'type_1'
+header_slideshow_all_slides_type_1:
+  type: 'slideshow'
+  field_slideshow_slides:
+    - 'paragraph_reference_slide_1'
+    - 'paragraph_reference_slide_2'
+    - 'paragraph_reference_slide_3'
+    - 'paragraph_reference_slide_video_1'
+    - 'paragraph_reference_slide_video_2'
+    - 'paragraph_reference_slide_video_3'
+    - 'paragraph_reference_slide_video_4'
+    - 'paragraph_reference_slide_video_5'
+  field_slideshow_type: 'type_1'
+header_slideshow_single_slides_type_1:
+  type: 'slideshow'
+  field_slideshow_slides:
+    - 'paragraph_reference_slide_1'
+  field_slideshow_type: 'type_1'
+header_slideshow_all_slides_type_2:
+  type: 'slideshow'
+  field_slideshow_slides:
+    - 'paragraph_reference_slide_1'
+    - 'paragraph_reference_slide_2'
+    - 'paragraph_reference_slide_3'
+    - 'paragraph_reference_slide_video_1'
+    - 'paragraph_reference_slide_video_2'
+    - 'paragraph_reference_slide_video_3'
+    - 'paragraph_reference_slide_video_4'
+    - 'paragraph_reference_slide_video_5'
+  field_slideshow_type: 'type_2'
+header_slideshow_single_slides_type_2:
+  type: 'slideshow'
+  field_slideshow_slides:
+    - 'paragraph_reference_slide_1'
+  field_slideshow_type: 'type_2'
+press_slideshow:
+  type: 'slideshow'
+  field_slideshow_slides:
+    - 'press_latest_content'
+header_video:
+  type: 'video_header'
+  field_override_caption: 'Quam Dolor Vehicula'
+  field_header_media: '{{MEDIA_ID_VIDEO}}'
+  field_header_text: 'Vivamus sagittis lacus vel augue laoret'
+slide_1:
+  type: 'slide'
+  field_override_caption: 'Sed posuere consectetur'
+  field_slide_media: '{{MEDIA_ID_IMAGE-image_4}}'
+  field_slide_text:
+    value: '<h1>Heading 1</h1>
+            <h2>Heading 2</h2>
+            <h3>Heading 3</h3>
+            <p><strong>Links are stripped if the field "field_slide_link" is not empty.</strong></h3>
+            <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. rebum Stet clita <a href="/">kasd</a> gubergren äöü ÄÖÜß àéîøū <a href="/">no</a> sea takimata sanctus est <a href="/">äöü</a> ÄÖÜß àéîøū Lorem ipsum <a href="/">dolor</a> sit amet Lorem ipsum Cras justo odio, dapibus ac facilisis.</p>
+            <p>Etiam porta sem malesuada magna mollis euismod. Donec ullamcorper nulla non metus auctor fringilla. <a href="/">ÄÖÜß</a> àéîøū rebum Stet clita <a href="/">kasd</a> gubergren äöü ÄÖÜß àéîøū <a href="/">vallum</a> sea takimata sanctus est <a href="/">ägäicum</a> ÄÖÜß àéîøū Lorem ipsum <a href="/">dolor</a> sit amet Lorem ipsum <a href="/">äöü</a> ÄÖÜß àéîøū dolor sit <a href="/">amet</a> consetetur äöüÄ ÖÜßà éîøū</p>
+            <p><strong>Nullam quis risus eget</strong>  urna mollis ornare vel eu leo <em>justo odio, dapibus ac facilisis</em> gestas eget quam <a href="/">linkum hyper referenzum</a> Duis mollis</p>'
+    format: 'rich_html'
+  field_slide_link:
+    - "https://drupal.org"
+slide_2:
+  type: 'slide'
+  field_override_caption: 'Morbi leo risus'
+  field_slide_media: '{{MEDIA_ID_IMAGE-image_2}}'
+  field_slide_text:
+    value: '<h1>Heading 1</h1>
+            <h2>Heading 2</h2>
+            <h3>Heading 3</h3>
+            <p>Etiam porta sem malesuada magna mollis euismod. Donec ullamcorper nulla non metus auctor fringilla. <a href="/">ÄÖÜß</a> àéîøū rebum Stet clita <a href="/">kasd</a> gubergren äöü ÄÖÜß àéîøū <a href="/">vallum</a> sea takimata sanctus est <a href="/">ägäicum</a> ÄÖÜß àéîøū Lorem ipsum <a href="/">dolor</a> sit amet Lorem ipsum <a href="/">äöü</a> ÄÖÜß àéîøū dolor sit <a href="/">amet</a> consetetur äöüÄ ÖÜßà éîøū</p>'
+    format: 'rich_html'
+slide_3:
+  type: 'slide'
+  field_override_caption: 'Ligula Venenatis Ullamcorper'
+  field_slide_media: '{{MEDIA_ID_IMAGE-image_1}}'
+  field_slide_text:
+    value: '<h3>Heading 3</h3>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Nulla vitae elit libero, a pharetra augue. Etiam porta sem malesuada magna mollis euismod. <a href="/">vallum</a> sea takimata sanctus est <a href="/">ägäicum</a>. Curabitur blandit tempus porttitor. Sed posuere consectetur est at lobortis.'
+    format: 'rich_html'
+slide_video_1:
+  type: 'slide'
+  field_override_caption: 'Fermentum Dolor Dapibus'
+  field_slide_media: '{{MEDIA_ID_VIDEO}}'
+  field_slide_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+slide_video_2:
+  type: 'slide'
+  field_override_caption: 'Donec id elit non mi porta'
+  field_slide_media: '{{MEDIA_ID_VIDEO_UPLOAD}}'
+  field_slide_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+slide_video_3:
+  type: 'slide'
+  field_override_caption: 'Nullam id dolor id nibh ultricies'
+  field_slide_media: '{{MEDIA_ID_VIDEO_MOBILE}}'
+  field_slide_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+slide_video_4:
+  type: 'slide'
+  field_override_caption: 'Etiam Nullam Vulputate Porta'
+  field_slide_media: '{{MEDIA_ID_VIDEO}}'
+  field_slide_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+slide_video_5:
+  type: 'slide'
+  field_override_caption: 'Maecenas sed diam eget risus varius blandit'
+  field_slide_media: '{{MEDIA_ID_VIDEO_UPLOAD}}'
+  field_slide_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+text_1:
+  type: 'text'
+  field_text_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_title: 'Tellus Ornare Adipiscing Purus Sem'
+  field_sub_title: 'Tristique Magna Vestibulum'
+  field_title_link:
+    uri: "https://www.example.com/this-is-a-very-long-link-over-eighty-characters-that-should-not-be-cut-off"
+text_2:
+  type: 'text'
+  field_title: 'Nibh Purus Euismod'
+  field_sub_title: 'Bibendum Inceptos Ipsum'
+  field_text_text:
+    value: >
+      <h1>Malesuada Risus Ornare Commodo Vulputate</h1>
+      <p>{{TEXT}}</p>
+      <p><strong>Nullam quis risus eget</strong>  urna mollis ornare vel eu leo <em>justo odio, dapibus ac facilisis</em> gestas eget quam <a href="/">linkum hyper referenzum</a> Duis mollis</p>
+      <h2>Duis mollisst non commodo luctus, nisi erat porttitor ligula. Maecenas faucibus mollis interdum.</h2>
+      <p>{{TEXT}}</p>
+      {{MEDIA_ID_IMAGE_ENTITY_EMBED-image_4}}
+      <h3>Eget lacinia odio sem nec elit</h3>
+      <p>{{TEXT}}</p>
+      <h4>Nullam quis risus eget urna mollis ornar.</h4>
+      <p>{{TEXT}}</p>
+      <h5>Fusce Quam</h5>
+      <p>{{TEXT}}</p>
+      <h6>Fusce Parturient Dolor</h6>
+      <p>{{TEXT}}</p>
+    format: 'rich_html'
+text_3:
+  type: 'text'
+  field_title: 'Vestibulum Dapibus Elit Bibendum'
+  field_text_text:
+    value: >
+      {{MEDIA_ID_IMAGE_ENTITY_EMBED-image_1}}
+      <p>{{TEXT}}</p>
+    format: 'rich_html'
+download_1:
+  type: 'downloads'
+  field_downloads_files:
+   - 'media_reference_document_1'
+   - 'media_reference_document_2'
+   - 'media_reference_document_3'
+  field_title: 'Ullamcorper Ligula Sollicitudin'
+  field_sub_title: 'Ullamcorper Dolor Magna Quam'
+faq_1:
+  type: 'faq'
+  field_faq_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_faq_title: 'Venenatis Elit Purus Cras'
+faq_2:
+  type: 'faq'
+  field_faq_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_faq_title: 'Dapibus Parturient Ipsum'
+faq_3:
+  type: 'faq'
+  field_faq_text:
+    value: '{{TEXT}}'
+    format: 'rich_html'
+  field_faq_title: 'Quam Dapibus Ultricies Inceptos Vestibulum Quam Dapibus Ultricies Inceptos Vestibulum Quam Dapibus Ultricies Inceptos Vestibulum Quam Dapibus Ultricies Inceptos Vestibulum'
+faq_list_1:
+  type: 'faq_list'
+  field_title: 'Magna Euismod Ornare'
+  field_sub_title: 'Pharetra Nibh Quam Dolor'
+  field_faq_list_inner_paragraphs:
+    - 'paragraph_reference_faq_1'
+    - 'paragraph_reference_faq_2'
+    - 'paragraph_reference_faq_3'
+iframe_1:
+  type: 'iframe'
+  field_title: 'Condimentum Pellentesque Commodo'
+  field_sub_title: 'Amet Ultricies Inceptos'
+  field_iframe_url: 'https://www.youtube.com/embed/z-qpyBRTJ2A'
+  field_iframe_height: 400
+map_1:
+  type: 'map'
+  field_map_address_reference:
+    - '{{MEDIA_ID_ADDRESS-address_1}}'
+    - '{{MEDIA_ID_ADDRESS-address_2}}'
+  field_map_address_view_mode: 'osm_map'
+  field_title: 'Open Street map'
+  field_sub_title: '{{SUBTITLE}}'
+map_2:
+  type: 'map'
+  field_map_address_reference:
+    - '{{MEDIA_ID_ADDRESS-address_1}}'
+    - '{{MEDIA_ID_ADDRESS-address_2}}'
+  field_map_address_view_mode: 'default_map'
+  field_title: 'Google map'
+  field_sub_title: '{{SUBTITLE}}'
+map_3:
+  type: 'map'
+  field_map_address_reference:
+    - '{{MEDIA_ID_ADDRESS-address_1}}'
+    - '{{MEDIA_ID_ADDRESS-address_2}}'
+  field_map_address_view_mode: 'osm_map'
+  field_title: 'Open Street map'
+  field_sub_title: '{{SUBTITLE}}'
+map_4:
+  type: 'map'
+  field_map_address_reference:
+    - '{{MEDIA_ID_ADDRESS-address_1}}'
+    - '{{MEDIA_ID_ADDRESS-address_2}}'
+  field_map_address_view_mode: 'default_map'
+  field_title: 'Google map'
+  field_sub_title: '{{SUBTITLE}}'
+video_upload_subtitle_file_1:
+  type: 'video_subtitle'
+  field_subtitle_kind: 'subtitles'
+  field_subtitle_label: 'Subtitles'
+  field_subtitle_lang: 'de'
+  field_subtitle_default: 1
+  file: 'untertitel.de.vtt'
+## View references
+views_reference_latest_media:
+  type: 'view_reference'
+  field_title: 'Mediathek'
+  field_sub_title: 'View latest media'
+  field_view_reference_view:
+    target_id: 'latest_media'
+    display_id: 'block_1'
+    view_mode: 'preview_wide'
+views_reference_latest_content:
+  type: 'view_reference'
+  field_title: 'A view displaying the latest content'
+  field_sub_title: 'Quam Vulputate Ornare Fringilla'
+  field_view_reference_view:
+    target_id: 'content_recent'
+    display_id: 'block_1'
+    view_mode: 'preview'
+views_reference_latest_press_slider:
+  type: 'view_reference'
+  field_title: 'Press Slider - Latest'
+  field_sub_title: 'Latest press teasers in view mode `latest`'
+  field_view_reference_view:
+    target_id: 'press_latest_content'
+    display_id: 'press_slider'
+    view_mode: 'latest'
+views_reference_latest_press_1:
+  type: 'view_reference'
+  field_title: 'Teaser - Small Image'
+  field_sub_title: 'Latest press teasers in view mode small image'
+  field_view_reference_view:
+    target_id: 'press_latest_content'
+    display_id: 'latest_press'
+    view_mode: 'small_image'
+views_reference_latest_press_2:
+  type: 'view_reference'
+  field_title: 'Teaser - Long Text'
+  field_sub_title: 'Latest press teasers in view mode long text'
+  field_view_reference_view:
+    target_id: 'press_latest_content'
+    display_id: 'latest_press'
+    view_mode: 'long_text'
+views_reference_latest_press_3:
+  type: 'view_reference'
+  field_title: 'Teaser - Preview'
+  field_sub_title: 'Latest press teasers in view mode preview'
+  field_view_reference_view:
+    target_id: 'press_latest_content'
+    display_id: 'latest_press'
+    view_mode: 'preview'
+views_reference_latest_press_4:
+  type: 'view_reference'
+  field_title: 'Teaser - Slim'
+  field_sub_title: 'Latest press teasers in view mode slim'
+  field_view_reference_view:
+    target_id: 'press_latest_content'
+    display_id: 'latest_press'
+    view_mode: 'slim'
+views_reference_latest_events_1:
+  type: 'view_reference'
+  field_title: 'Teaser - Small Image'
+  field_sub_title: 'Latest events teasers in view mode small image'
+  field_view_reference_view:
+    target_id: 'latest_events'
+    display_id: 'latest_event'
+    view_mode: 'small_image'
+views_reference_latest_events_2:
+  type: 'view_reference'
+  field_title: 'Teaser - Long Text'
+  field_sub_title: 'Latest events teasers in view mode long text'
+  field_view_reference_view:
+    target_id: 'latest_events'
+    display_id: 'latest_event'
+    view_mode: 'long_text'
+views_reference_latest_events_3:
+  type: 'view_reference'
+  field_title: 'Teaser - Preview'
+  field_sub_title: 'Latest events teasers in view mode preview'
+  field_view_reference_view:
+    target_id: 'latest_events'
+    display_id: 'latest_event'
+    view_mode: 'preview'
+views_reference_latest_events_4:
+  type: 'view_reference'
+  field_title: 'Teaser - Slim'
+  field_sub_title: 'Latest events teasers in view mode slim'
+  field_view_reference_view:
+    target_id: 'latest_events'
+    display_id: 'latest_event'
+    view_mode: 'slim'
+## Media References
+media_reference_image:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Bild-Mediums'
+  field_sub_title: 'In View Mode `preview`'
+  field_media_reference_view_mode: 'preview'
+  field_media_reference_media: '{{MEDIA_ID_IMAGE-image_1}}'
+media_reference_video_upload:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Video-Upload-Mediums'
+  field_sub_title: 'Vehicula Amet Euismod'
+  field_media_reference_view_mode: 'preview'
+  field_media_reference_media: '{{MEDIA_ID_VIDEO_UPLOAD}}'
+media_reference_document:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Dokument-Mediums'
+  field_sub_title: 'Quam Venenatis Malesuada Pellentesque'
+  field_media_reference_view_mode: 'preview'
+  field_media_reference_media: '{{MEDIA_ID_DOCUMENT}}'
+media_reference_audio:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Audio-Mediums'
+  field_sub_title: 'Porta Ullamcorper Parturient'
+  field_media_reference_view_mode: 'preview'
+  field_media_reference_media: '{{MEDIA_ID_AUDIO}}'
+media_reference_address:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Adresse-Mediums'
+  field_sub_title: 'Vestibulum Dapibus Fusce'
+  field_media_reference_view_mode: 'preview'
+  field_media_reference_media: '{{MEDIA_ID_ADDRESS-address_1}}'
+media_reference_citation:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Zitat-Mediums'
+  field_sub_title: 'Citatum subtitulum maximalis referencesarium'
+  field_media_reference_view_mode: 'preview'
+  field_media_reference_media: '{{MEDIA_ID_CITATION}}'
+media_reference_citation_front:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Zitat-Mediums'
+  field_sub_title: 'Dolor id ultricies vehicula subtitulum'
+  field_media_reference_view_mode: 'default'
+  field_media_reference_media: '{{MEDIA_ID_CITATION}}'
+media_reference_person:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Person-Mediums'
+  field_sub_title: 'Inceptos Ligula referencum'
+  field_media_reference_view_mode: 'preview'
+  field_media_reference_media: '{{MEDIA_ID_PERSON}}'
+media_reference_contact_1:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Kontakt Mediums mit Bild'
+  field_sub_title: 'Contactum con visualis'
+  field_media_reference_view_mode: 'preview'
+  field_media_reference_media: '{{MEDIA_ID_CONTACT-contact_1}}'
+media_reference_contact_2:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Kontakt Mediums ohne Bild'
+  field_sub_title: 'Contactum sin imago'
+  field_media_reference_view_mode: 'preview'
+  field_media_reference_media: '{{MEDIA_ID_CONTACT-contact_2}}'
+media_reference_contact_3:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Kontakt Mediums mit Bild ohne Ansichtsmodus'
+  field_sub_title: 'Contactum con visualis'
+  field_media_reference_media: '{{MEDIA_ID_CONTACT-contact_1}}'
+media_reference_contact_4:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Kontakt Mediums ohne Bild ohne Ansichtsmodus'
+  field_sub_title: 'Contactum sin imago'
+  field_media_reference_media: '{{MEDIA_ID_CONTACT-contact_2}}'
+media_reference_gallery:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Galerie-Mediums'
+  field_sub_title: 'Subtitle for the gallery'
+  field_media_reference_view_mode: 'preview'
+  field_media_reference_media: '{{MEDIA_ID_GALLERY}}'
+media_reference_gallery_no_view_mode:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Galerie-Mediums'
+  field_sub_title: 'Another Subtitle for the gallery'
+  field_media_reference_media: '{{MEDIA_ID_GALLERY}}'
+media_reference_tweet:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Tweet-Mediums'
+  field_sub_title: 'Cras Fusce del Tweetulum'
+  field_media_reference_view_mode: 'preview'
+  field_media_reference_media: '{{MEDIA_ID_TWEET}}'
+media_reference_instagram:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Instagram-Mediums'
+  field_sub_title: 'Simplificum instagrammum'
+  field_media_reference_view_mode: 'preview'
+  field_media_reference_media: '{{MEDIA_ID_INSTAGRAM}}'
+media_reference_some_embed:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Social Media Embed Mediums'
+  field_sub_title: 'Embedulum Tristique Lorem'
+  field_media_reference_view_mode: 'preview'
+  field_media_reference_media: '{{MEDIA_ID_SOME_EMBED}}'
+media_reference_video:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Video-Mediums'
+  field_sub_title: 'Transmittum audiovisualis'
+  field_media_reference_view_mode: 'preview'
+  field_media_reference_media: '{{MEDIA_ID_VIDEO}}'
+media_reference_responsive_video:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Responsiven Video-Mediums'
+  field_sub_title: 'motum vocis imaginem'
+  field_media_reference_view_mode: 'full'
+  field_media_reference_media: '{{MEDIA_ID_VIDEO_MOBILE}}'
+media_reference_image_overridden:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Bild-Mediums'
+  field_sub_title: 'Vestibulum Nibh Lorem'
+  field_media_reference_view_mode: 'preview'
+  field_media_reference_media: '{{MEDIA_ID_IMAGE-image_1}}'
+  field_override_caption: 'Caption set in paragraph'
+media_reference_image_viewmode_default:
+  type: 'media_reference'
+  field_title: 'Vorschau eines Bild-Mediums'
+  field_sub_title: 'In View Mode `default`'
+  field_media_reference_view_mode: 'default'
+  field_media_reference_media: '{{MEDIA_ID_IMAGE-image_1}}'

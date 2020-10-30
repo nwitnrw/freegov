@@ -1,0 +1,36 @@
+.top-header-wrapper {
+  height: $font-size-base * 2.8;
+  background-color: $blue;
+  color: $white;
+  nav.navbar {
+    padding: 0;
+  }
+  .navbar-nav {
+    flex-direction: row;
+    .nav-item {
+      margin-right: 0;
+      @include media-breakpoint-up(md) {
+        margin-right: 1rem;
+      }
+      i {
+        padding-left: .3rem;
+      }
+      &:first-of-type {
+        padding-left: 0;
+      }
+    }
+  }
+  a {
+    color: $white;
+    text-decoration: none;
+  }
+  .dropdown-toggle {
+    white-space: normal;
+    &::after {
+      content: none;
+    }
+  }
+  .dropdown-menu {
+    background-color: $blue;
+  }
+}

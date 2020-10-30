@@ -1,0 +1,22 @@
+langcode: de
+status: false
+dependencies:
+  config:
+    - facets.facet.changed
+  module:
+    - facets
+  theme:
+    - nrw_base_theme
+id: changed
+theme: nrw_base_theme
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'facet_block:changed'
+settings:
+  id: 'facet_block:changed'
+  label: Änderungsdatum
+  provider: facets
+  label_display: visible
+  block_id: changed
+visibility: {  }

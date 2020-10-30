@@ -1,0 +1,9 @@
+name: 'deGov - Paragraph Configuration Overrides'
+description: 'Overrides node entities.'
+type: module
+package: deGov
+core: 8.x
+dependencies:
+  - degov_content_types_shared_fields
+  - degov_paragraph_slideshow
+  - degov_paragraph_media_reference

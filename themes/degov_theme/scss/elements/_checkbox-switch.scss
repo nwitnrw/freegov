@@ -1,0 +1,40 @@
+.checkbox-switch {
+  position: relative;
+  -webkit-appearance: none;
+  outline: none;
+  width: 50px;
+  height: 30px;
+  background-color: $white;
+  border: 1px solid $gray;
+  border-radius: 50px;
+  box-shadow: inset -20px 0 0 0 #fff;
+  cursor: pointer;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    background: transparent;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    box-shadow: 2px 4px 6px rgba(0,0,0,0.2);
+
+  }
+
+  &:checked {
+    box-shadow: inset 20px 0 0 0 $link-color;
+    border-color: $link-color;
+
+    &:after {
+      left: 20px;
+      box-shadow: -2px 4px 3px rgba(0,0,0,0.05);
+    }
+  }
+  & + label {
+    line-height: 30px;
+    vertical-align: bottom;
+    cursor: pointer;
+  }
+}

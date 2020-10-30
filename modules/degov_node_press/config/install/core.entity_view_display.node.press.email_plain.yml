@@ -1,0 +1,68 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.email_plain
+    - field.field.node.press.field_content_paragraphs
+    - field.field.node.press.field_content_type
+    - field.field.node.press.field_header_paragraphs
+    - field.field.node.press.field_internal_title
+    - field.field.node.press.field_metatags
+    - field.field.node.press.field_press_date
+    - field.field.node.press.field_section
+    - field.field.node.press.field_sidebar_right_paragraphs
+    - field.field.node.press.field_social_media
+    - field.field.node.press.field_tags
+    - field.field.node.press.field_teaser_image
+    - field.field.node.press.field_teaser_sub_title
+    - field.field.node.press.field_teaser_text
+    - field.field.node.press.field_teaser_title
+    - field.field.node.press.field_topic
+    - field.field.node.press.field_view_control
+    - node.type.press
+  enforced:
+    module:
+      - degov_node_press
+  module:
+    - datetime
+    - user
+id: node.press.email_plain
+targetEntityType: node
+bundle: press
+mode: email_plain
+content:
+  field_press_date:
+    weight: 0
+    label: hidden
+    settings:
+      timezone_override: Europe/Berlin
+      date_format: d.m.Y
+    third_party_settings: {  }
+    type: datetime_custom
+    region: content
+  field_teaser_title:
+    type: string
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  field_content_paragraphs: true
+  field_content_type: true
+  field_header_paragraphs: true
+  field_internal_title: true
+  field_metatags: true
+  field_section: true
+  field_sidebar_right_paragraphs: true
+  field_social_media: true
+  field_tags: true
+  field_teaser_image: true
+  field_teaser_sub_title: true
+  field_teaser_text: true
+  field_topic: true
+  field_view_control: true
+  langcode: true
+  links: true
+  shariff_field: true

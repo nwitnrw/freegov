@@ -1,0 +1,38 @@
+<phpunit bootstrap="../../../core/tests/bootstrap.php" colors="true"
+         beStrictAboutTestsThatDoNotTestAnything="true"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutChangesToGlobalState="true"
+         printerClass="\Drupal\Tests\Listeners\HtmlOutputPrinter"
+         convertDeprecationsToExceptions="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         executionOrder="random"
+         failOnRisky="true"
+         failOnWarning="true"
+>
+
+
+  <php>
+    <ini name="error_reporting" value="E_ALL" />
+    <ini name="display_errors" value="1" />
+    <ini name="display_startup_errors" value="1" />
+    <ini name="memory_limit" value="-1" />
+    <ini name="zend.enable_gc" value="1" />
+    <env name="SIMPLETEST_DB" value="sqlite://localhost//tmp/db.sqlite"/>
+  </php>
+
+  <testsuites>
+    <testsuite name="Robo">
+      <directory>./scripts/Robo/Test/</directory>
+    </testsuite>
+    <testsuite name="deGov">
+      <directory>./modules/</directory>
+    </testsuite>
+    <testsuite name="behat">
+      <directory>./testing/behat/context/Tests/</directory>
+      <directory>./testing/behat/context/Tests/Unit/</directory>
+    </testsuite>
+  </testsuites>
+
+</phpunit>

@@ -1,0 +1,22 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_common
+  module:
+    - degov_common
+  theme:
+    - degov_theme
+id: degov_theme_sidebarparagraphsfromnodeentity
+theme: degov_theme
+region: top_header
+weight: -9
+provider: null
+plugin: sidebar_paragraphs
+settings:
+  id: sidebar_paragraphs
+  label: 'Sidebar paragraphs from Node entity'
+  provider: degov_common
+  label_display: '0'
+visibility: {  }

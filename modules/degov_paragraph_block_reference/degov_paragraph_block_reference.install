@@ -1,0 +1,103 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_paragraph_block_reference module.
+ */
+
+use Drupal\Core\Field\FieldConfigInterface;
+
+/**
+ * Update block reference paragraph
+ */
+function degov_paragraph_block_reference_update_8007() {
+  /**
+   * @var \Drupal\degov_common\DegovModuleUpdater $moduleUpdater
+   */
+  $moduleUpdater = \Drupal::service('degov_config.module_updater');
+  $moduleUpdater->reImport('core.entity_view_display.paragraph.block_reference_sidebar.default', 'degov_paragraph_block_reference', 'install');
+  $moduleUpdater->reImport('core.entity_view_display.paragraph.block_reference_sidebar.preview', 'degov_paragraph_block_reference', 'install');
+  $moduleUpdater->reImport('core.entity_form_display.paragraph.block_reference_sidebar.default', 'degov_paragraph_block_reference', 'install');
+  $moduleUpdater->reImport('field.field.paragraph.block_reference_sidebar.field_block_plugin', 'degov_paragraph_block_reference', 'install');
+  $moduleUpdater->reImport('field.field.paragraph.block_reference_sidebar.field_sub_title', 'degov_paragraph_block_reference', 'install');
+  $moduleUpdater->reImport('field.field.paragraph.block_reference_sidebar.field_title_link', 'degov_paragraph_block_reference', 'install');
+  $moduleUpdater->reImport('paragraphs.paragraphs_type.block_reference_sidebar', 'degov_paragraph_block_reference', 'install');
+  $moduleUpdater->reImport('field.field.paragraph.block_reference_sidebar.field_title', 'degov_paragraph_block_reference', 'install');
+
+  \Drupal::service('module_installer')->install([
+    'degov_node_press',
+    'degov_social_media_youtube',
+    'degov_social_media_instagram',
+    'degov_tweets',
+    'degov_simplenews_references',
+  ]);
+
+  $configFactory = \Drupal::configFactory();
+
+  \Drupal::service('degov_config.updater')
+    ->checkOptional(drupal_get_path('module', 'degov_paragraph_block_reference') . '/config/install');
+
+  if (empty(\Drupal::configFactory()
+    ->get('field.field.paragraph.block_reference_sidebar.field_block_plugin')
+    ->getRawData())) {
+    throw new RuntimeException('Paragraph block reference for sidebar is missing after import!');
+  }
+
+  $fieldName = 'field_sidebar_right_paragraphs';
+
+  foreach (degov_paragraph_block_reference_get_all_node_types() as $nodeType) {
+
+    if (isset(degov_paragraph_block_reference_get_all_fields($nodeType)[$fieldName])) {
+      $fieldConfig = $configFactory->getEditable('field.field.node.' . $nodeType . '.' . $fieldName);
+      $targetBundles = $fieldConfig->get('settings.handler_settings.target_bundles');
+      $targetBundlesDragDrop = $fieldConfig->get('settings.handler_settings.target_bundles_drag_drop');
+
+      $targetBundles['block_reference_sidebar'] = 'block_reference_sidebar';
+      unset($targetBundles['block_reference']);
+
+      $tempTargetBundlesDragDrop = $targetBundlesDragDrop['block_reference'];
+      $targetBundlesDragDrop['block_reference_sidebar'] = $tempTargetBundlesDragDrop;
+      unset($targetBundlesDragDrop['block_reference']);
+
+      $fieldConfig->set('settings.handler_settings.target_bundles', $targetBundles);
+      $fieldConfig->set('settings.handler_settings.target_bundles_drag_drop', $targetBundlesDragDrop);
+      $fieldConfig->save();
+    }
+  }
+
+  $configFactory
+    ->getEditable('field.field.paragraph.block_reference.field_block_plugin')
+    ->set('settings.plugin_ids', [
+      'degov_twitter_block' => 'degov_twitter_block',
+      'degov_social_media_instagram' => 'degov_social_media_instagram',
+      'degov_social_media_youtube' => 'degov_social_media_youtube',
+    ])
+    ->save(TRUE);
+}
+
+function degov_paragraph_block_reference_get_all_node_types(): array {
+  $nodeTypes = [];
+  $nodeTypesEntities = \Drupal::entityTypeManager()
+    ->getStorage('node_type')
+    ->loadMultiple();
+  foreach ($nodeTypesEntities as $nodeTypesEntity) {
+    $nodeTypes[] = $nodeTypesEntity->id();
+  }
+
+  return $nodeTypes;
+}
+
+function degov_paragraph_block_reference_get_all_fields($contentType): array {
+  $entityManager = Drupal::service('entity.manager');
+  $fields = [];
+
+  if (!empty($contentType)) {
+    $fields = array_filter(
+      $entityManager->getFieldDefinitions('node', $contentType), function ($field_definition) {
+        return $field_definition instanceof FieldConfigInterface;
+      }
+    );
+  }
+
+  return $fields;
+}

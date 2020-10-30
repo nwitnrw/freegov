@@ -1,0 +1,27 @@
+degov_common.admin_config_degov:
+  path: '/admin/config/degov'
+  defaults:
+    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
+    _title: 'deGov'
+  requirements:
+    _permission: 'access administration pages'
+degov_common.settings:
+  path: '/admin/config/degov/common'
+  defaults:
+    _form: '\Drupal\degov_common\Form\DegovSettingsForm'
+    _title: 'deGov distribution settings'
+  requirements:
+    _permission: 'administer degov'
+degov_common.ajax_load_entity:
+  path: '/ajax-load-entity/{entity_type}/{entity_id}'
+  defaults:
+    _controller: '\Drupal\degov_common\Controller\CommonController::ajaxEntityLoad'
+  requirements:
+    _permission: 'access content'
+degov_common.file_download:
+  path: /file/{file}/download
+  defaults:
+    _controller: '\Drupal\degov_common\Controller\FileController::download'
+    _title: 'Download file'
+  requirements:
+    _entity_access: 'file.download'

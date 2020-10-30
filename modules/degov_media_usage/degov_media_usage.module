@@ -1,0 +1,88 @@
+<?php
+
+/**
+ * @file
+ * Drupal hooks implementations for the degov_media_usage module.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Entity\EntityForm;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\degov_media_usage\EntityTypeInfo;
+use Drupal\media\MediaInterface;
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function degov_media_usage_views_data_alter(array &$data) {
+  $data['media']['media_usage'] = [
+    'title' => t('Media usage count'),
+    'field' => [
+      'id' => 'media_usage',
+      'title' => t('Media usage count'),
+      'help' => t('Displays media entity usage count'),
+    ],
+  ];
+
+  $data['views']['file_usage'] = [
+    'title' => t('File usage count'),
+    'field' => [
+      'id' => 'file_usage',
+      'title' => t('File usage count'),
+      'help' => t('Displays file usage count'),
+    ],
+  ];
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function degov_media_usage_entity_type_alter(array &$entity_types) {
+  return \Drupal::service('class_resolver')
+    ->getInstanceFromDefinition(EntityTypeInfo::class)
+    ->entityTypeAlter($entity_types);
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function degov_media_usage_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  /** @var \Drupal\degov_media_usage\Service\MediaUsageInfo $info */
+  $info = \Drupal::service('degov_media_usage.reference_info');
+
+  if (preg_match('/^media_(.+)_delete_form$/iu', $form_id)) {
+    $object = $form_state->getFormObject();
+    if ($object instanceof EntityForm) {
+      $entity = $object->getEntity();
+      if ($entity instanceof MediaInterface) {
+        $count = $info->getRefsCount($entity);
+        if ($count > 0) {
+          $form['description'] = [
+            'alert' => [
+              '#markup' => t('This action cannot be undone.'),
+            ],
+            'references' => [
+              '#prefix' => '<br/>',
+              '#markup' => t(
+                'This media is referenced at @count place(s).',
+                ['@count' => $count]
+              ),
+            ],
+            'link' => [
+              '#prefix' => '<br/>',
+              '#type' => 'link',
+              '#title' => t('Browse references'),
+              '#url' => Url::fromRoute(
+                'entity.media.degov_media_usage_refs',
+                ['media' => $entity->id()]
+              ),
+              '#attributes' => ['target' => '_blank'],
+            ],
+          ];
+        }
+      }
+    }
+  }
+}

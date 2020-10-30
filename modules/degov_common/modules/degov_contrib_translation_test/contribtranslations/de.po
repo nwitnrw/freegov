@@ -1,0 +1,8 @@
+msgid ""
+msgstr ""
+
+msgid "Status report"
+msgstr "Statusbericht CONTRIB DE"
+
+msgid "Memory limit"
+msgstr "Speicherbegrenzung CONTRIB DE"

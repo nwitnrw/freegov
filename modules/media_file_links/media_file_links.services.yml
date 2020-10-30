@@ -1,0 +1,29 @@
+services:
+  media_file_links.file_field_mapper:
+    class: Drupal\media_file_links\Service\MediaFileFieldMapper
+    arguments: [ ]
+
+  logger.channel.media_file_links:
+    class: Drupal\Core\Logger\LoggerChannel
+    factory: logger.factory:get
+    arguments: ['media_file_links']
+
+  media_file_links.file_link_resolver:
+    class: Drupal\media_file_links\Service\MediaFileLinkResolver
+    arguments: [ '@media_file_links.file_field_mapper', '@entity_type.manager', '@logger.channel.media_file_links' ]
+
+  media_file_links.file_suggester:
+    class: Drupal\media_file_links\Service\MediaFileSuggester
+    arguments: [ '@media_file_links.file_field_mapper', '@media_file_links.file_link_resolver', '@entity_type.manager' , '@entity_type.bundle.info']
+
+  media_file_links.usage_tracker:
+    class: Drupal\media_file_links\Service\MediaFileLinkUsageTracker
+    arguments: [ '@media_file_links.placeholder_handler', '@plugin.manager.menu.link' , '@cache_tags.invalidator', '@database']
+
+  media_file_links.placeholder_handler:
+    class: Drupal\media_file_links\Service\MediaFileLinkPlaceholderHandler
+    arguments: [ ]
+
+  media_file_links.autocomplete_matcher:
+    class: Drupal\media_file_links\EntityAutocompleteMatcher
+    arguments: ['@plugin.manager.entity_reference_selection', '@entity_type.manager', '@entity.repository', '@media_file_links.file_suggester']

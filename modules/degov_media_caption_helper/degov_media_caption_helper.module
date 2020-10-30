@@ -1,0 +1,65 @@
+<?php
+
+/**
+ * @file
+ * Allows paragraphs to override the caption media.
+ */
+
+/**
+ * Implements hook_preprocess().
+ */
+
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\paragraphs\ParagraphInterface;
+
+/**
+ * Implements hook_preprocess().
+ */
+function degov_media_caption_helper_preprocess(&$variables, $hook) {
+  if ($hook == 'media') {
+    $medieEntity = $variables['elements']['#media'];
+    // Add url contexts to cache.
+    $variables['#cache']['contexts'][] = 'url.path';
+    $variables['elements']['#cache']['contexts'][] = 'url.path';
+    // Сheck if the media is referenced from another entity.
+    $caption_field = 'field_' . $medieEntity->bundle() . '_caption';
+    if ($medieEntity->_referringItem && $medieEntity->hasField($caption_field)) {
+      $referencingEntity = $medieEntity->_referringItem->getEntity();
+      if ($referencingEntity instanceof ContentEntityInterface) {
+        // Add cache tags, so the media cache depend on the referencing entity.
+        $variables['elements']['#cache']['tags'][] = $referencingEntity->getEntityTypeId() . ':' . $referencingEntity->id();
+        $variables['elements']['#cache']['tags'][] = $referencingEntity->getEntityTypeId() . '_view';
+        _degov_media_caption_add_paragraph_cache_keys($referencingEntity, $variables);
+        if (empty($variables['#cache']['tags'])) {
+          $variables['#cache']['tags'] = [];
+        }
+        $variables['#cache']['tags'] = $variables['#cache']['tags'] + $variables['elements']['#cache']['tags'];
+        // If referencing entity has overridden caption use it instead.
+        if ($referencingEntity->hasField('field_override_caption') && !$referencingEntity->get('field_override_caption')->isEmpty()) {
+          $variables['content'][$caption_field] = $referencingEntity->get('field_override_caption')->view('full');
+        }
+      }
+    }
+  }
+  if (in_array($hook, ['node', 'paragraph'])) {
+    // Unset field override caption. We don't need in parent entity display.
+    if (!empty($variables['content']['field_override_caption'])) {
+      unset($variables['content']['field_override_caption']);
+    }
+  }
+}
+
+/**
+ * Add paragraph cache keys and tags to media.
+ */
+function _degov_media_caption_add_paragraph_cache_keys($referencingEntity, &$variables) {
+  if ($referencingEntity instanceof ParagraphInterface) {
+    /** @var \Drupal\paragraphs\ParagraphInterface $referencingEntity */
+    $paragraphHost = $referencingEntity->getParentEntity();
+    if ($paragraphHost && $paragraphHost instanceof ContentEntityInterface) {
+      $variables['elements']['#cache']['tags'][] = $paragraphHost->getEntityTypeId() . ':' . $paragraphHost->id();
+      $variables['elements']['#cache']['tags'][] = $paragraphHost->getEntityTypeId() . '_view';
+      _degov_media_caption_add_paragraph_cache_keys($paragraphHost, $variables);
+    }
+  }
+}

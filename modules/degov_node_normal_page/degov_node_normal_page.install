@@ -1,0 +1,95 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_node_normal_page module.
+ */
+
+use Drupal\Core\Config\Config;
+use Drupal\Core\Extension\ModuleHandler;
+use Drupal\Core\Extension\ModuleInstaller;
+use Drupal\degov_common\Common;
+use Drupal\degov_common\DegovConfigUpdate;
+use Drupal\degov_common\DegovModuleUpdater;
+use Drupal\language\Config\LanguageConfigOverride;
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_node_normal_page_uninstall() {
+  /** @var \Drupal\degov_common\Entity\WorkflowHandler $workflowService */
+  $workflowService = \Drupal::service('degov_common.workflow_handler');
+  $workflowService->disableWorkflow('normal_page');
+
+  // Removes all module type defined content when uninstalling the module.
+  Common::removeContent([
+    'entity_type'    => 'node',
+    'entity_bundles' => ['normal_page'],
+  ]);
+}
+
+/**
+ * Implements hook_install().
+ */
+function degov_node_normal_page_install() {
+  /** @var \Drupal\degov_common\Entity\WorkflowHandler $workflowService */
+  $workflowService = \Drupal::service('degov_common.workflow_handler');
+  $workflowService->enableWorkflow('normal_page');
+}
+
+/**
+ * Enable workflow for content type
+ */
+function degov_node_normal_page_update_8010() {
+  \Drupal::service('module_installer')->install(['degov_users_roles']);
+  /** @var \Drupal\degov_common\Entity\WorkflowHandler $workflowService */
+  $workflowService = \Drupal::service('degov_common.workflow_handler');
+  $workflowService->enableWorkflow('normal_page');
+}
+
+/**
+ * deGov Update 5.1.0 - Re-Import Form and display mode default for content type normal_page., Apply config to use the landscape_to_squared image style.
+ */
+function degov_node_normal_page_update_850100() {
+  /**
+   * @var $moduleUpdater   DegovModuleUpdater
+   * @var $moduleInstaller ModuleInstaller
+   * @var $moduleHandler   ModuleHandler
+   * @var $updater         DegovConfigUpdate
+   * @var $existingConfig  Config
+   */
+  $moduleUpdater = \Drupal::service('degov_config.module_updater');
+  $moduleUpdater->applyUpdates('degov_node_normal_page', '8011');
+  $moduleInstaller = \Drupal::service('module_installer');
+  $moduleHandler = \Drupal::service('module_handler');
+  $updater = \Drupal::service('degov_config.updater');
+
+  if (!$moduleHandler->moduleExists('degov_taxonomies')) {
+    $existingConfig = \Drupal::service('config.factory')->getEditable('field.storage.media.field_topic');
+
+    if ($existingConfig instanceof Config) {
+      $existingConfig->delete();
+    }
+  }
+
+  $moduleInstaller->install(['degov_taxonomies', 'degov_metatags']);
+  $updater->checkOptional(drupal_get_path('module', 'degov_node_normal_page') . '/config/install');
+  $moduleUpdater->reImport('core.entity_form_display.node.normal_page.default', 'degov_node_normal_page', 'install');
+  $moduleUpdater->reImport('core.entity_view_display.node.normal_page.default', 'degov_node_normal_page', 'install');
+}
+
+/**
+ * Fix translation of labels on node normal page
+ */
+function degov_node_normal_page_update_870500() {
+  /** @var \Drupal\Core\Language\LanguageManagerInterface $configTranslation */
+  $configTranslation = \Drupal::languageManager()->getLanguageConfigOverride('de', 'core.entity_form_display.node.normal_page.default');
+  if ($configTranslation instanceof LanguageConfigOverride) {
+    $configTranslation->set('third_party_settings.field_group.group_preview.label', 'Vorschau');
+    $configTranslation->set('third_party_settings.field_group.group_header.label', 'Kopfzeile');
+    $configTranslation->set('third_party_settings.field_group.group_content.label', 'Inhalt');
+    $configTranslation->set('third_party_settings.field_group.group_common.label', 'Allgemein');
+    $configTranslation->set('third_party_settings.field_group.group_righ.label', 'Seitenleiste rechts');
+    $configTranslation->save(TRUE);
+  }
+}

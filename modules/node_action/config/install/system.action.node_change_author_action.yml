@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node_change_author_action
+label: 'Change the author'
+type: node
+plugin: 'node_action:entity:author:node'
+configuration: {  }

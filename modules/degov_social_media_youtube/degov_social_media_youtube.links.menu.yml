@@ -1,0 +1,6 @@
+degov_social_media_youtube.admin_settings:
+  title: 'YouTube feed settings'
+  route_name: 'degov_social_media_youtube.admin_settings'
+  parent: 'degov.default'
+  description: 'Administer deGov YouTube feed.'
+  weight: -9

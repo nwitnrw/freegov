@@ -1,0 +1,14 @@
+slick:
+  version: 1.8.1
+  js:
+    /libraries/slick/slick/slick.min.js: {}
+  css:
+    base:
+      /libraries/slick/slick/slick.css: {}
+    theme:
+      /libraries/slick/slick/slick-theme.css: {}
+browser.styling:
+  version: 1.0
+  css:
+    theme:
+      css/browser.styling.css: {}

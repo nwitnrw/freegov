@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.8_to_3
+  module:
+    - crop
+name: citation_640x240
+label: 'Citation (640x240)'
+effects:
+  4c234b66-4bd2-4d81-ba7c-af6587321694:
+    uuid: 4c234b66-4bd2-4d81-ba7c-af6587321694
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: 8_to_3
+  03a44475-8a8f-4a82-b302-aff516d3d892:
+    uuid: 03a44475-8a8f-4a82-b302-aff516d3d892
+    id: image_scale
+    weight: 2
+    data:
+      width: 640
+      height: null
+      upscale: false

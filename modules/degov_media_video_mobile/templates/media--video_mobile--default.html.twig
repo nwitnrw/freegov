@@ -1,0 +1,103 @@
+{#
+/**
+ * @file
+ * Default theme implementation to present a media entity.
+ *
+ * Available variables:
+ * - name: Name of the media.
+ * - content: Media content.
+ *
+ * @see template_preprocess_media()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+set media_classes = [
+  'video-mobile',
+  'clearfix',
+]
+%}
+<article{{ attributes.addClass(media_classes) }}>
+  {{ content.contextual_links }}
+  <div class="video-mobile__video">
+    <video{{ video_attributes }}>
+      {% for key, subtitle in content.field_video_upload_subtitle if key|first != '#' %}
+        {{ subtitle }}
+      {% endfor %}
+    </video>
+  </div>
+  <div class="row below-video">
+    <div class="col-sm-8">
+      <div class="video__extra-info">
+        <div class="video-mobile__top">
+          {% if content.field_media_accessibility|field_value %}
+            <div class="media__type-label video__assets-accessibility"{{ content.field_media_accessibility|quickedit_attr }}>
+              {{ content.field_media_accessibility|field_value }}
+            </div>
+          {% else %}
+            <div class="media__type-label">{{ 'Video'|t }}</div>
+          {% endif %}
+        </div>
+      </div>
+      {% if content.field_title %}
+        <h2 class="video-mobile__title"{{ content.field_title|quickedit_attr }}>{{ content.field_title|field_value }}</h2>
+      {% endif %}
+     {{ field_media_copyright }}
+      {% if content.field_video_upload_caption|field_value %}
+        <span class="video-mobile__caption"{{ content.field_video_upload_caption|quickedit_attr }}>{{ content.field_video_upload_caption|field_value }}</span>
+      {% endif %}
+      {% if content.field_media_duration|field_value %}
+        <div class="video__duration"{{ content.field_media_duration|quickedit_attr }}>{{ content.field_media_duration|field_value }}</div>
+      {% endif %}
+      <div class="video__date">{{ created|date("d.m.Y") }}</div>
+      {% if content.field_description %}
+        <div class="video__description"{{ content.field_description|quickedit_attr }}>
+          {{ content.field_description|field_value }}
+        </div>
+      {% endif %}
+      {% if content.field_tags|field_value %}
+        <div class="tags"{{ content.field_tags|quickedit_attr }}>{{ content.field_tags }}</div>
+      {% endif %}
+      {% if content.field_media_transcription|field_value %}
+        <div class="video-mobile__transcription"{{ content.field_media_transcription|quickedit_attr }}>
+          <div class="video-mobile__transcription__header">
+            <i class="fa fa-caret-right"></i>
+            {{ 'Transkription'|trans }}
+          </div>
+          <div class="video-mobile__transcription__body closed">
+            {{ content.field_media_transcription|field_value }}
+          </div>
+        </div>
+      {% endif %}
+      {% if content.field_media_language %}
+        <div class="video__assets">
+          <div class="video__assets-language"{{ content.field_media_language|quickedit_attr }}>
+            {{ content.field_media_language|field_value }}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+    <div class="col-sm-4">
+      <div class="video-mobile__quality">
+        <label>{{ 'Choose quality:'|trans }}</label>
+        <select name="video-mobile-quality" data-for-video="{{ video_attributes.id }}">
+            {% for quality_key, quality_label in video_qualities %}
+              {% if video_attributes.src == quality_key %}
+                <option selected="selected" value="{{ quality_key }}">{{ quality_label }}</option>
+              {% else %}
+                <option value="{{ quality_key }}">{{ quality_label }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+      </div>
+      <div class="video-mobile__downloads">
+        {% if content.downloads %}
+          {% for key, download in content.downloads %}
+            {{ download }}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</article>

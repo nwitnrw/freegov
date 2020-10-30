@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_taxonomies module.
+ */
+
+/**
+ * Create the content type taxonomy terms.
+ */
+
+use Drupal\taxonomy\Entity\Term;
+
+/**
+ * Implements hook_install().
+ */
+function degov_taxonomies_install() {
+  Term::create([
+    'name' => 'Blog-Artikel',
+    'vid' => 'content_type',
+  ])->save();
+  Term::create([
+    'name' => 'FAQ',
+    'vid' => 'content_type',
+  ])->save();
+  Term::create([
+    'name' => 'Inhaltsseite',
+    'vid' => 'content_type',
+  ])->save();
+  Term::create([
+    'name' => 'Pressemitteilung',
+    'vid' => 'content_type',
+  ])->save();
+  Term::create([
+    'name' => 'Veranstaltung',
+    'vid' => 'content_type',
+  ])->save();
+}

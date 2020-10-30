@@ -1,0 +1,39 @@
+{#
+  link: @string - The url to the post
+  caption: @string - The caption for the psots
+
+#}
+
+<div
+  class="col-md-12 col-xl-6 pb-3 d-flex flex-column flex-md-row teaser-social-media-youtube">
+  <div class="teaser-image flex-shrink-0"
+       style="background-image: url({{ thumbnail }})">
+    <a href="https://youtube.com/watch?v={{ videoID }}">
+      <div class="play-icon ">
+        <i class="fa fa-play-circle"></i>
+      </div>
+    </a>
+  </div>
+  <div
+    class="teaser-content position-relative p-2 p-md-3 pb-5 pb-md-5 flex-grow-1">
+    <a href="https://youtube.com/watch?v={{ videoID }}"><span
+        class="link">{{ link_display }}</span></a>
+    <div class="caption pt-2">{{ description }}</div>
+    <div class="learn-more bg-blue position-absolute py-1 pr-2 pr-md-5 text-right">
+      <span class="likes pl-3">
+        {{ likes }}
+        <i class="fa fa-thumbs-up"></i>
+      </span>
+      <span class="dislikes pl-3">
+        {{ dislikes }}
+        <i class="fa fa-thumbs-down"></i>
+      </span>
+      <span class="views pl-3">
+        {{ views }}
+        <i class="fa fa-eye"></i>
+      </span>
+    </div>
+  </div>
+</div>
+
+

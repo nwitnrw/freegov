@@ -1,0 +1,12 @@
+name: 'deGov - Paragraph video subtitle'
+description: 'This paragraph is used for subtitles of videos.'
+package: deGov
+type: module
+core: 8.x
+dependencies:
+  - degov_content_types_shared_fields
+  - field
+  - file
+  - options
+  - paragraphs
+hidden: TRUE

@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_search_content_solr module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function degov_search_content_solr_install() {
+  // Flush plugin caches so our facets will be shown.
+  \Drupal::service('plugin.cache_clearer')->clearCachedDefinitions();
+
+  /**
+   * @var \Drupal\degov_common\DegovConfigUpdate $configUpdater
+   */
+  $configUpdater = \Drupal::service('degov_config.updater');
+  if ($config = $configUpdater->getEditableConfig('search_api_attachments.admin_config')) {
+    $config->set('extraction_method', 'tika_extractor');
+    $config->save(TRUE);
+  }
+
+}

@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.12_to_5
+  module:
+    - crop
+  enforced:
+    module:
+      - degov_image_and_crop_styles
+name: slider_full_width_480
+label: 'Slider full width 480'
+effects:
+  1f1a58de-50ed-4b21-8fc3-4f3fff8a011d:
+    uuid: 1f1a58de-50ed-4b21-8fc3-4f3fff8a011d
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: 12_to_5
+  90c9a182-9b24-41b3-8696-797bbcc7fe1c:
+    uuid: 90c9a182-9b24-41b3-8696-797bbcc7fe1c
+    id: image_scale_and_crop
+    weight: 2
+    data:
+      width: 480
+      height: 200
+      anchor: center-center

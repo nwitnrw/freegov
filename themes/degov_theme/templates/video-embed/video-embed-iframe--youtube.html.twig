@@ -1,0 +1,13 @@
+{#
+/**
+ * @file
+ * Display an iframe with alterable components.
+ */
+#}
+
+
+{% if query is not empty %}
+  {% set query = query|merge({"enablejsapi": 1}) %}
+{% endif %}
+
+<iframe{{ attributes|without('frameborder') }}{% if url is not empty %} src="{{ url }}{% if query is not empty %}?{{ query | url_encode }}{% endif %}{% if fragment is not empty %}#{{ fragment }}{% endif %}"{% endif %}></iframe>

@@ -1,0 +1,10 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_paragraph_links
+  module:
+id: links
+label: Link-Liste
+behavior_plugins: {  }

@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * Drupal hooks implementations for the degov_fa_icon_picker module.
+ */
+
+/**
+ * Implements hook_page_attachments().
+ */
+function degov_fa_icon_picker_page_attachments(array &$attachments) {
+  if (\Drupal::service('router.admin_context')->isAdminRoute() &&
+    (\Drupal::routeMatch()->getRouteName() === 'entity.menu_link_content.canonical' || \Drupal::routeMatch()->getRouteName() === 'entity.menu.add_link_form')) {
+    $attachments['#attached']['library'][] = 'degov_fa_icon_picker/degov_fa_icon_picker';
+  }
+}

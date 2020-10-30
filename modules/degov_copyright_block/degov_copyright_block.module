@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Drupal hooks implementations for the degov_copyright_block module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function degov_copyright_block_theme() {
+  return [
+    'degov_copyright_block' => [
+      'variables' => [
+        'date'             => '',
+        'copyright_holder' => '',
+      ],
+      'template'  => 'degov-copyright-block',
+    ],
+  ];
+}

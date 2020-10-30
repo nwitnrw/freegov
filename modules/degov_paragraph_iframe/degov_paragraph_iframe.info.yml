@@ -1,0 +1,10 @@
+name: 'deGov - Paragraph iframe'
+description: 'This paragraph can show an iframe.'
+package: deGov
+type: module
+core: 8.x
+dependencies:
+  - degov_content_types_shared_fields
+  - field
+  - link
+  - paragraphs

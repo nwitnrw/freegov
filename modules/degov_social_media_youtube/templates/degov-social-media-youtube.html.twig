@@ -1,0 +1,27 @@
+{#
+  link: @string - The url to the post
+  caption: @string - The caption for the psots
+
+#}
+<div class="row">
+  <div class="slick-slide">
+    <a href="https://youtube.com/watch?v={{ videoID }}">
+      <img src="{{ thumbnail }}" title="{{ title }}" alt="{{ title }}"/>
+
+      <div class="info">
+        {% if views %}
+          <span class="views">{{ views }}</span>
+        {% endif %}
+        <span class="likes">{{ likes }}</span>
+        <span class="comments">{{ comments }}</span>
+      </div>
+    </a>
+    <span class="caption">{{ title }}</span>
+    <a href="https://youtube.com/watch?v={{ videoID }}">
+      <span class="link">{{ link_display }}</span>
+    </a>
+    <div class="date">{{ date }}</div>
+  </div>
+</div>
+
+

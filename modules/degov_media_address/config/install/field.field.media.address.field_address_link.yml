@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_address_link
+    - media.type.address
+  module:
+    - link
+id: media.address.field_address_link
+field_name: field_address_link
+entity_type: media
+bundle: address
+label: Link
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

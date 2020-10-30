@@ -1,0 +1,22 @@
+langcode: en
+status: false
+dependencies:
+  config:
+    - views.view.search_media
+  module:
+    - views
+  theme:
+    - degov_theme
+id: exposedformsearch_mediapage
+theme: degov_theme
+region: search_form
+weight: 0
+provider: null
+plugin: 'views_exposed_filter_block:search_media-page'
+settings:
+  id: 'views_exposed_filter_block:search_media-page'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+visibility: {  }

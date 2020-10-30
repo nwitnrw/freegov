@@ -1,0 +1,15 @@
+includes:
+  - phpstan-baseline.neon
+
+parameters:
+  level: 0
+  autoload_files:
+    - docroot/core/modules/locale/locale.fetch.inc
+    - docroot/core/modules/locale/locale.bulk.inc
+  paths:
+    - docroot/profiles/contrib/degov
+    - docroot/modules/contrib/scheduled_publish
+    - docroot/modules/contrib/degov_simplenews
+  excludes_analyse:
+    - docroot/profiles/contrib/degov/modules/lightning_media/tests/contexts/
+    - docroot/profiles/contrib/degov/modules/lightning_core/tests/contexts/

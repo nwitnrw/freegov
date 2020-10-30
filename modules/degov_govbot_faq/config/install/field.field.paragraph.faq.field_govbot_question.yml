@@ -1,0 +1,21 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_govbot_question
+    - paragraphs.paragraphs_type.faq
+  enforced:
+    module:
+      - degov_govbot_faq
+id: paragraph.faq.field_govbot_question
+field_name: field_govbot_question
+entity_type: paragraph
+bundle: faq
+label: 'GovBot Fragemöglichkeiten'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,20 @@
+name: 'deGov - Media Person'
+description: 'Dieses Modul stellt das Media Bundle Person bereit.'
+package: deGov
+type: module
+core: 8.x
+dependencies:
+  - degov_common
+  - degov_media
+  - degov_content_types_shared_fields
+  - degov_taxonomy_term_tags
+  - entity_browser
+  - field
+  - field_group
+  - image
+  - lightning_core
+  - media
+  - path
+  - taxonomy
+  - text
+  - user

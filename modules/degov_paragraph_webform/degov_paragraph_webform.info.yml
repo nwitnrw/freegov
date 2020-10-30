@@ -1,0 +1,13 @@
+name: 'deGov - Paragraph Form'
+description: 'Provides a Webform paragraph type.'
+type: module
+package: deGov
+core: 8.x
+dependencies:
+  - degov_content_types_shared_fields
+  - field
+  - link
+  - node
+  - paragraphs
+  - webform
+  - webform_ui

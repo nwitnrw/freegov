@@ -1,0 +1,5 @@
+services:
+  degov_media_usage_paragraphs.persistance:
+    class: Drupal\degov_media_usage_paragraphs\Service\ParagraphPersistance
+    parent: degov_media_usage.persistance
+    arguments: ['degov_media_usage_paragraphs']

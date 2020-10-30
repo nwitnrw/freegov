@@ -1,0 +1,19 @@
+address_popup:
+  version: 1.1.0
+  js:
+    js/degov-media-address-popup.js: {}
+  dependencies:
+    - core/drupal
+osm_map:
+  version: 1.1.0
+  css:
+    theme:
+      /libraries/leaflet/dist/leaflet.css: {}
+      css/osm_map.css: {}
+  js:
+    /libraries/leaflet/dist/leaflet.js: {}
+    js/osm_map.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - degov_media_address/address_popup

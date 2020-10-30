@@ -1,0 +1,6 @@
+entity-form:
+  version: 1.x
+  js:
+    js/degov_media_image.js: {}
+  dependencies:
+  - core/jquery

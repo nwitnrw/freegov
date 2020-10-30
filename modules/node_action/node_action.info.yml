@@ -1,0 +1,9 @@
+name: 'Node Action'
+description: 'Provides action plugins for nodes.'
+type: module
+package: deGov
+core: 8.x
+dependencies:
+  - degov_scheduled_updates
+  - node
+  - degov_common

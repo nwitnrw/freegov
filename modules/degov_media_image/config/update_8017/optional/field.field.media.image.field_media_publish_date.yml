@@ -1,0 +1,20 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_media_publish_date
+    - media.type.image
+  module:
+    - datetime
+id: media.image.field_media_publish_date
+field_name: field_media_publish_date
+entity_type: media
+bundle: image
+label: Veröffentlichungsdatum
+description: ''
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime
+required: true

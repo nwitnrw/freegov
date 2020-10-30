@@ -1,0 +1,15 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_media_address
+id: address
+label: Adresse
+description: 'Ein Media-Bundle für Adressen.'
+source: generic
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_media_generic
+field_map: {  }

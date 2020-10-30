@@ -1,0 +1,66 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - image.style.slider_main_16_9_1280
+    - image.style.slider_main_16_9_480
+    - image.style.slider_main_16_9_720
+    - image.style.slider_main_16_9_960
+  enforced:
+    module:
+      - degov_image_and_crop_styles
+  module:
+    - degov_image_and_crop_styles
+id: slider_main
+label: 'Slider main'
+image_style_mappings:
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.md
+    multiplier: 1.5x
+    image_mapping_type: sizes
+    image_mapping:
+      sizes: '(min-width:1280px) 100vw'
+      sizes_image_styles:
+        - slider_main_16_9_1280
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.md
+    multiplier: 1x
+    image_mapping_type: sizes
+    image_mapping:
+      sizes: '(min-width:1280px) 100vw'
+      sizes_image_styles:
+        - slider_main_16_9_1280
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.md
+    multiplier: 2x
+    image_mapping_type: sizes
+    image_mapping:
+      sizes: '(min-width:1280px) 100vw'
+      sizes_image_styles:
+        - slider_main_16_9_1280
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.sm
+    multiplier: 1.5x
+    image_mapping_type: sizes
+    image_mapping:
+      sizes: '(min-width:720px) 100vw'
+      sizes_image_styles:
+        - slider_main_16_9_720
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.xs
+    multiplier: 1.5x
+    image_mapping_type: sizes
+    image_mapping:
+      sizes: '(min-width:480px) 100vw'
+      sizes_image_styles:
+        - slider_main_16_9_480
+  -
+    breakpoint_id: degov_image_and_crop_styles.media.xs
+    multiplier: 1x
+    image_mapping_type: sizes
+    image_mapping:
+      sizes: '(min-width:480px) 100vw'
+      sizes_image_styles:
+        - slider_main_16_9_480
+breakpoint_group: degov_image_and_crop_styles.media
+fallback_image_style: slider_main_16_9_960

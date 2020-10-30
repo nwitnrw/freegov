@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Node event views.
+ */
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function degov_node_event_views_data_alter(array &$data) {
+  $data['views']['degov_calendar_widget_header'] = [
+    'title' => t('Calendar Widget Header'),
+    'help' => t('Calendar heading or pager.'),
+    'area' => [
+      'id' => 'degov_calendar_widget_header',
+    ],
+  ];
+}

@@ -1,0 +1,23 @@
+core: 8.x
+type: theme
+
+name: 'deGov Theme'
+description: 'The base theme of the deGov Drupal distribution.'
+package: 'deGov - Theme'
+
+logo: images/logo.png
+
+base theme: classy
+
+regions:
+  top_header: 'Top Header'
+  bottom_header: 'Bottom Header'
+  search_form: 'Search Form'
+  navigation: 'Header navigation'
+  breadcrumb: Breadcrumbs
+  content: 'Main content'
+  footer: Footer
+  footer_bottom: "Footer bottom"
+
+libraries:
+  - 'degov_theme/theme-assets'

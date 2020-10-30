@@ -1,0 +1,8 @@
+filter_html_disallow:
+  id: filter_html_disallow
+  provider: filter_disallow
+  status: true
+  weight: -10
+  settings:
+    disallowed_html: '<script> <font>'
+    filter_html_disallow_help: '1'

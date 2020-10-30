@@ -1,0 +1,15 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_media_audio
+id: audio
+label: 'Audio'
+description: 'Mit diesem Bundle können Audio-Dateien hochgeladen werden.'
+source: generic
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_media_generic_1
+field_map: {  }

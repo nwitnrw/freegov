@@ -1,0 +1,26 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - system.menu.header-top
+  module:
+    - menu_block
+  theme:
+    - nrw_base_theme
+id: headertopmenu
+theme: nrw_base_theme
+region: top_navigation
+weight: 0
+provider: null
+plugin: 'menu_block:header-top'
+settings:
+  id: 'menu_block:header-top'
+  label: 'Header Top Menu'
+  provider: menu_block
+  label_display: '0'
+  level: 1
+  depth: 0
+  expand: 0
+  parent: 'header-top:'
+  suggestion: header_top
+visibility: {  }

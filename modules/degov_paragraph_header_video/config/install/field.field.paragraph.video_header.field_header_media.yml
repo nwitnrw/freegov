@@ -1,0 +1,33 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_header_media
+    - media.type.video
+    - media.type.video_upload
+    - paragraphs.paragraphs_type.video_header
+  enforced:
+    module:
+      - degov_paragraph_header_video
+      - degov_media_video_upload
+id: paragraph.video_header.field_header_media
+field_name: field_header_media
+entity_type: paragraph
+bundle: video_header
+label: Media
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      video: video
+      video_upload: video_upload
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: video
+field_type: entity_reference

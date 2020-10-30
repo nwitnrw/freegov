@@ -1,0 +1,33 @@
+// Search results media
+
+.srmedia {
+
+  &__image {
+    overflow: hidden;
+    height: 255px; // No image style is available that will scale and crop image to 1:1 ratio. No other way around
+
+    img {
+      height: 100%;
+      width: auto;
+    }
+  }
+  &__type {
+    background-color: $white;
+    color: $blue;
+    top: 1rem;
+    left: 1rem;
+  }
+  &__copyright {
+    background-color: rgba($white, .7);
+    color: $blue;
+    bottom: 1rem;
+    left: 1rem;
+  }
+  &__date {
+    min-height: 1.5rem;
+  }
+
+  &__title {
+    min-height: 1.5rem;
+  }
+}

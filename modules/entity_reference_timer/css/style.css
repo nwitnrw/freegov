@@ -1,0 +1,23 @@
+@media (min-width: 1900px) {
+  .field--widget-entity-reference-autocomplete-date .form-type-entity-autocomplete {
+    display: inline-block;
+  }
+
+  .field--widget-entity-reference-autocomplete-date .form-type-checkbox {
+    display: inline-block;
+    width: 30%;
+    margin-left: 15px;
+  }
+
+  .field--widget-entity-reference-autocomplete-date h4 {
+    display: inline-block;
+  }
+
+  .field--widget-entity-reference-autocomplete-date .start_date {
+    display: inline-block;
+  }
+
+  .field--widget-entity-reference-autocomplete-date .end_date {
+    display: inline-block;
+  }
+}

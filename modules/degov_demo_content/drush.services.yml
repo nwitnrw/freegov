@@ -1,0 +1,11 @@
+services:
+  degov_demo_content.commands:
+    class: Drupal\degov_demo_content\Command\DegovDemoContentDrushCommands
+    arguments:
+      - '@degov_demo_content.media_generator'
+      - '@degov_demo_content.node_generator'
+      - '@degov_demo_content.menu_item_generator'
+      - '@degov_demo_content.block_content_generator'
+      - '@degov_demo_content.documentation_generator'
+    tags:
+      - { name: drush.command }

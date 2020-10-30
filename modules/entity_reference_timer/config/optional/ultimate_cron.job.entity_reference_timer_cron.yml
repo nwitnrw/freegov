@@ -1,0 +1,27 @@
+status: true
+dependencies:
+  module:
+    - entity_reference_timer
+title: 'Default cron handler'
+id: entity_reference_timer_cron
+weight: 0
+module: entity_reference_timer
+callback: entity_reference_timer_cron
+scheduler:
+  id: simple
+  configuration:
+    rules:
+      - '* * * * *'
+launcher:
+  id: serial
+  configuration:
+    timeouts:
+      lock_timeout: 3600
+    launcher:
+      thread: 0
+logger:
+  id: database
+  configuration:
+    method: '3'
+    expire: 1209600
+    retain: 1000

@@ -1,0 +1,4 @@
+degov_media_video_mobile:
+  version: 1.0
+  js:
+    js/degov_media_video_mobile.entry.js: { }

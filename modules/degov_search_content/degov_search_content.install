@@ -1,0 +1,85 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_search_content module.
+ */
+
+use Drupal\facets\Entity\Facet;
+
+/**
+ * Implements hook_install().
+ */
+function degov_search_content_install() {
+  // Flush plugin caches so our facets will be shown.
+  \Drupal::service('plugin.cache_clearer')->clearCachedDefinitions();
+}
+
+/**
+ * Update topic filter for search content.
+ */
+function degov_search_content_update_8010() {
+
+  /**
+   * @var $updater \Drupal\degov_common\DegovModuleUpdater
+   */
+  $updater = \Drupal::service('degov_config.module_updater');
+  $updater->applyUpdates('degov_search_content', '8010');
+
+  $updater->reImport('facets.facet.search_content_node_bundle', 'degov_search_content', 'install');
+  $updater->reImport('facets.facet.search_content_tags', 'degov_search_content', 'install');
+  $updater->reImport('search_api.index.search_content', 'degov_search_content', 'install');
+
+  $facet = Facet::load('search_content_section');
+  if ($facet) {
+    $facet->delete();
+  }
+}
+
+/**
+ * Update 6.0.0 - Remove the "Ignore characters" filter from the content type field
+ */
+function degov_search_content_update_860000() {
+  $config = \Drupal::configFactory()->getEditable('search_api.index.search_content');
+  $ignoreCharacterFieldsSettings = $config->get('processor_settings.ignore_character.fields');
+
+  if (!empty($ignoreCharacterFieldsSettings)) {
+    $unsetKey = array_search('type', $ignoreCharacterFieldsSettings, FALSE);
+    if ($unsetKey !== FALSE) {
+      unset($ignoreCharacterFieldsSettings[$unsetKey]);
+      $config->set('processor_settings.ignore_character.fields', $ignoreCharacterFieldsSettings)->save();
+      return t('The Search API configuration for the content index has been updated. Please perform a reindex!');
+    }
+  }
+}
+
+/**
+ * Update 7.0.0 - Update the search content tags facet block name.
+ */
+function degov_search_content_update_870000() {
+  $configFactory = \Drupal::service('config.factory');
+  $config = $configFactory->getEditable('facets.facet.search_content_tags');
+  $config->set('name', 'Schlagworte (Inhalt)');
+  $config->save(TRUE);
+}
+
+/**
+ * Place the search for to the top search_form region.
+ */
+function degov_search_content_update_870200() {
+  /* @var \Drupal\degov_common\DegovModuleUpdater $updater */
+  $updater = \Drupal::service('degov_config.module_updater');
+  $updater->applyUpdates('degov_search_content', '870200');
+}
+
+/**
+ * deGov 7.6.0 - Set the fixed empty-message for existing search indexes as well.
+ */
+function degov_search_content_update_870600() {
+  $config = \Drupal::configFactory()->getEditable('views.view.search_content');
+  $emptyMessage = $config->get('display.default.display_options.empty.area.content');
+  if (!empty($emptyMessage['value']) && $emptyMessage['value'] === '<h2>Suchergebnisse</h2>Keine Treffer gefunden. Bitte überprüfen Sie Ihre Suchbegriffe oder versuchen weniger Begriffe.') {
+    $emptyMessage['value'] = '<h2>Suchergebnisse</h2>Keine Treffer gefunden. Bitte überprüfen Sie Ihre Suchbegriffe oder versuchen Sie weniger Begriffe.';
+    $config->set('display.default.display_options.empty.area.content', $emptyMessage)->save();
+  }
+}

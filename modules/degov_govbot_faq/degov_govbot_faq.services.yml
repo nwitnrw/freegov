@@ -1,0 +1,15 @@
+services:
+  degov_govbot_faq.faq_access:
+    class: Drupal\degov_govbot_faq\FAQAccess
+    autowire: true
+
+  degov_govbot_faq.govbot_fields_extractor:
+    class: Drupal\degov_govbot_faq\GovBotFieldsExtractor
+    autowire: true
+
+  degov_govbot_faq.govbot_fields_merger:
+    class: Drupal\degov_govbot_faq\GovBotFieldsMerger
+
+  degov_govbot_faq.paragraphs_extractor:
+    class: Drupal\degov_govbot_faq\ParagraphsExtractor
+    autowire: true

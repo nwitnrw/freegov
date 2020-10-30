@@ -1,0 +1,118 @@
+# $Id$
+#
+# German translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  media_file_links.module: n/a
+#  src/Plugin/Field/FieldType/MediaFileLinkItem.php: n/a
+#  media_file_links.info.yml: n/a
+#  src/Plugin/Linkit/Matcher/MediaFileMatcher.php: n/a
+#  src/Plugin/Field/FieldWidget/MediaFileLinkWidget.php: n/a
+#  src/Plugin/Filter/FilterMediaFileLinks.php: n/a
+#  src/Service/MediaFileLinkResolver.php: n/a
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2019-04-12 10:46+0200\n"
+"PO-Revision-Date: 2019-04-12 10:53+0200\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: German <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: de_DE\n"
+"X-Generator: Poedit 2.2\n"
+
+#: media_file_links.module:39 src/Plugin/Field/FieldType/MediaFileLinkItem.php:8
+msgid "Link"
+msgstr "Link"
+
+#: media_file_links.module:40
+msgid "The location this menu link points to."
+msgstr "Das Ziel, auf das dieser Menü-Link verweist."
+
+#: media_file_links.module:150
+msgid "The media <i>:mediaName</i> is used in a file link reference in the media <i>:referencingMediaName</i> in field <i>:referencingFieldName</i>. <a href=\"/media/:referencingMediaId/edit\" target=\"_blank\">Edit the reference</a> first to avoid dead links."
+msgstr "Das Medium <i>:mediaName</i> wird in einer Datei-Link-Referenz im Medium <i>:referencingMediaName</i> im Feld <i>:referencingFieldName</i> verwendet. <a href=\"/media/:referencingMediaId/edit\" target=\"_blank\">Bearbeiten Sie die Referenz</a> um tote Links zu vermeiden."
+
+#: media_file_links.module:160
+msgid "The media <i>:mediaName</i> is used in a file link reference in the node <i>:referencingNodeTitle</i> in field <i>:referencingFieldName</i>. <a href=\"/node/:referencingNodeId/edit\" target=\"_blank\">Edit the reference</a> first to avoid dead links."
+msgstr "Das Medium <i>:mediaName</i> wird in einer Datei-Link-Referenz im Inhalt <i>:referencingNodeTitle</i> im Feld <i>:referencingFieldName</i> verwendet. <a href=\"/node/:referencingNodeId/edit\" target=\"_blank\">Bearbeiten Sie die Referenz</a> um tote Links zu vermeiden."
+
+#: media_file_links.module:170
+msgid "The media <i>:mediaName</i> is used in a file link reference in the menu entry <i>:referencingMenuLinkTitle</i>. <a href=\"/admin/structure/menu/item/:referencingMenuLinkId/edit\" target=\"_blank\">Edit the reference</a> first to avoid dead links."
+msgstr "Das Medium <i>:mediaName</i> wird in einer Datei-Link-Referenz im Menüeintrag <i>:referencingMenuLinkTitle</i> verwendet. <a href=\"/admin/structure/menu/item/:referencingMenuLinkId/edit\" target=\"_blank\">Bearbeiten Sie die Referenz</a> um tote Links zu vermeiden."
+
+#: media_file_links.module:185
+msgid "The media <i>:mediaName</i> is used in a file link reference in a paragraph in the media <i>:parentMediaName</i>. <a href=\"/paragraphs_edit/media/:parentMediaId/paragraphs/:referencingParagraphId/edit?destination=/media/:parentMediaId\" target=\"_blank\">Edit the reference</a> first to avoid dead links."
+msgstr ""
+"Das Medium <i>:mediaName</i> wird in einer Datei-Link-Referenz in einem Seitenabschnitt im Medium <i>:parentMediaName</i> verwendet. <a href=\"/paragraphs_edit/media/:parentMediaId/paragraphs/:referencingParagraphId/edit?destination=/media/:parentMediaId\" target=\"_blank\">Bearbeiten Sie die Referenz</a> um "
+"tote Links zu vermeiden."
+
+#: media_file_links.module:196
+msgid "The media <i>:mediaName</i> is used in a file link reference in a paragraph in the node <i>:parentNodeName</i>. <a href=\"/paragraphs_edit/node/:parentNodeId/paragraphs/:referencingParagraphId/edit?destination=/node/:parentNodeId\" target=\"_blank\">Edit the reference</a> first to avoid dead links."
+msgstr ""
+"Das Medium <i>:mediaName</i> wird in einer Datei-Link-Referenz in einem Seitenabschnitt im Inhalt <i>:parentNodeName</i> verwendet. <a href=\"/paragraphs_edit/node/:parentNodeId/paragraphs/:referencingParagraphId/edit?destination=/node/:parentNodeId\" target=\"_blank\">Bearbeiten Sie die Referenz</a> um tote "
+"Links zu vermeiden."
+
+#: media_file_links.info.yml:0 src/Plugin/Linkit/Matcher/MediaFileMatcher.php:102;10
+msgid "Media file links"
+msgstr "Media file links"
+
+#: media_file_links.info.yml:0
+msgid "Link to files contained in Media entities from the editor and menu entries."
+msgstr "Aus dem Editor und Menüeinträgen auf in Medien-Entitäten enthaltene Dateien verlinken."
+
+#: media_file_links.info.yml:0
+msgid "deGov"
+msgstr "deGov"
+
+#: src/Plugin/Field/FieldType/MediaFileLinkItem.php:8
+msgid "Stores a URL string, optional varchar link text, and optional blob of attributes to assemble a link."
+msgstr "Speichert eine URL-Zeichenkette, optionalen VARCHAR Link-Text und einen optionalen BLOB von Attributen um einen Link zu erzeugen."
+
+#: src/Plugin/Field/FieldWidget/MediaFileLinkWidget.php:51
+msgid "Manually entered paths should start with /, ? or #, or match &lt;media/file/ID&gt;."
+msgstr "Manuell eingegebene Pfade sollten mit /, ? oder # beginnen, oder dem Muster &lt;media/file/ID&gt; entsprechen."
+
+#: src/Plugin/Field/FieldWidget/MediaFileLinkWidget.php:31
+msgid "Suggestions may also include files from Media entities you can link to. These will be prefixed with an icon appropriate to their file type."
+msgstr "Vorschläge können auch Dateien von Medienentitäten enthalten, auf die verlinkt werden kann. Diesen ist ein zum Dateityp passendes Icon vorangestellt."
+
+#: src/Plugin/Field/FieldWidget/MediaFileLinkWidget.php:10
+msgid "Link (with Media support)"
+msgstr "Link (Unterstützung für Medien-Verlinkung)"
+
+#: src/Plugin/Filter/FilterMediaFileLinks.php:8
+msgid "Resolve links to media files"
+msgstr "Links zu Dateien aus Medien-Entitäten auflösen"
+
+#: src/Plugin/Linkit/Matcher/MediaFileMatcher.php:42
+msgid "Result description: @result_description"
+msgstr "Ergebnisbeschreibung: @result_description"
+
+#: src/Plugin/Linkit/Matcher/MediaFileMatcher.php:48
+msgid "Group by bundle: @bundle_grouping"
+msgstr "Nach Bundle gruppieren: @bundle_grouping"
+
+#: src/Plugin/Linkit/Matcher/MediaFileMatcher.php:49
+msgid "Yes"
+msgstr "Ja"
+
+#: src/Plugin/Linkit/Matcher/MediaFileMatcher.php:49
+msgid "No"
+msgstr "Nein"
+
+#: src/Plugin/Linkit/Matcher/MediaFileMatcher.php:62
+msgid "Result description"
+msgstr "Ergebnisbeschreibung"
+
+#: src/Plugin/Linkit/Matcher/MediaFileMatcher.php:75
+msgid "Group by bundle"
+msgstr "Nach Bundle gruppieren"
+
+#: src/Service/MediaFileLinkResolver.php:46;64
+msgid "Requested file for Media ID %id could not be found."
+msgstr "Angefragte Datei für Media ID %id konnte nicht gefunden werden."

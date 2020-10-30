@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_simplenews_references module.
+ */
+
+use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_install().
+ */
+function degov_simplenews_references_install() {
+  $schema = Database::getConnection()->schema();
+
+  if ($schema && $schema->tableExists('nrw_simplenews_subscription')) {
+    $schema->dropTable('nrw_simplenews_subscription');
+  }
+}

@@ -1,0 +1,53 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_paragraph_media_reference module.
+ */
+
+use Drupal\degov_common\Common;
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_paragraph_media_reference_uninstall() {
+  // Removes all module type defined content when uninstalling the module.
+  Common::removeContent([
+    'entity_type' => 'paragraph',
+    'entity_bundles' => ['media_reference'],
+  ]);
+}
+
+/**
+ * Install the deGov - Media video mobile module and update existing config.
+ */
+function degov_paragraph_media_reference_update_8001() {
+  if (!\Drupal::moduleHandler()->moduleExists('degov_media_video_mobile')) {
+    \Drupal::service('module_installer')->install([
+      'degov_media_video_mobile'
+    ]);
+  }
+
+  /**
+   * @var \Drupal\Core\Config\ConfigFactory $configFactory
+   */
+  $configFactory = \Drupal::service('config.factory');
+  /**
+   * @var Drupal\Core\Config\Config $config
+   */
+  $config = $configFactory->getEditable('field.field.paragraph.media_reference.field_media_reference_media');
+  $config->set('dependencies.config', array_merge(
+    $config->get('dependencies.config'),
+    ['media.type.video_mobile']
+  ));
+
+  $config = $configFactory->getEditable('field.field.paragraph.media_reference.field_media_reference_media');
+  $config->set('settings.handler_settings.target_bundles', array_merge(
+    $config->get('settings.handler_settings.target_bundles'),
+    [
+      'video_mobile' => 'video_mobile'
+    ]
+  ));
+
+  $config->save();
+}

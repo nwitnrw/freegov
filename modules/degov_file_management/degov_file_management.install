@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_file_management module.
+ */
+
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Implements hook_install().
+ */
+function degov_file_management_install() {
+  $filesViewConfig = \Drupal::configFactory()->getEditable('views.view.files');
+
+  if (!$filesViewConfig->isNew()) {
+    $viewDefaultFieldsConfig = $filesViewConfig->get('display.default.display_options.fields');
+    $viewPage1FieldsConfig = $filesViewConfig->get('display.page_1.display_options.fields');
+    if (empty($viewPage1FieldsConfig)) {
+      $viewPage1FieldsConfig = [];
+    }
+    $fieldsConfigFromFile = Yaml::parseFile(drupal_get_path('module', 'degov_file_management') . '/config/partial/file_delete_link-and-dropbutton.yml');
+    $valuesMerged = array_merge($viewDefaultFieldsConfig, $viewPage1FieldsConfig, $fieldsConfigFromFile);
+    $filesViewConfig->set('display.page_1.display_options.fields', $valuesMerged)
+      ->save();
+
+    $viewPage1DisplayOptionsDefaultsConfig = $filesViewConfig->get('display.page_1.display_options.defaults');
+    $viewPage1DisplayOptionsDefaultsConfig['fields'] = FALSE;
+    $filesViewConfig->set('display.page_1.display_options.defaults', $viewPage1DisplayOptionsDefaultsConfig);
+
+    $filesViewConfig->save();
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_file_management_uninstall() {
+  $filesViewConfig = \Drupal::configFactory()->getEditable('views.view.files');
+
+  if (!$filesViewConfig->isNew()) {
+    $viewPage1FieldsConfig = $filesViewConfig->get('display.page_1.display_options.fields');
+    if (isset($viewPage1FieldsConfig['file_delete_link'])) {
+      unset($viewPage1FieldsConfig['file_delete_link']);
+    }
+    if (isset($viewPage1FieldsConfig['dropbutton'])) {
+      unset($viewPage1FieldsConfig['dropbutton']);
+    }
+    $filesViewConfig->set('display.page_1.display_options.fields', $viewPage1FieldsConfig);
+    $filesViewConfig->save();
+  }
+}

@@ -1,0 +1,27 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - facets.facet.media_publish_date
+  module:
+    - facets
+  theme:
+    - active_theme
+id: media_publish_date
+theme: active_theme
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'facet_block:media_publish_date'
+settings:
+  id: 'facet_block:media_publish_date'
+  label: Veröffentlichungsdatum
+  provider: facets
+  label_display: visible
+  block_id: media_publish_date
+visibility:
+  request_path:
+    id: request_path
+    pages: /mediathek
+    negate: false
+    context_mapping: {  }

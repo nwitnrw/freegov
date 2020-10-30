@@ -1,0 +1,195 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_users_roles module.
+ */
+
+use Drupal\user\Entity\User;
+use Drupal\user\RoleInterface;
+
+/**
+ * Implements hook_install().
+ */
+function degov_users_roles_install() {
+  // Assign user 1 the "administrator" role.
+  /** @var \Drupal\user\Entity\User $user */
+  $user = User::load(1);
+  $user->roles[] = 'administrator';
+  $user->save();
+
+  // Allow authenticated users to use shortcuts.
+  user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, ['access shortcuts']);
+}
+
+/**
+ * Implements hook_update_dependencies().
+ */
+function degov_users_roles_update_dependencies() {
+  $dependencies = [
+    'degov_users_roles' => [
+      8010 => [
+        'degov_common' => 8026,
+      ],
+      8011 => [
+        'degov_common' => 8026,
+      ],
+    ],
+  ];
+
+  return $dependencies;
+}
+
+/**
+ * Updating permissions from workbench moderation to content moderation
+ */
+function degov_users_roles_update_8010() {
+
+  // Apply updates for workflows.
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_users_roles', '8001');
+
+  /** @var \Drupal\degov_common\Entity\ConfigRemover $configRemover */
+  $configRemover = \Drupal::service('degov_common.config_remover');
+
+  $permissions = [
+    'use draft_draft transition',
+    'use draft_needs_review transition',
+    'use published_draft transition',
+    'use needs_review_draft transition',
+    'use archived_published transition',
+    'use draft_published transition',
+    'use needs_review_needs_review transition',
+    'use needs_review_published transition',
+    'use published_archived transition',
+    'use published_published transition',
+  ];
+
+  // Remove old permissions.
+  foreach ($permissions as $permission) {
+    $configRemover->removeListItemFromConfiguration('user.role.editor', 'permissions', $permission);
+    $configRemover->removeListItemFromConfiguration('user.role.manager', 'permissions', $permission);
+  }
+
+  // Add new permissions.
+  $editorPermissions = [
+    'use editorial transition create_new_draft',
+    'use editorial transition needs_review',
+    'use published_draft transition',
+  ];
+  $managerPermissions = [
+    'use editorial transition archive',
+    'use editorial transition archived_draft',
+    'use editorial transition archived_published',
+    'use editorial transition create_new_draft',
+    'use editorial transition needs_review',
+    'use editorial transition publish',
+  ];
+
+  /** @var \Drupal\degov_common\Entity\ConfigAdder $configAdder */
+  $configAdder = \Drupal::service('degov_common.config_adder');
+
+  foreach ($editorPermissions as $permission) {
+    $configAdder->addListItemFromConfiguration('user.role.editor', 'permissions', $permission);
+  }
+  foreach ($managerPermissions as $permission) {
+    $configAdder->addListItemFromConfiguration('user.role.manager', 'permissions', $permission);
+  }
+}
+
+/**
+ * Re-apply update hook 8001 with role configuration
+ */
+function degov_users_roles_update_8011() {
+  // Apply updates for workflows.
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_users_roles', '8001');
+}
+
+/**
+ * deGov Update 5.1.0 - Give managers default permissions on the permissions by term module.
+ */
+function degov_users_roles_update_850100() {
+  // Add new permissions.
+  $managerPermissions = [
+    'access pbt settings',
+    'show term permission form on term page',
+    'show term permissions on node edit page',
+  ];
+
+  /** @var \Drupal\degov_common\Entity\ConfigAdder $configAdder */
+  $configAdder = \Drupal::service('degov_common.config_adder');
+
+  foreach ($managerPermissions as $permission) {
+    $configAdder->addListItemFromConfiguration('user.role.manager', 'permissions', $permission);
+  }
+}
+
+/**
+ * deGov Update 6.1.0 - Give editors and upwards the permission to delete files and access media
+ */
+function degov_users_roles_update_860100() {
+  // Add new permissions.
+  $permissions = [
+    'access content overview',
+    'access files overview',
+    'access media overview',
+    'delete any file',
+  ];
+  $roles = [
+    'user.role.editor',
+    'user.role.manager',
+  ];
+
+  $configAdder = \Drupal::service('degov_common.config_adder');
+
+  foreach ($roles as $role) {
+    foreach ($permissions as $permission) {
+      $configAdder->addListItemFromConfiguration($role, 'permissions', $permission);
+    }
+  }
+}
+
+/**
+ * deGov Update 6.2.0 - Give managers permission to view filter_disallow messages.
+ */
+function degov_users_roles_update_860200() {
+  // Add new permissions.
+  $permissions = [
+    'view filter_disallow messages',
+  ];
+  $roles = [
+    'user.role.manager',
+  ];
+
+  $configAdder = \Drupal::service('degov_common.config_adder');
+
+  foreach ($roles as $role) {
+    foreach ($permissions as $permission) {
+      $configAdder->addListItemFromConfiguration($role, 'permissions', $permission);
+    }
+  }
+}
+
+/**
+ * deGov Update 7.1.0 - Add a role system_configurator
+ */
+function degov_users_roles_update_870100() {
+  \Drupal::service('module_installer')->install(['block_permissions']);
+
+  // Apply updates for workflows.
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_users_roles', '8012');
+}
+
+/**
+ * Give editors permission to edit nodes of content type press.
+ */
+function degov_users_roles_update_870500() {
+  $editorRoleConfig = \Drupal::service('degov_common.config_storage_factory')->getEditable('user.role.editor');
+  $permissions = array_merge($editorRoleConfig->get('permissions'), [
+    'edit any press content',
+    'view any unpublished content',
+  ]);
+  $editorRoleConfig->set('permissions', $permissions)->save(TRUE);
+}

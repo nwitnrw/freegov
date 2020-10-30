@@ -1,0 +1,22 @@
+name: 'deGov - Paragraph Slideshow'
+description: 'Slideshow paragraph for the header region.'
+type: module
+package: deGov
+core: 8.x
+dependencies:
+  - degov_common
+  - degov_content_types_shared_fields
+  - degov_image_and_crop_styles
+  - degov_paragraph_node_reference
+  - degov_media_video
+  - degov_media_video_mobile
+  - degov_media_video_upload
+  - entity_browser
+  - entity_reference_revisions
+  - field
+  - inline_entity_form
+  - link
+  - media
+  - options
+  - paragraphs
+  - text

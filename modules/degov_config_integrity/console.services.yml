@@ -1,0 +1,6 @@
+services:
+  degov_config_integrity.integrity_check:
+    class: Drupal\degov_config_integrity\Command\DegovConfigIntegrityCheckConsoleCommand
+    arguments: ['@degov_config_integrity.module_integrity_checker']
+    tags:
+      - { name: drupal.command }

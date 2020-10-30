@@ -1,0 +1,90 @@
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.usage
+    - field.field.media.video_mobile.field_allow_download
+    - field.field.media.video_mobile.field_copyright
+    - field.field.media.video_mobile.field_description
+    - field.field.media.video_mobile.field_include_search
+    - field.field.media.video_mobile.field_media_accessibility
+    - field.field.media.video_mobile.field_media_duration
+    - field.field.media.video_mobile.field_media_generic_9
+    - field.field.media.video_mobile.field_media_in_library
+    - field.field.media.video_mobile.field_media_language
+    - field.field.media.video_mobile.field_media_publish_date
+    - field.field.media.video_mobile.field_media_transcription
+    - field.field.media.video_mobile.field_subtitle
+    - field.field.media.video_mobile.field_tags
+    - field.field.media.video_mobile.field_title
+    - field.field.media.video_mobile.field_video_mobile_caption
+    - field.field.media.video_mobile.field_video_mobile_mp4
+    - field.field.media.video_mobile.field_video_mobile_preview
+    - field.field.media.video_mobile.field_video_mobile_subtitle
+    - media.type.video_mobile
+  enforced:
+    module:
+      - degov_media_video_mobile
+  module:
+    - degov_common
+    - entity_reference_revisions
+id: media.video_mobile.usage
+targetEntityType: media
+bundle: video_mobile
+mode: usage
+content:
+  field_tags:
+    type: taxonomy_term_search
+    weight: 2
+    region: content
+    label: hidden
+    settings:
+      route_name: ''
+    third_party_settings: {  }
+  field_title:
+    weight: 0
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_video_mobile_preview:
+    type: entity_reference_entity_view
+    weight: 3
+    region: content
+    label: hidden
+    settings:
+      image_style: thumbnail
+      image_link: content
+      view_mode: teaser_squared_1_1
+      link: true
+    third_party_settings: {  }
+  field_video_mobile_subtitle:
+    type: entity_reference_revisions_entity_view
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_allow_download: true
+  field_copyright: true
+  field_description: true
+  field_include_search: true
+  field_media_accessibility: true
+  field_media_duration: true
+  field_media_generic_9: true
+  field_media_in_library: true
+  field_media_language: true
+  field_media_publish_date: true
+  field_media_transcription: true
+  field_subtitle: true
+  field_video_mobile_caption: true
+  field_video_mobile_mp4: true
+  langcode: true
+  name: true
+  thumbnail: true
+  uid: true

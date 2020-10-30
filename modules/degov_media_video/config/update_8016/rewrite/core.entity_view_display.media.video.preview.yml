@@ -1,0 +1,11 @@
+content:
+  thumbnail:
+    type: responsive_image
+    settings:
+      responsive_image_style: teaser_squared
+      image_link: ''
+  field_video_preview:
+    type: entity_reference_entity_view
+    settings:
+      view_mode: teaser_squared_1_1
+      link: true

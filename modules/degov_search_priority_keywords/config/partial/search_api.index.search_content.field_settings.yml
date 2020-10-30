@@ -1,0 +1,9 @@
+field_preferred_search_terms:
+  label: 'Preferred search terms'
+  datasource_id: 'entity:node'
+  property_path: field_preferred_search_terms
+  type: text
+  boost: !!float 21
+  dependencies:
+    config:
+      - field.storage.node.field_preferred_search_terms

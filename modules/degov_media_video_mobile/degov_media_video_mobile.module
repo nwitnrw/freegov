@@ -1,0 +1,316 @@
+<?php
+
+/**
+ * @file
+ * The deGov Media Video Mobile module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Template\Attribute;
+use Drupal\degov_common\Common;
+use Drupal\file\Entity\File;
+use Drupal\image\ImageStyleInterface;
+
+/**
+ * Implements hook_preprocess().
+ */
+function degov_media_video_mobile_preprocess(&$variables, $hook, &$info) {
+  // Add template suggestions and libraries implemented in this module.
+  Common::addThemeSuggestions($variables, $hook, $info, [
+    'module_name'       => 'degov_media_video_mobile',
+    'entity_type'       => 'media',
+    'entity_bundles'    => ['video_mobile'],
+    'entity_view_modes' => [
+      'usage',
+      'preview',
+      'search',
+      'embedded',
+      'reference',
+      'full',
+      'preview_wide',
+    ],
+  ]);
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function degov_media_video_mobile_preprocess_media__video_mobile(&$variables) {
+  if (\Drupal::service('router.admin_context')->isAdminRoute()) {
+    return;
+  }
+
+  $javascriptData = [];
+  /* @var \Drupal\media\Entity\Media $media */
+  $media = $variables['elements']['#media'];
+  $variables['#attached']['library'][] = 'degov_media_video_mobile/degov_media_video_mobile';
+  $variables['video_url'] = $media->url();
+  $variables['video_attributes'] = new Attribute([
+    'id'           => 'video-upload-' . $media->id(),
+    'preload'      => 'metadata',
+    'controls'     => 'controls',
+    'controlslist' => 'nodownload',
+  ]);
+
+  $javascriptData['id'] = 'video-upload-' . $media->id();
+
+  if (!$media->get('field_mobile_video_mobile_mp4')->isEmpty()) {
+    /* @var \Drupal\file\Entity\File $file */
+    $file = $media->field_mobile_video_mobile_mp4->entity;
+    if (!empty($file)) {
+      $file_url = file_create_url($file->getFileUri());
+      $variables['video_mobile_mp4'] = $file_url;
+      $variables['video_attributes']->setAttribute('src', $variables['video_mobile_mp4']);
+      $javascriptData['files']['video_mobile'] = $variables['video_mobile_mp4'];
+      $variables['video_qualities'][$file_url] = $media->get('field_mobile_video_mobile_mp4')->getFieldDefinition()->getLabel();
+
+      if (in_array($variables['elements']['#view_mode'], ['full', 'default'])) {
+        if (!empty($media->get('field_allow_download_mobile')->value)) {
+          $variables['content']['downloads']['mobile'] = degov_common_file_download_render_array($file, $media->getFieldDefinition('field_mobile_video_mobile_mp4')->getLabel());
+        }
+      }
+    }
+  }
+
+  if (!$media->get('field_video_mobile_mp4')->isEmpty()) {
+    /* @var \Drupal\file\Entity\File $file */
+    $file = $media->field_video_mobile_mp4->entity;
+    if (!empty($file)) {
+      $file_url = file_create_url($file->getFileUri());
+      $variables['video_mp4'] = $file_url;
+      $variables['video_attributes']->setAttribute('src', $variables['video_mp4']);
+      $javascriptData['files']['video_default'] = $variables['video_mp4'];
+      $variables['video_qualities'][$file_url] = $media->get('field_video_mobile_mp4')->getFieldDefinition()->getLabel();
+      // Add the download link only to full view mode.
+      if (in_array($variables['elements']['#view_mode'], ['full', 'default'])) {
+        if (!empty($media->get('field_allow_download')->value)) {
+          $variables['content']['downloads']['standard'] = degov_common_file_download_render_array($file, $media->getFieldDefinition('field_video_mobile_mp4')->getLabel());
+        }
+      }
+    }
+  }
+
+  if (!$media->get('field_hdready_video_mobile_mp4')->isEmpty()) {
+    /* @var \Drupal\file\Entity\File $file */
+    $file = $media->field_hdready_video_mobile_mp4->entity;
+    if (!empty($file)) {
+      $file_url = file_create_url($file->getFileUri());
+      $variables['video_hdready_mp4'] = $file_url;
+      $javascriptData['files']['video_hdready'] = $variables['video_hdready_mp4'];
+      $variables['video_qualities'][$file_url] = $media->get('field_hdready_video_mobile_mp4')->getFieldDefinition()->getLabel();
+
+      if (in_array($variables['elements']['#view_mode'], ['full', 'default'])) {
+        if (!empty($media->get('field_allow_download_hdready')->value)) {
+          $variables['content']['downloads']['hdready'] = degov_common_file_download_render_array($file, $media->getFieldDefinition('field_hdready_video_mobile_mp4')->getLabel());
+        }
+      }
+    }
+  }
+
+  if (!$media->get('field_fullhd_video_mobile_mp4')->isEmpty()) {
+    /* @var \Drupal\file\Entity\File $file */
+    $file = $media->field_fullhd_video_mobile_mp4->entity;
+    if (!empty($file)) {
+      $file_url = file_create_url($file->getFileUri());
+      $variables['video_fullhd_mp4'] = $file_url;
+      $javascriptData['files']['video_fullhd'] = $variables['video_fullhd_mp4'];
+      $variables['video_qualities'][$file_url] = $media->get('field_fullhd_video_mobile_mp4')->getFieldDefinition()->getLabel();
+
+      if (in_array($variables['elements']['#view_mode'], ['full', 'default'])) {
+        if (!empty($media->get('field_allow_download_fullhd')->value)) {
+          $variables['content']['downloads']['fullhd'] = degov_common_file_download_render_array($file, $media->getFieldDefinition('field_fullhd_video_mobile_mp4')->getLabel());
+        }
+      }
+    }
+  }
+
+  if (!$media->get('field_ultrahd4k_video_mobile_mp4')->isEmpty()) {
+    /* @var \Drupal\file\Entity\File $file */
+    $file = $media->field_ultrahd4k_video_mobile_mp4->entity;
+    if (!empty($file)) {
+      $file_url = file_create_url($file->getFileUri());
+      $variables['video_ultrahd4k_mp4'] = $file_url;
+      $javascriptData['files']['video_ultrahd4k'] = $variables['video_ultrahd4k_mp4'];
+      $variables['video_qualities'][$file_url] = $media->get('field_ultrahd4k_video_mobile_mp4')->getFieldDefinition()->getLabel();
+
+      if (in_array($variables['elements']['#view_mode'], ['full', 'default'])) {
+        if (!empty($media->get('field_allow_download_4k')->value)) {
+          $variables['content']['downloads']['4k'] = degov_common_file_download_render_array($file, $media->getFieldDefinition('field_ultrahd4k_video_mobile_mp4')->getLabel());
+        }
+      }
+    }
+  }
+
+  $variables['#attached']['drupalSettings']['degov_media_video_mobile'] = [
+    (int) $media->id() => $javascriptData
+  ];
+
+  /* @var \Drupal\media\Entity\Media $poster */
+  $image = $media->field_video_mobile_preview->entity;
+  if (!empty($image)) {
+    $file = $image->image->entity;
+    if (!empty($file)) {
+      $imageStyle16By9 = \Drupal::entityTypeManager()->getStorage('image_style')->load('crop_16_to_9');
+      if ($imageStyle16By9 instanceof ImageStyleInterface) {
+        $variables['video_attributes']['poster'] = $imageStyle16By9->buildUrl($file->getFileUri());
+      }
+      else {
+        $variables['video_attributes']['poster'] = file_create_url($file->getFileUri());
+      }
+    }
+  }
+
+  $variables['#attached']['drupalSettings']['degov_media_video_mobile']['checkCellular'] = $javascriptData;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function degov_media_video_mobile_media_presave(EntityInterface $entity) {
+  $bundle = $entity->bundle();
+  if ($bundle == 'video_mobile') {
+    /*
+     * Check if the field for duration is enabled for the media bundle and
+     * that it is empty.
+     * There is no need to check the duration again and again if it is
+     * already set.
+     */
+    if ($entity->hasField('field_media_duration') && $entity->get('field_media_duration')->isEmpty()) {
+      /** @var \Drupal\degov_common\VideoUtils $videoUtils */
+      $videoUtils = \Drupal::service('degov_common.video_utils');
+      $duration = $videoUtils->getVideoDuration($entity);
+      $entity->set('field_media_duration', [0 => ['value' => $duration]]);
+    }
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function degov_media_video_mobile_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (\in_array($form_id, [
+    'media_video_mobile_add_form',
+    'media_video_mobile_edit_form',
+  ])) {
+    $form['#validate'][] = 'degov_media_video_mobile_validate_video_specs';
+  }
+}
+
+/**
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ */
+function degov_media_video_mobile_validate_video_specs(&$form, FormStateInterface $form_state) {
+  $video_fields = [
+    'field_fullhd_video_mobile_mp4',
+    'field_hdready_video_mobile_mp4',
+    'field_mobile_video_mobile_mp4',
+    'field_ultrahd4k_video_mobile_mp4',
+    'field_video_mobile_mp4',
+  ];
+
+  /*
+   * If validation is triggered by a file upload to a specific field,
+   * only validate that field.
+   */
+  $triggeringElement = $form_state->getTriggeringElement();
+  if ($triggeringElement['#id'] !== 'edit-submit') {
+    if (!empty($triggeringElement['#parents'][0]) && in_array($triggeringElement['#parents'][0], $video_fields)) {
+      $video_fields = [$triggeringElement['#parents'][0]];
+    }
+  }
+
+  foreach ($video_fields as $field_name) {
+    $value = $form_state->getValue($field_name);
+    if (!empty($value[0]['fids'][0])) {
+      $uploaded_file = File::load($value[0]['fids'][0]);
+      $uploaded_file_path = \Drupal::service('file_system')
+        ->realpath($uploaded_file->getFileUri());
+
+      $file_info = \Drupal::service('degov_common.video_utils')
+        ->getFileInfo($uploaded_file_path);
+
+      // Check file type.
+      if (empty($file_info['fileformat'])) {
+        \Drupal::service('messenger')->addWarning(
+          t(
+            '@field_name: The file format could not be determined.',
+            [
+              '@field_name' => $form[$field_name]['widget'][0]['#title'],
+            ]
+          )
+        );
+      }
+      if ($file_info['fileformat'] !== 'mp4') {
+        \Drupal::service('messenger')->addWarning(
+          t(
+            '@field_name: Expected an MP4 file. Got "@format" instead.',
+            [
+              '@field_name' => $form[$field_name]['widget'][0]['#title'],
+              '@format'     => $file_info['fileformat'],
+            ]
+          )
+        );
+      }
+
+      // Check file pixel dimensions.
+      $field_definitions = \Drupal::service('entity_field.manager')
+        ->getFieldDefinitions('media', 'video_mobile');
+      if (isset($field_definitions[$field_name])) {
+        $current_field_definition = $field_definitions[$field_name];
+        if (!empty($current_field_definition->getDescription()) && preg_match("/^(\d+) ?x ?(\d+)$/", $current_field_definition->getDescription(), $dimensions) && count($dimensions) === 3) {
+          if ((int) $file_info['video']['resolution_x'] !== (int) $dimensions[1] || (int) $file_info['video']['resolution_y'] !== (int) $dimensions[2]) {
+            \Drupal::service('messenger')->addWarning(
+              t(
+                '@field_name: Expected @dimensions video dimensions. Got "@resolution_x x @resolution_y" instead.',
+                [
+                  '@field_name'   => $form[$field_name]['widget'][0]['#title'],
+                  '@dimensions'   => $current_field_definition->getDescription(),
+                  '@resolution_x' => $file_info['video']['resolution_x'],
+                  '@resolution_y' => $file_info['video']['resolution_y'],
+                ]
+              )
+            );
+          }
+        }
+      }
+
+      // Check file aspect ratio.
+      $ratio_y = 0;
+      if (!empty($file_info['video']['resolution_y']) && !empty($file_info['video']['resolution_x'])) {
+        $ratio_y = $file_info['video']['resolution_y'] / ($file_info['video']['resolution_x'] / 16);
+      }
+      if ($ratio_y !== 9) {
+        \Drupal::service('messenger')->addWarning(
+          t(
+            '@field_name: Expected aspect ratio of 16:9. Got "16:@ratio_y" instead.',
+            [
+              '@field_name' => $form[$field_name]['widget'][0]['#title'],
+              '@ratio_y'    => $ratio_y,
+            ]
+          )
+        );
+      }
+
+      // Check file codec.
+      if (empty($file_info['video']['fourcc']) || !in_array($file_info['video']['fourcc'], [
+        'avc1',
+        'davc',
+        'h264',
+        'x264',
+        'vssh',
+      ])) {
+        \Drupal::service('messenger')->addWarning(
+          t(
+            '@field_name: Expected H.264 encoded video. Got "@fourcc" instead.',
+            [
+              '@field_name' => $form[$field_name]['widget'][0]['#title'],
+              '@fourcc'     => $file_info['video']['fourcc'],
+            ]
+          )
+        );
+      }
+    }
+  }
+}

@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_media_video module.
+ */
+
+use Drupal\degov_common\Common;
+
+/**
+ * Implements hook_uninstall
+ */
+function degov_media_video_uninstall() {
+  Common::removeContent([
+    'entity_type' => 'media',
+    'entity_bundles' => ['video'],
+  ]);
+}
+
+/**
+ * Fix fields config.
+ */
+function degov_media_video_update_8015() {
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_media_video', '8015');
+}
+
+/**
+ * Moved configuration from image styles module
+ */
+function degov_media_video_update_8016() {
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_media_video', '8016');
+}
+
+/**
+ * Adds missing preview wide format
+ */
+function degov_media_video_update_8017() {
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_media_video', '8017');
+}
+
+/**
+ * Adds missing field publish_date
+ */
+function degov_media_video_update_8018() {
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_media_video', '8018');
+}
+
+/**
+ * Define a default value for publish date
+ */
+function degov_media_video_update_8019() {
+  /**
+   * @var DegovModuleUpdater $degovModuleUpdater
+   */
+  $degovModuleUpdater = \Drupal::service('degov_config.module_updater');
+  $degovModuleUpdater->applyUpdates('degov_media_video', '8019');
+}

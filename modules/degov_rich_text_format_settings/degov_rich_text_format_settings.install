@@ -1,0 +1,93 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_rich_text_format_settings module.
+ */
+
+/**
+ * deGov 7.1.0 - Removes or replaces the CKEditor DrupalLink button for a Linkit button, removes buttons from lightning_media in rich_text editor.
+ */
+function degov_rich_text_format_settings_update_870100() {
+  _degov_rich_text_format_settings_replace_drupallink_button();
+  _degov_rich_text_format_settings_remove_lightning_media_toolbar();
+}
+
+/**
+ * Removes buttons from lightning_media in rich_text editor.
+ */
+function _degov_rich_text_format_settings_remove_lightning_media_toolbar(): void {
+  $config = \Drupal::service('config.factory')
+    ->getEditable('editor.editor.rich_text');
+  if (empty($config)) {
+    return;
+  }
+  /* On a default install the first line buttons is
+   * from modules/lightning_media/config/install/editor.editor.rich_text.yml.
+   * And the second line from ./config/rewrite/editor.editor.rich_text.yml.
+   */
+  $configRows = $config->get('settings.toolbar.rows');
+  if (is_array($configRows) && \count($configRows) === 2) {
+    $configRows[0] = $configRows[1];
+    unset($configRows[1]);
+    $config->set('settings.toolbar.rows', $configRows)->save(TRUE);
+  }
+}
+
+/**
+ * Removes or replaces the CKEditor DrupalLink button for a Linkit button
+ */
+function _degov_rich_text_format_settings_replace_drupallink_button() {
+  // Check if the Linkit module is enabled.
+  if (!\Drupal::moduleHandler()->moduleExists('linkit')) {
+    return;
+  }
+  $editorConfigList = ['editor.editor.rich_html', 'editor.editor.rich_text'];
+  // Each deGov CKEditor configuration file will need to be checked.
+  foreach ($editorConfigList as $editorConfig) {
+    // In case the configuration does not exist anymore, skip it.
+    $config = \Drupal::service('config.factory')->getEditable($editorConfig);
+    if (empty($config)) {
+      continue;
+    }
+    $linkitKeyFound = FALSE;
+    $drupalLinkKeyFound = FALSE;
+    $drupalLinkKey = [];
+
+    // Check each CKEditor button, to check in case we have a DrupalLink and/or Linkit field.
+    $configRows = $config->get('settings.toolbar.rows');
+    foreach ($configRows as $configRowKey => $configRow) {
+      foreach ($configRow as $configGroupKey => $configGroup) {
+        // In case a DrupalLink button is found, we keep its position in the array.
+        if (!$drupalLinkKeyFound && is_numeric($key = array_search('DrupalLink', $configGroup['items']))) {
+          $drupalLinkKeyFound = TRUE;
+          $drupalLinkKey = [
+            'row' => $configRowKey,
+            'group' => $configGroupKey,
+            'key' => $key
+          ];
+        }
+        // In case a Linkit button is found, we just flag it.
+        if (!$linkitKeyFound && is_numeric(array_search('Linkit', $configGroup['items']))) {
+          $linkitKeyFound = TRUE;
+        }
+        // In case both buttons are found we exit the loop faster.
+        if ($linkitKeyFound && $drupalLinkKeyFound) {
+          break 2;
+        }
+      }
+    }
+
+    if ($drupalLinkKeyFound && $linkitKeyFound) {
+      // Both buttons were found, so we remove the normal DrupalLink button.
+      unset($configRows[$drupalLinkKey['row']][$drupalLinkKey['group']]['items'][$drupalLinkKey['key']]);
+    }
+    elseif ($drupalLinkKeyFound && !$linkitKeyFound) {
+      // Only the DrupalLink button is found, so we replace it with the Linkit button.
+      $configRows[$drupalLinkKey['row']][$drupalLinkKey['group']]['items'][$drupalLinkKey['key']] = 'Linkit';
+    } // Any other reason we assume it has been done on purpose by the site administrator.
+
+    $configRows[$drupalLinkKey['row']][$drupalLinkKey['group']]['items'] = array_values($configRows[$drupalLinkKey['row']][$drupalLinkKey['group']]['items']);
+    $config->set('settings.toolbar.rows', $configRows)->save(TRUE);
+  }
+}

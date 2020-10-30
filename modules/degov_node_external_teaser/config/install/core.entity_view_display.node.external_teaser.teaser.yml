@@ -1,0 +1,28 @@
+langcode: de
+status: false
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.external_teaser.field_link
+    - field.field.node.external_teaser.field_teaser_image
+    - field.field.node.external_teaser.field_teaser_text
+    - node.type.external_teaser
+  module:
+    - user
+  enforced:
+    module:
+      - degov_node_external_teaser
+id: node.external_teaser.teaser
+targetEntityType: node
+bundle: external_teaser
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_link: true
+  field_teaser_image: true
+  field_teaser_text: true
+  langcode: true
+  shariff_field: true

@@ -1,0 +1,17 @@
+gallery:
+  version: 1.0
+  css:
+    component:
+      css/media-gallery.css: {}
+  js:
+    js/gallery.js: {}
+  dependencies:
+    - degov_common/slick
+
+#photoswipe:
+#  css:
+#    theme:
+#      public/css/photoswipe-default-skin.css: { }
+#  js:
+#    source/js/photoswipe/4.1.2/photoswipe-ui-default.min.js: { minified: true }
+#    source/js/photoswipe/4.1.2/photoswipe.min.js: { minified: true }

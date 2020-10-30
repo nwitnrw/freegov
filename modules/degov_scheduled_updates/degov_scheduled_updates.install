@@ -1,0 +1,71 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_scheduled_updates module.
+ */
+
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Implements hook_install().
+ */
+function degov_scheduled_updates_install() {
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_scheduled_updates', '8000');
+
+  // Scheduled Publish module list view override.
+  $config = \Drupal::configFactory()
+    ->getEditable('views.view.scheduled_publish');
+  $newConfigData = Yaml::parseFile(\Drupal::service('extension.list.module')
+    ->getPath('degov_scheduled_updates') . '/config/optional/views.view.scheduled_publish.yml');
+  $config->setData($newConfigData)->save();
+
+  \Drupal::service('degov_common.translation_import')->importConfigTranslation('de', 'views.view.scheduled_publish', drupal_get_path('module', 'degov_scheduled_updates') . '/config/optional/language/de/views.view.scheduled_publish.yml');
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_scheduled_updates_uninstall() {
+  $config = \Drupal::configFactory()
+    ->getEditable('views.view.scheduled_publish');
+  $newConfigData = Yaml::parseFile(drupal_get_path('module', 'scheduled_publish') . '/config/optional/views.view.scheduled_publish.yml');
+  $config->setData($newConfigData)->save();
+}
+
+function degov_scheduled_updates_update_8002() {
+
+  \Drupal::service('module_installer')->install([
+    'scheduled_publish',
+    'degov_node_normal_page',
+    'degov_node_press',
+    'degov_node_faq',
+    'degov_node_event',
+    'degov_simplenews',
+  ]);
+
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_scheduled_updates', '8001');
+}
+
+/**
+ * Change cardinality of scheduled_publish fields added by this module
+ * and override Scheduled Publish module list view.
+ */
+function degov_scheduled_updates_update_8003() {
+  $config = \Drupal::configFactory()->getEditable('field.storage.node.field_scheduled_publish');
+  if (!$config->isNew() && $config->get('type') === 'scheduled_publish') {
+    $config->set('cardinality', -1);
+    $config->save();
+  }
+
+  // List view override.
+  $config = \Drupal::configFactory()
+    ->getEditable('views.view.scheduled_publish');
+  $newConfigData = Yaml::parseFile(\Drupal::service('extension.list.module')
+    ->getPath('degov_scheduled_updates') . '/config/optional/views.view.scheduled_publish.yml');
+  $config->setData($newConfigData)->save();
+
+  \Drupal::service('degov_common.translation_import')->importConfigTranslation('de', 'views.view.scheduled_publish', drupal_get_path('module', 'degov_scheduled_updates') . '/config/optional/language/de/views.view.scheduled_publish.yml');
+}

@@ -1,0 +1,53 @@
+{#
+/**
+ * @file
+ * Default theme implementation to present a media entity.
+ *
+ * Available variables:
+ * - name: Name of the media.
+ * - content: Media content.
+ *
+ * @see template_preprocess_media()
+ *
+ * @ingroup themeable
+ */
+ #}
+{% set media_classes = [
+  'image',
+  'image--full',
+  'clearfix',
+  'skin--background-primary'
+] %}
+<article{{ attributes.addClass(media_classes) }}>
+    {{ content.contextual_links }}
+    <div class="image__wrapper">
+        <div class="image__image"{{ content.image|quickedit_attr }}>{{ content.image|field_value }}</div>
+    </div>
+  <div class="col-sm-12 image__info">
+    <div class="media__type-label skin--contrast">{{ 'Bild'|t }}</div>
+    {{ field_media_copyright }}
+  </div>
+  <div class="col-sm-12 image__extra-info">
+      {% if content.download %}
+          {{ content.download }}
+      {% endif %}
+      {% if content.field_subtitle|field_value %}
+          <h2 class="image__subtitle"{{ content.field_subtitle|quickedit_attr }}>{{ content.field_subtitle|field_value }}</h2>
+      {% endif %}
+      {% if content.field_media_publish_date|field_value %}
+      <div class="image__date"{{ content.field_media_publish_date|quickedit_attr }}>
+          {{ content.field_media_publish_date|field_value }}
+      </div>
+      {% endif %}
+      {% if content.field_description|field_value %}
+          <div class="image__description"{{ content.field_description|quickedit_attr }}>
+              {{ content.field_description|field_value }}
+          </div>
+      {% endif %}
+      {% if content.field_tags|field_value %}
+          <div class="tags"{{ content.field_tags|quickedit_attr }}>
+              {{ content.field_tags }}
+          </div>
+      {% endif %}
+  </div>
+</article>

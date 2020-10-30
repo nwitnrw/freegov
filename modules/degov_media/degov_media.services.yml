@@ -1,0 +1,6 @@
+services:
+  degov_media.media_access_subscriber:
+    class: '\Drupal\degov_media\EventSubscriber\MediaAccessSubscriber'
+    arguments: ['@current_user']
+    tags:
+      - { name: 'event_subscriber' }

@@ -1,0 +1,13 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_node_overrides
+  module:
+    - node
+third_party_settings: { }
+id: node.preview
+label: 'Teaser Preview'
+targetEntityType: node
+cache: true

@@ -1,0 +1,16 @@
+third_party_settings:
+  field_group:
+    group_preview:
+      label: Vorschau
+    group_header:
+      label: Kopfzeile
+    group_content:
+      label: Inhalt
+    group_date_and_time:
+      format_settings:
+        label: Datum und Uhrzeit
+      label: Datum und Uhrzeit
+    group_common:
+      label: Allgemein
+    group_righ:
+      label: Seitenleiste rechts

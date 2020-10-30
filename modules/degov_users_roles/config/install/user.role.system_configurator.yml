@@ -1,0 +1,58 @@
+langcode: de
+status: true
+dependencies:
+  module:
+    - lightning_core
+  enforced:
+    module:
+      - degov_users_roles
+id: system_configurator
+label: Systemkonfigurator
+weight: 18
+is_admin: null
+permissions:
+  - 'access administration pages'
+  - 'access ckeditor_media_browser entity browser pages'
+  - 'access image_browser entity browser pages'
+  - 'access media overview'
+  - 'access media_browser entity browser pages'
+  - 'access toolbar'
+  - 'administer block settings for all themes'
+  - 'administer blocks'
+  - 'administer blocks provided by calendar'
+  - 'administer blocks provided by core'
+  - 'administer blocks provided by ctools'
+  - 'administer blocks provided by degov_common'
+  - 'administer blocks provided by degov_search_content'
+  - 'administer blocks provided by degov_social_media_settings'
+  - 'administer blocks provided by facets'
+  - 'administer blocks provided by help'
+  - 'administer blocks provided by language'
+  - 'administer blocks provided by menu_block'
+  - 'administer blocks provided by node'
+  - 'administer blocks provided by nrw_menu'
+  - 'administer blocks provided by open_readspeaker'
+  - 'administer blocks provided by search_api_sorts'
+  - 'administer blocks provided by shariff'
+  - 'administer blocks provided by shortcut'
+  - 'administer blocks provided by simplenews'
+  - 'administer blocks provided by sitemap'
+  - 'administer blocks provided by system'
+  - 'administer blocks provided by user'
+  - 'administer blocks provided by views'
+  - 'administer blocks provided by webform'
+  - 'administer blocks provided by workbench'
+  - 'administer menu'
+  - 'administer simplenews settings'
+  - 'administer site configuration'
+  - 'administer themes'
+  - 'configure color schema ui'
+  - 'create media'
+  - 'delete media'
+  - 'dropzone upload files'
+  - 'update any media'
+  - 'update media'
+  - 'use color schema ui'
+  - 'use text format rich_html'
+  - 'view media'
+  - 'view the administration theme'

@@ -1,0 +1,16 @@
+name: 'deGov - Common'
+description: "This module contains base functionality for the deGov distribution."
+package: deGov
+type: module
+core: 8.x
+configure: degov_common.settings
+dependencies:
+  - drupal:locale
+  - viewsreference:viewsreference
+  - config_replace:config_replace
+  - dropzonejs:dropzonejs_eb_widget
+  - lightning_media:lightning_media
+  - degov:degov_theming
+  - degov:degov_users_roles
+  - video_embed_field:video_embed_field
+  - degov:degov_media_copyright

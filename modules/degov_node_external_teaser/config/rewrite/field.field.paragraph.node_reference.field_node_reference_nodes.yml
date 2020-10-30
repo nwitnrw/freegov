@@ -1,0 +1,8 @@
+settings:
+  handler_settings:
+    target_bundles:
+      blog: blog
+      external_teaser: external_teaser
+      normal_page: normal_page
+      press: press
+      event: event

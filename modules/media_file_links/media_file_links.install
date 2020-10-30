@@ -1,0 +1,134 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the media_file_links module.
+ */
+
+use Drupal\Core\Url;
+use Drupal\menu_link_content\Entity\MenuLinkContent;
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Implements hook_install().
+ */
+function media_file_links_install() {
+  $configsToUpdate = ['filter.format.rich_html', 'filter.format.rich_text'];
+
+  foreach ($configsToUpdate as $configToUpdate) {
+    $config = \Drupal::configFactory()->getEditable($configToUpdate);
+    $filters = $config->get('filters');
+    if (empty($filters['filter_mediafilelinks'])) {
+      $filters['filter_mediafilelinks'] = [
+        'id'       => 'filter_mediafilelinks',
+        'provider' => 'media_file_links',
+        'status'   => TRUE,
+        'weight'   => 10,
+        'settings' => [],
+      ];
+
+      $config->set('filters', $filters)->save();
+    }
+  }
+
+  $configsToUpdate = ['linkit.linkit_profile.full_text'];
+
+  foreach ($configsToUpdate as $configToUpdate) {
+    $config = \Drupal::configFactory()->getEditable($configToUpdate);
+
+    $matchers = $config->get('matchers');
+    $addMediaFileLinksMatcher = TRUE;
+    foreach ($matchers as $matcher) {
+      if ($matcher['id'] === 'entity:media_file_links') {
+        $addMediaFileLinksMatcher = FALSE;
+      }
+    }
+    if ($addMediaFileLinksMatcher) {
+      $newMatcher = Yaml::parseFile(\Drupal::service('extension.list.module')
+        ->getPath('media_file_links') . '/config/partial/linkit_matcher.yml');
+      if (!empty($newMatcher['uuid'])) {
+        $matchers[$newMatcher['uuid']] = $newMatcher;
+        $config->set('matchers', $matchers)->save();
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_schema().
+ */
+function media_file_links_schema(): array {
+  $schema['media_file_links_usage'] = [
+    'description' => 'Tracks the usage of Media through media_file_links placeholders.',
+    'fields' => [
+      'referencing_entity_id' => [
+        'description' => 'The ID of the referencing entity, e.g. a node, a menu item, etc.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'referencing_entity_type' => [
+        'description' => 'The type of the referencing entity.',
+        'type' => 'varchar_ascii',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'referencing_entity_field' => [
+        'description' => 'The name of the field the reference is located in.',
+        'type' => 'varchar_ascii',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'referencing_entity_langcode' => [
+        'description' => 'The langcode of the referencing entity.',
+        'type' => 'varchar_ascii',
+        'length' => 12,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'media_entity_id' => [
+        'description' => 'The ID of the referenced media entity.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function media_file_links_uninstall() {
+  // Set existing menu items to point to the system 404 page.
+  $mediaFileMenuLinksIds = \Drupal::entityQuery('menu_link_content')
+    ->execute();
+  $mediaFileMenuLinks = MenuLinkContent::loadMultiple($mediaFileMenuLinksIds);
+  foreach ($mediaFileMenuLinks as $mediaFileMenuLink) {
+    if (\Drupal::service('media_file_links.placeholder_handler')->isValidMediaFileLinkPlaceholder($mediaFileMenuLink->link->first()->uri)) {
+      $mediaFileMenuLink->link->first()->uri = 'internal:' . Url::fromRoute('system.404')->toString();
+      $mediaFileMenuLink->save();
+    }
+  }
+
+  // Remove Media file link matchers from Linkit profiles.
+  $configsToUpdate = ['linkit.linkit_profile.full_text'];
+
+  foreach ($configsToUpdate as $configToUpdate) {
+    $config = \Drupal::configFactory()->getEditable($configToUpdate);
+
+    $matchers = $config->get('matchers');
+    foreach ($matchers as $key => $matcher) {
+      if ($matcher['id'] === 'entity:media_file_links') {
+        unset($matchers[$key]);
+      }
+    }
+    $config->set('matchers', $matchers)->save();
+  }
+}

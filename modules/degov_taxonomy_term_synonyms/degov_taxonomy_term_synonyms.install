@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_taxonomy_term_synonyms module.
+ */
+
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
+use Drupal\Core\Entity\EntityStorageException;
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Implements hook_install().
+ */
+function degov_taxonomy_term_synonyms_install() {
+  // Get or create the form display config.
+  /** @var \Drupal\Core\Entity\Entity\EntityFormDisplay $form_display */
+  $form_display = EntityFormDisplay::load('taxonomy_term.tags.default');
+  if (!$form_display) {
+    $form_display = EntityFormDisplay::create([
+      'targetEntityType' => 'taxonomy_term',
+      'bundle'           => 'tags',
+      'status'           => TRUE,
+      'mode'             => 'default',
+    ]);
+  }
+
+  // Add synonyms to the tag form.
+  $form_display->setComponent('field_synonyms', [
+    'settings' => [
+      'match_operator' => 'CONTAINS',
+      'size'           => 60,
+      'placeholder'    => '',
+    ],
+    'type'     => 'entity_reference_autocomplete',
+    'region'   => 'content',
+    'weight'   => 1,
+  ]);
+
+  try {
+    $form_display->save();
+  }
+  catch (EntityStorageException $e) {
+    $message = $e->getMessage();
+    Drupal::logger('degov_taxonomy_term_synonyms')->error($message);
+  }
+
+  $viewConfig = \Drupal::service('config.factory')
+    ->getEditable('views.view.content');
+  if (!$viewConfig->isNew()) {
+    $filters = $viewConfig->get('display.default.display_options.filters');
+    $newFilterConfig = Yaml::parseFile(drupal_get_path('module', 'degov_taxonomy_term_synonyms') . '/config/partial/views.view.content.display.default.display_options.filters.yml');
+    $viewConfig
+      ->set('display.default.display_options.filters', array_merge($filters, $newFilterConfig))
+      ->save();
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_taxonomy_term_synonyms_uninstall() {
+  $configFactory = \Drupal::service('config.factory');
+  $config = $configFactory->getEditable('views.view.content');
+  $config
+    ->clear('display.default.display_options.filters.field_tags_target_id')
+    ->save();
+}

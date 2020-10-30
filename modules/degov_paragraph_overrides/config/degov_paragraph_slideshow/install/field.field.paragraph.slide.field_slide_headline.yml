@@ -1,0 +1,21 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_slide_headline
+    - paragraphs.paragraphs_type.slide
+  enforced:
+    module:
+      - degov_paragraph_overrides
+id: paragraph.slide.field_slide_headline
+field_name: field_slide_headline
+entity_type: paragraph
+bundle: slide
+label: Headline
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

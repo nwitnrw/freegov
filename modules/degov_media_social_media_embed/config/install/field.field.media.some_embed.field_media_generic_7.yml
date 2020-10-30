@@ -1,0 +1,18 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_media_generic_7
+    - media.type.some_embed
+id: media.some_embed.field_media_generic_7
+field_name: field_media_generic_7
+entity_type: media
+bundle: some_embed
+label: 'Generic media'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

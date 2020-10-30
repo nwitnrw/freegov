@@ -1,0 +1,53 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Node Action\n"
+"Language-Team: German\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+msgid "`@actionName` action took no effect on node titled `@nodeTitle`, since your user has no role permission."
+msgstr "`@actionName` Aktion konnte nicht auf die Node mit dem Titel `@nodeTitle` angewendet werden, da Ihrem Benutzer die entsprechende Rollenberechtigung fehlt."
+
+msgid "`@actionName` action took no effect on node titled `@nodeTitle`, due to taxonomy term restrictions regarding your user."
+msgstr "`@actionName` Aktion konnte nicht auf die Node mit dem Titel `@nodeTitle` angewendet werden, da Ihr Benutzer betreffend Taxonomie Termen einer Einschränkung unterliegt."
+
+msgid "Applied moderation change with state @state on @num nodes."
+msgstr "Veröffentlichungsstatus Änderung mit Status @state auf @num Nodes angewendet."
+
+msgid "Scheduled moderation state change with state @state on @num nodes for date @date."
+msgstr "Geplante Veröffentlichungsstatus Änderung mit Status @state auf @num Nodes für folgendes Datum angeplant: @date Uhr."
+
+msgid "The date must be in the future."
+msgstr "Das Datum muss in der Zukunft liegen."
+
+msgid "Change moderation state"
+msgstr "Veröffentlichungsstatus ändern"
+
+msgid "The date of the scheduled publish state change. If you provide none, the moderation state will be set immediately."
+msgstr "Das Datum der geplanten Veröffentlichungsstatus Änderung. Wenn kein Datum angegeben wurde, wird der Veröffentlichungsstatus sofort geändert."
+
+msgid "Nodes which will be affected by this action:"
+msgstr "Nodes die von dieser Aktion betroffen sind:"
+
+msgid "Which moderation state would you like to set?"
+msgstr "Welcher Veröffentlichungsstatus soll gesetzt werden?"
+
+msgid "Applied author change with user display name @userDisplayName on @num nodes."
+msgstr "Die Autor Änderung mit dem Benutzer @userDisplayName wurde auf @num Nodes angewendet."
+
+msgid "Change the author"
+msgstr "Autor ändern"
+
+msgid "Action was performed successfully."
+msgstr "Aktion wurde erfolgreich durchgeführt."
+
+msgid "Which author would you like to set?"
+msgstr "Welchen Autor möchten Sie eintragen?"
+
+msgid "Node with title `@nodeTitle` is published. The workflow does not allow editors to modify the moderation state of published content."
+msgstr "Die Node mit dem Titel `@nodeTitle` ist veröffentlicht. Der Arbeitsablauf sieht nicht vor, dass Ihre Redakteurrolle den Moderationsstatus bereits veröffentlichter Inhalte modifiziert."
+
+msgid "Content with title `@title` is of content entity type `@contentEntityType`, which does not have any moderation states assigned."
+msgstr "Der Inhalt mit dem Titel `@title` ist vom Inhaltstyp `@contentEntityType`, welcher über keinerlei Moderationsstatus verfügt."

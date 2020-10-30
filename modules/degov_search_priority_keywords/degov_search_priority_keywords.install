@@ -1,0 +1,87 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_search_priority_keywords module.
+ */
+
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Implements hook_install().
+ */
+function degov_search_priority_keywords_install() {
+  $content_types = [
+    'normal_page',
+    'blog',
+    'press',
+    'event',
+  ];
+
+  foreach ($content_types as $content_type) {
+    $field = "field.field.node.$content_type.field_preferred_search_terms";
+
+    // Add field to form display.
+    /**@var Drupal\Core\Config\Config $form_display_config */
+    $form_display_config = \Drupal::service('config.factory')->getEditable("core.entity_form_display.node.$content_type.default");
+    $content = $form_display_config->get('content');
+    $form_display_config->set('content', array_merge($content, [
+      'field_preferred_search_terms' => [
+        'weight' => 99,
+        'settings' => [
+          'size' => 60,
+          'placeholder' => '',
+        ],
+        'third_party_settings' => [],
+        'type' => 'string_textfield',
+        'region' => 'content',
+      ],
+    ]));
+
+    // Add field as dependency.
+    $dependencies = $form_display_config->get('dependencies.config');
+    if (!in_array($field, $dependencies)) {
+      $hidden[] = $field;
+    }
+    $form_display_config->set('dependencies.config', $dependencies);
+
+    // Add field to common group.
+    $group_common = $form_display_config->get('third_party_settings.field_group.group_common.children');
+    if (!in_array('field_preferred_search_terms', $group_common)) {
+      $group_common[] = 'field_preferred_search_terms';
+    }
+    $form_display_config->set('third_party_settings.field_group.group_common.children', $group_common);
+    $form_display_config->save();
+
+    // Hide field from default display.
+    /**@var Drupal\Core\Config\Config $display_config */
+    $display_config = \Drupal::service('config.factory')->getEditable("core.entity_view_display.node.$content_type.default");
+    $hidden = $display_config->get('hidden');
+    if (!in_array('field_preferred_search_terms', $hidden)) {
+      $hidden[] = 'field_preferred_search_terms';
+    }
+    $display_config->set('hidden', $hidden);
+
+    // Add field as dependency.
+    $dependencies = $display_config->get('dependencies.config');
+    if (!in_array($field, $dependencies)) {
+      $hidden[] = $field;
+    }
+    $display_config->set('dependencies.config', $dependencies);
+    $display_config->save();
+  }
+
+  // Add field to search api index.
+  /** @var Drupal\Core\Config\Config $config */
+  $config = \Drupal::service('config.factory')->getEditable('search_api.index.search_content');
+  $field_settings = $config->get('field_settings');
+  $new_field = Yaml::parseFile(drupal_get_path('module', 'degov_search_priority_keywords') . '/config/partial/search_api.index.search_content.field_settings.yml');
+  $config
+    ->set('field_settings', array_merge($field_settings, $new_field))
+    ->save();
+
+  $index_storage = \Drupal::entityTypeManager()
+    ->getStorage('search_api_index');
+  $index = $index_storage->load('search_content');
+  $index->save();
+}

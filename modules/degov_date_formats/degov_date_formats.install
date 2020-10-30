@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_date_formats module.
+ */
+
+/**
+ * Translate date formats
+ */
+function degov_date_formats_update_8002() {
+  \Drupal::service('module_installer')->install(['config_translation']);
+}

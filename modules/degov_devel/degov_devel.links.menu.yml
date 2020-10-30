@@ -1,0 +1,6 @@
+degov_devel.settings:
+  title: 'Development settings'
+  route_name: 'degov_devel.settings'
+  parent: 'system.admin_config_development'
+  description: 'Administer deGov Devel settings.'
+  weight: 0

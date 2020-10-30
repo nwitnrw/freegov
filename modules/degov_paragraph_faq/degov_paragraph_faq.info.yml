@@ -1,0 +1,12 @@
+name: 'deGov - Paragraph FAQ accordion'
+description: 'This paragraph shows you an FAQ list. This will be displayed as an accordion.'
+type: module
+package: deGov
+core: 8.x
+dependencies:
+  - degov_content_types_shared_fields
+  - entity_reference_revisions
+  - field
+  - link
+  - paragraphs
+  - text

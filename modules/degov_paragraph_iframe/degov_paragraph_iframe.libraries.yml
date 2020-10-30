@@ -1,0 +1,9 @@
+iframe:
+  version: 1.0
+  js:
+    js/iframe.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery.once

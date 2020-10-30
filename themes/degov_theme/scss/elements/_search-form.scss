@@ -1,0 +1,71 @@
+@import "../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "../../node_modules/@fortawesome/fontawesome-free/scss/solid.scss";
+
+.search-form-icon {
+  button {
+    border: none;
+    outline: none;
+    padding-top: $font-size-base * .8;
+    padding-bottom: $font-size-base * .5;
+    i {
+      font-size: $font-size-base * 1.25;
+    }
+  }
+}
+.search-form-wrapper {
+  background-color: $light-blue;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  .block-degov-search-content {
+    position: relative;
+    .contextual {
+      right: -30px;
+    }
+
+    form {
+      width: 100%;
+
+      label {
+        display: none;
+      }
+
+      .form-item {
+        margin-top: 0;
+        margin-bottom: 0;
+
+        &.form-type-textfield {
+          width: 100%;
+
+          input[type="text"] {
+            background-color: $light-blue;
+            border: none;
+            padding: 0.5rem 0;
+            width: 100%;
+            min-height: 4rem;
+            outline: none;
+
+            &::placeholder {
+              color: $white;
+            }
+          }
+        }
+      }
+
+      [data-drupal-selector="edit-actions"] {
+        display: none;
+      }
+    }
+
+    .x-close {
+      position: absolute;
+      top: 33%;
+      right: 0;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

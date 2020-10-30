@@ -1,0 +1,14 @@
+langcode: de
+status: true
+dependencies:
+  module:
+    - lightning_core
+    - media
+  enforced:
+    module:
+      - degov_content_types_shared_fields
+third_party_settings: { }
+id: media.preview_wide
+label: 'Preview Wide'
+targetEntityType: media
+cache: true

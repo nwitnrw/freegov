@@ -1,0 +1,39 @@
+services:
+  degov_demo_content.content_generator:
+    class: Drupal\degov_demo_content\Generator\ContentGenerator
+    abstract: true
+    arguments: ['@module_handler', '@entity_type.manager', '@degov_demo_content.paragraphs_file_handler']
+  degov_demo_content.node_generator:
+    class: Drupal\degov_demo_content\Generator\NodeGenerator
+    parent: degov_demo_content.content_generator
+    calls:
+      - [setAliasCleaner, ['@pathauto.alias_cleaner']]
+      - [setConfigFactory, ['@config.factory']]
+  degov_demo_content.media_generator:
+    class: Drupal\degov_demo_content\Generator\MediaGenerator
+    parent: degov_demo_content.content_generator
+    calls:
+      - ['setWktGenerator', ['@geofield.wkt_generator']]
+      - ['setMediaFileHandler', ['@degov_demo_content.media_file_handler']]
+  degov_demo_content.menu_item_generator:
+    class: Drupal\degov_demo_content\Generator\MenuItemGenerator
+    parent: degov_demo_content.content_generator
+    calls:
+      - ['setDatabase', ['@database']]
+  degov_demo_content.file_handler:
+    class: Drupal\degov_demo_content\FileHandler\FileHandler
+    arguments: ['@degov_demo_content.file_adapter']
+  degov_demo_content.media_file_handler:
+    class: Drupal\degov_demo_content\FileHandler\MediaFileHandler
+    parent: degov_demo_content.file_handler
+  degov_demo_content.paragraphs_file_handler:
+    class: Drupal\degov_demo_content\FileHandler\ParagraphsFileHandler
+    parent: degov_demo_content.file_handler
+  degov_demo_content.file_adapter:
+    class: Drupal\degov_demo_content\FileAdapter
+  degov_demo_content.block_content_generator:
+    class: Drupal\degov_demo_content\Generator\BlockContentGenerator
+    parent: degov_demo_content.content_generator
+  degov_demo_content.documentation_generator:
+    class: Drupal\degov_demo_content\Generator\DocumentationGenerator
+    arguments: ['@entity_type.manager', '@file_system', '@path_alias.manager']

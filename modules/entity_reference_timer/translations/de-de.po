@@ -1,0 +1,76 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Entity Reference Timer\n"
+"Language-Team: German\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: entity_reference_timer.info.yml:0
+msgid "Field types"
+msgstr "Feldtypen"
+
+#: src/Plugin/Field/FieldFormatter/EntityReferenceDateDisplayFormatter.php:7
+msgid "Selected display mode for entity reference date"
+msgstr ""
+
+#: src/Plugin/Field/FieldFormatter/EntityReferenceDateDisplayFormatter.php:7
+msgid "This formatter allows you to render referenced entities by selected display mode."
+msgstr ""
+
+#: src/Plugin/Field/FieldType/EntityReferenceDate.php:40
+msgid "The start datetime"
+msgstr "Das Startdatum"
+
+#: src/Plugin/Field/FieldType/EntityReferenceDate.php:41;45
+msgid "A DateTime object."
+msgstr "Ein DateTime Objekt"
+
+#: src/Plugin/Field/FieldType/EntityReferenceDate.php:44
+msgid "The end datetime"
+msgstr "Das Ende Datum"
+
+#: src/Plugin/Field/FieldType/EntityReferenceDate.php:11
+msgid "Entity reference date"
+msgstr ""
+
+#: src/Plugin/Field/FieldType/EntityReferenceDate.php:11
+msgid "An entity field containing an entity reference with a date."
+msgstr ""
+
+#: src/Plugin/Field/FieldType/EntityReferenceDate.php:13
+msgid "Timed reference"
+msgstr "Zeitgesteuerte Referenz"
+
+#: src/Plugin/Field/FieldType/EntityReferenceDate.php:11
+msgid "Reference"
+msgstr "Referenz"
+
+#: src/Plugin/Field/FieldWidget/EntityReferenceAutocompleteDateWidget.php:30
+msgid "Start"
+msgstr "Start"
+
+#: src/Plugin/Field/FieldWidget/EntityReferenceAutocompleteDateWidget.php:31
+msgid "End"
+msgstr "Ende"
+
+#: src/Plugin/Field/FieldWidget/EntityReferenceAutocompleteDateWidget.php:36
+msgid "publish time scheduled"
+msgstr "zeitgesteuert veröffentlichen"
+
+#: src/Plugin/Field/FieldWidget/EntityReferenceAutocompleteDateWidget.php:76;77
+msgid "Start date and end date must exist"
+msgstr "Das Datum für den Start und das Ende müssen existieren"
+
+#: src/Plugin/Field/FieldWidget/EntityReferenceAutocompleteDateWidget.php:81
+msgid "Start date must be before end date"
+msgstr "Das Startdatum muss vor dem Enddatum liegen"
+
+#: src/Plugin/Field/FieldWidget/EntityReferenceAutocompleteDateWidget.php:82
+msgid "End date must be after start date"
+msgstr "Das Enddatum muss nach dem Startdatum liegen"
+
+#: src/Plugin/Field/FieldWidget/EntityReferenceAutocompleteDateWidget.php:13
+msgid "Autocomplete with date"
+msgstr ""

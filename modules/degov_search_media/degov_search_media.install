@@ -1,0 +1,215 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_search_media module.
+ */
+
+use Drupal\facets\Entity\Facet;
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Implements hook_install().
+ */
+function degov_search_media_install() {
+  // Flush plugin caches so our facets will be shown.
+  \Drupal::service('plugin.cache_clearer')->clearCachedDefinitions();
+}
+
+/**
+ * Implements hook_update_dependencies().
+ */
+function degov_search_media_update_dependencies() {
+  $dependencies['degov_search_media'][8007] = [
+    'degov_media_overrides' => 8001,
+  ];
+
+  return $dependencies;
+}
+
+/**
+ * Add fields publish date to field sort.
+ */
+function degov_search_media_update_8007() {
+  /**
+   * @var $updater \Drupal\degov_common\DegovModuleUpdater
+   */
+  $updater = \Drupal::service('degov_config.module_updater');
+  if (\Drupal::config('facets.facet.search_media_publish_date')->get() === NULL) {
+    $updater->applyUpdates('degov_search_media', '8007');
+  }
+  $updater->reImport('views.view.search_media', 'degov_search_media', 'install');
+  $updater->reImport('search_api.index.search_media', 'degov_search_media', 'install');
+
+  foreach ([
+    'search_media_changed',
+    'search_media_published_date',
+  ] as $facetName) {
+    $facet = Facet::load($facetName);
+    if ($facet) {
+      $facet->delete();
+    }
+  }
+}
+
+/**
+ * Add path /mediathek to block media_publish_date.
+ */
+function degov_search_media_update_8008() {
+  /**
+   * @var $updater \Drupal\degov_common\DegovModuleUpdater
+   */
+  $updater = \Drupal::service('degov_config.module_updater');
+  $updater->applyUpdates('degov_search_media', '8008');
+}
+
+/**
+ * deGov Update 5.1.0 - Apply the updated media_publish_date block visibility
+ */
+function degov_search_media_update_850100() {
+  // Apply updates for workflows.
+  \Drupal::service('degov_config.module_updater')
+    ->applyUpdates('degov_search_media', '8008');
+}
+
+/**
+ * deGov Update 6.0.0 - Remove the "Ignore characters" filter from the media bundle field
+ */
+function degov_search_media_update_860000() {
+  $config = \Drupal::configFactory()->getEditable('search_api.index.search_media');
+  $ignoreCharacterFieldsSettings = $config->get('processor_settings.ignore_character.fields');
+
+  if (!empty($ignoreCharacterFieldsSettings)) {
+    $unsetKey = array_search('bundle', $ignoreCharacterFieldsSettings, FALSE);
+    if ($unsetKey !== FALSE) {
+      unset($ignoreCharacterFieldsSettings[$unsetKey]);
+      $config->set('processor_settings.ignore_character.fields', $ignoreCharacterFieldsSettings)->save();
+      return t('The Search API configuration for the media index has been updated. Please perform a reindex!');
+    }
+  }
+}
+
+/**
+ * deGov update 6.3.0 - Add video_mobile media type to search_media view as a filter.
+ */
+function degov_search_media_update_860300() {
+  /**
+   * @var \Drupal\Core\Config\ConfigFactory $configFactory
+   */
+  $configFactory = \Drupal::service('config.factory');
+  /**
+   * @var \Drupal\Core\Config\Config $config
+   */
+  $config = $configFactory->getEditable('views.view.search_media');
+
+  $viewsFilterConfig = <<<HERE
+bundle_5:
+  id: bundle_5
+  table: search_api_index_search_media
+  field: bundle
+  relationship: none
+  group_type: group
+  admin_label: ''
+  operator: '='
+  value:
+    min: ''
+    max: ''
+    value: video_mobile
+  group: 1
+  exposed: false
+  expose:
+    operator_id: ''
+    label: ''
+    description: ''
+    use_operator: false
+    operator: ''
+    identifier: ''
+    required: false
+    remember: false
+    multiple: false
+    remember_roles:
+      authenticated: authenticated
+    placeholder: ''
+    min_placeholder: ''
+    max_placeholder: ''
+  is_grouped: false
+  group_info:
+    label: ''
+    description: ''
+    identifier: ''
+    optional: true
+    widget: select
+    multiple: false
+    remember: false
+    default_group: All
+    default_group_multiple: {  }
+    group_items: {  }
+  plugin_id: search_api_string
+HERE;
+
+  if (!empty($config->get('display.default.display_options.filters'))) {
+    $config->set('display.default.display_options.filters', array_merge(
+      $config->get('display.default.display_options.filters'),
+      Yaml::parse($viewsFilterConfig)
+    ));
+    $config->save();
+  }
+
+  $viewModesConfig = <<<HERE
+'entity:media':
+  address: search
+  audio: search
+  citation: search
+  contact: search
+  document: search
+  facts: search
+  gallery: search
+  image: search
+  instagram: search
+  person: search
+  some_embed: search
+  tweet: search
+  video: search
+  video_file: search
+  video_mobile: search
+  video_upload: search
+HERE;
+
+  if (!empty($config->get('display.default.display_options.row.options.view_modes'))) {
+    $viewModes = $config->get('display.default.display_options.row.options.view_modes');
+
+    $config->set('display.default.display_options.row.options.view_modes', array_merge(
+      $viewModes,
+      Yaml::parse($viewModesConfig)
+    ));
+    $config->save();
+  }
+
+}
+
+/**
+ * deGov Update 7.0.0 - Update the search media tags facet block name.
+ */
+function degov_search_media_update_870000() {
+  $configFactory = \Drupal::service('config.factory');
+  $config = $configFactory->getEditable('facets.facet.search_media_tags');
+  $config->set('name', 'Schlagworte (Media)');
+  $config->save(TRUE);
+}
+
+/**
+ * deGov 8.0.8 – Set the ignore character filter to omit media bundles, otherwise it will destroy underscores.
+ */
+function degov_search_media_update_880008() {
+  $searchIndexConfig = \Drupal::configFactory()
+    ->getEditable('search_api.index.search_media');
+  if (!$searchIndexConfig->isNew()) {
+    $processorConfig = $searchIndexConfig->get('processor_settings.ignore_character');
+    $processorConfig['all_fields'] = FALSE;
+    if (($key = array_search('bundle', $processorConfig['fields'], TRUE)) !== FALSE) {
+      unset($processorConfig['fields'][$key]);
+    }
+    $searchIndexConfig->set('processor_settings.ignore_character', $processorConfig)
+      ->save(TRUE);
+  }
+}

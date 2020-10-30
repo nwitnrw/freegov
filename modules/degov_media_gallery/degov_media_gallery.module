@@ -1,0 +1,129 @@
+<?php
+
+/**
+ * @file
+ * Contains hooks and custom functionds for the degov_media_gallery module.
+ */
+
+use Drupal\degov_common\Common;
+use Drupal\media\Entity\Media;
+
+/**
+ * Implements hook_theme().
+ */
+function degov_media_gallery_theme($existing, $type, $theme, $path) {
+  // Static template with Photoswipe UI.
+  return [
+    'photoswipe_inc'  => [
+      'variables' => [],
+      'template'  => 'include/photoswipe_inc.html.twig',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+function degov_media_gallery_preprocess(&$variables, $hook, &$info) {
+  // Add template suggestions and libraries implemented in this module.
+  Common::addThemeSuggestions($variables, $hook, $info, [
+    'module_name'       => 'degov_media_gallery',
+    'entity_type'       => 'media',
+    'entity_bundles'    => ['gallery'],
+    'entity_view_modes' => [
+      'usage',
+      'preview',
+      'search',
+      'embedded',
+      'reference',
+      'full',
+      'preview_wide',
+    ],
+  ]);
+}
+
+/**
+ * Implements hook_preprocess_media().
+ */
+function degov_media_gallery_preprocess_media(&$variables) {
+  $mediaGallery = $variables['elements']['#media'];
+
+  if ($mediaGallery->bundle() === 'gallery') {
+    static $imageDataArray;
+
+    $display = \Drupal::entityTypeManager()
+      ->getStorage('entity_view_display')
+      ->load('media.gallery.default');
+    $component = $display->getComponent('field_gallery_images');
+    $component['settings']['view_mode'] = 'teaser_squared_1_1';
+
+    $variables['content']['#preview'] = $mediaGallery->get('field_gallery_images')->view($component);
+    $variables['content']['uuid'] = $mediaGallery->uuid();
+
+    $slideCount = 0;
+    foreach ($mediaGallery->get('field_gallery_images') as $item) {
+
+      if (!$item->entity) {
+        // Ignore deleted media.
+        $mediaGallery->save();
+        continue;
+      }
+
+      $media = Media::load($item->getValue('id')['target_id']);
+
+      $fieldAllowDownload = NULL;
+      if ($media->hasField('field_allow_download')) {
+        $fieldAllowDownload = (bool) $media->get('field_allow_download')->first()->getValue()['value'];
+      }
+
+      $imageFile = $item->entity->image->get(0)->entity;
+      if (!empty($imageFile)) {
+        $urlString = degov_common_file_download_link($imageFile, ['attributes' => ['type' => $imageFile->getMimeType() . '; length=' . $imageFile->getSize()]]);
+        $imageDataArray[$slideCount] = [
+          // Download and photoswipe require uri.
+          'uri' => $urlString->toString(),
+          'width' => $item->entity->image->get(0)->width,
+          'height' => $item->entity->image->get(0)->height,
+          'field_allow_download' => $fieldAllowDownload,
+        ];
+        $slideCount++;
+      }
+    }
+    $variables['content']['totalImages'] = count($imageDataArray);
+    $variables['#attached']['drupalSettings']['degov_media_gallery']['imagesDownloadLinks'][$mediaGallery->uuid()] = $imageDataArray;
+    $media_current = $variables['elements']['#media'];
+    $variables['gallery_url'] = $media_current->url();
+  }
+}
+
+/**
+ * Implements hook_preprocess_type().
+ */
+function degov_media_gallery_preprocess_media__gallery(&$variables) {
+
+  // Add created.
+  $variables['created'] = $variables['elements']['#media']->created->value;
+
+  // Add media-copyright.
+  if (isset($variables["content"]["field_gallery_images"])) {
+
+    $moduleHandler = \Drupal::service('module_handler');
+    if ($moduleHandler->moduleExists('degov_media_copyright')) {
+
+      $galleryItems = $variables['elements']['#media']
+        ->get('field_gallery_images')
+        ->referencedEntities();
+
+      foreach ($galleryItems as $i => $media) {
+        $mediaCopyright = $media->get('field_media_copyright')->first()->view();
+        $mediaCopyright['#attributes'] = [
+          'class' => ['copyright-slide-' . $i],
+        ];
+        if ($i === 0) {
+          $mediaCopyright['#attributes']['class'][] = 'is-visible';
+        }
+        $variables["content"]["field_gallery_images"][$i]['field_media_copyright'] = $mediaCopyright;
+      }
+    }
+  }
+}

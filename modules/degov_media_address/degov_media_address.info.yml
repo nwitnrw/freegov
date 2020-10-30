@@ -1,0 +1,26 @@
+name: 'deGov - media address'
+description: 'Contains the media address media type.'
+type: module
+package: deGov
+core: 8.x
+dependencies:
+  - address
+  - degov_common
+  - degov_media
+  - degov_content_types_shared_fields
+  - degov_taxonomy_term_tags
+  - field
+  - field_group
+  - geocoder
+  - geocoder_address
+  - geocoder_field
+  - geocoder_geofield
+  - geofield
+  - language
+  - lightning_core
+  - media
+  - path
+  - spamspan
+  - styled_google_map
+  - system_stream_wrapper
+  - taxonomy

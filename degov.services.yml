@@ -1,0 +1,4 @@
+services:
+  degov.installation:
+    class: Drupal\degov\Installation
+    arguments: ['@module_handler', '@extension.list.module']

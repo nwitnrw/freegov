@@ -1,0 +1,42 @@
+.block--degov-social-media-twitter {
+  @extend .paragraph-node-reference-node-view-mode-small-image;
+
+  .paragraph__content {
+    .js-social-media-settings-open {
+      color: #1060b1;
+    }
+
+    .tweet {
+      .top {
+        background-color: $porcelaint;
+      }
+
+      &__avatar img {
+        height: 85px;
+        width: auto;
+      }
+
+      &__timestamp a {
+        color: $regent-grey;
+      }
+
+      &__text {
+        font-size: .8rem;
+        min-height: 4rem;
+      }
+
+      &__actions {
+        background-color: $blue;
+
+        li {
+          display: inline-block;
+          min-width: 4rem;
+        }
+
+        a {
+          color: $white;
+        }
+      }
+    }
+  }
+}

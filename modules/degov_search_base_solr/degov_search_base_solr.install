@@ -1,0 +1,84 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_search_base_solr module.
+ */
+
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Implements hook_install().
+ */
+function degov_search_base_solr_install() {
+  /**
+   * @var \Drupal\Core\Extension\ModuleInstaller $moduleInstaller
+   */
+  $moduleInstaller = \Drupal::service('module_installer');
+  $moduleInstaller->uninstall(['search_api_db']);
+
+  /**
+   * @var \Drupal\degov_common\DegovConfigUpdate $configUpdate
+   */
+  $configUpdate = \Drupal::service('degov_config.updater');
+  $config = $configUpdate->getEditableConfig('search_api_attachments.admin_config');
+  $config->set('extraction_method', 'tika_extractor');
+  $config->set('tika_extractor_configuration.java_path', 'java');
+  $config->set('tika_extractor_configuration.tika_path', '../vendor/apache/tika/tika-app-1.20.jar');
+  $config->save(TRUE);
+
+  $fieldConfig = \Drupal::configFactory()->getEditable('search_api_solr.solr_field_type.text_de_7_0_0');
+  if ($fieldConfig->isNew()) {
+    $configContents = Yaml::parseFile(drupal_get_path('module', 'search_api_solr') . '/config/optional/search_api_solr.solr_field_type.text_de_7_0_0.yml');
+    $fieldConfig->setData($configContents);
+    $fieldConfig->save();
+  }
+
+  $fieldConfig = \Drupal::configFactory()->getEditable('search_api_solr.solr_field_type.text_phonetic_de_7_0_0');
+  if ($fieldConfig->isNew()) {
+    $configContents = Yaml::parseFile(drupal_get_path('module', 'search_api_solr') . '/config/optional/search_api_solr.solr_field_type.text_phonetic_de_7_0_0.yml');
+    $fieldConfig->setData($configContents);
+    $fieldConfig->save();
+  }
+
+  $searchServerConfig = \Drupal::configFactory()->getEditable('search_api.server.degov');
+  if ($searchServerConfig->isNew()) {
+    $configContents = Yaml::parseFile(drupal_get_path('module', 'degov_search_base_solr') . '/config/search/search_api.server.degov.yml');
+    $searchServerConfig->setData($configContents);
+    $searchServerConfig->save();
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function degov_search_base_solr_uninstall() {
+  $fieldConfig = \Drupal::configFactory()->getEditable('search_api_solr.solr_field_type.text_phonetic_de_7_0_0');
+  if (!$fieldConfig->isNew()) {
+    $fieldConfig->delete();
+  }
+
+  $fieldConfig = \Drupal::configFactory()->getEditable('search_api_solr.solr_field_type.text_de_7_0_0');
+  if (!$fieldConfig->isNew()) {
+    $fieldConfig->delete();
+  }
+
+  $searchServerConfig = \Drupal::configFactory()->getEditable('search_api.server.degov');
+  if (!$searchServerConfig->isNew()) {
+    $searchServerConfig->delete();
+  }
+}
+
+/**
+ * degov_search_base_solr update_880000
+ * - Update Composer package name from Apache Tika to standard convention.
+ */
+function degov_search_base_solr_update_880000() {
+  /**
+   * @var \Drupal\degov_common\DegovConfigUpdate $configUpdate
+   */
+  $configUpdate = \Drupal::service('degov_config.updater');
+  $config = $configUpdate->getEditableConfig('search_api_attachments.admin_config');
+  $config->set('tika_extractor_configuration.tika_path', '../vendor/apache/tika/tika-app-1.20.jar');
+  $config->save(TRUE);
+}

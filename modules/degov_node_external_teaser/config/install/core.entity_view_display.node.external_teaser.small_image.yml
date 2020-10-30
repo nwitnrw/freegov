@@ -1,0 +1,54 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.small_image
+    - field.field.node.external_teaser.field_link
+    - field.field.node.external_teaser.field_teaser_image
+    - field.field.node.external_teaser.field_teaser_text
+    - node.type.external_teaser
+  module:
+    - link
+    - degov_node_overrides
+    - text
+    - user
+  enforced:
+    module:
+      - degov_node_external_teaser
+id: node.external_teaser.small_image
+targetEntityType: node
+bundle: external_teaser
+mode: small_image
+content:
+  field_link:
+    weight: 2
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+  field_teaser_image:
+    weight: 1
+    label: hidden
+    settings:
+      view_mode: teaser_squared_1_1
+      link: false
+    third_party_settings: {  }
+    type: degov_preview_image
+    region: content
+  field_teaser_text:
+    weight: 0
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+hidden:
+  langcode: true
+  links: true
+  shariff_field: true

@@ -1,0 +1,18 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_media_generic_8
+    - media.type.video_upload
+id: media.video_upload.field_media_generic_8
+field_name: field_media_generic_8
+entity_type: media
+bundle: video_upload
+label: 'Generic media'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

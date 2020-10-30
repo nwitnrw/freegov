@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the degov_email_login module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function degov_email_login_install() {
+  $config = \Drupal::configFactory()->getEditable('mail_login.settings');
+  $config->set('mail_login_enabled', '1');
+  $config->set('mail_login_override_login_labels', '1');
+  $config->set('mail_login_username_title', 'Username or Email address');
+  $config->set('mail_login_username_description', 'You can use your username or email address to login.');
+  $config->save();
+}

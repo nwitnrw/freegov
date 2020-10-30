@@ -1,0 +1,4 @@
+degov_common.settings_tab:
+  route_name: degov_common.settings
+  title: Settings
+  base_route: degov_common.settings

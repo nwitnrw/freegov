@@ -1,0 +1,15 @@
+node_action.moderation_state_form:
+  path: '/admin/moderation-state-form'
+  defaults:
+    _title: 'Which moderation state would you like to set?'
+    _form: '\Drupal\node_action\Form\ModerationState'
+  requirements:
+    _permission: 'use change moderation state action'
+
+node_action.author_form:
+  path: '/admin/author-form'
+  defaults:
+    _title: 'Which author would you like to set?'
+    _form: '\Drupal\node_action\Form\Author'
+  requirements:
+    _permission: 'use change author action'

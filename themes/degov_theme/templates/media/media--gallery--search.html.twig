@@ -1,0 +1,35 @@
+{#
+/**
+ * @file
+ * Theme override to display a media item.
+ *
+ * Available variables:
+ * - name: Name of the media.
+ * - content: Media content.
+ *
+ * @see template_preprocess_media()
+ *
+ * @ingroup themeable
+ */
+#}
+{% set media_classes = [
+  'srmedia',
+  'clearfix',
+] %}
+
+<article{{ attributes.addClass(media_classes) }}>
+  {{ content.contextual_links }}
+  <div class="srmedia__image position-relative">
+    <div class="srmedia__type position-absolute py-1 px-3 font-weight-bold">
+      <span>{{ 'Gallery'|trans }} <i class="fas fa-images"></i></span>
+    </div>
+    {{ teaser_image }}
+    {{ field_media_copyright }}
+  </div>
+  <div class="srmedia__info">
+    <div class="srmedia__date"{{ content.field_media_publish_date|quickedit_attr }}>
+      {{ attribute(content.field_media_publish_date|field_value|first, '#text')[0:10] }}
+    </div>
+    <div class="srmedia__title font-weight-bold"{{ content.field_title|quickedit_attr }}>{{ content.field_title|field_value }}</div>
+  </div>
+</article>

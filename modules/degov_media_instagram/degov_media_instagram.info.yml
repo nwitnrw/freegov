@@ -1,0 +1,20 @@
+name: 'deGov - Media instagram'
+description: 'This module extends the media type instagram.'
+package: deGov
+type: module
+core: 8.x
+dependencies:
+  - config_replace
+  - degov_common
+  - degov_media
+  - degov_content_types_shared_fields
+  - degov_taxonomy_term_tags
+  - entity_browser
+  - field
+  - image
+  - media
+  - media_entity_instagram
+  - path
+  - taxonomy
+  - text
+  - user

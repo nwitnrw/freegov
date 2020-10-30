@@ -1,0 +1,18 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_media_generic_5
+    - media.type.gallery
+id: media.gallery.field_media_generic_5
+field_name: field_media_generic_5
+entity_type: media
+bundle: gallery
+label: 'Generic media'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

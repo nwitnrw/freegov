@@ -1,0 +1,10 @@
+content:
+  field_teaser_image:
+    weight: 102
+    label: above
+    settings:
+      view_mode: teaser_landscape_squared
+      link: false
+    third_party_settings: {  }
+    type: degov_preview_image
+    region: content

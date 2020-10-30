@@ -1,0 +1,13 @@
+degov_social_media_instagram.settings:
+  type: config_object
+  label: 'deGov social media - Instagram-feed settings'
+  mapping:
+    user:
+      type: string
+      label: 'Your user name'
+    number_of_posts:
+      type: integer
+      label: 'Number of listed posts'
+    number_of_characters:
+      type: integer
+      label: "Number of characters post's caption"

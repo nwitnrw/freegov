@@ -1,0 +1,10 @@
+name: deGov Taxonomies
+core: 8.x
+package: deGov
+type: module
+dependencies:
+  - language
+  - path
+  - taxonomy
+  - text
+  - degov_taxonomy_term

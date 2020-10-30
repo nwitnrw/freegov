@@ -1,0 +1,21 @@
+name: 'deGov - media contact'
+description: 'Contains a media type for a contact or a location.'
+type: module
+core: 8.x
+package: deGov
+dependencies:
+  - degov_common
+  - degov_media
+  - degov_content_types_shared_fields
+  - degov_taxonomy_term_tags
+  - degov_image_and_crop_styles
+  - entity_browser
+  - field
+  - field_group
+  - image
+  - language
+  - media
+  - media_entity_generic
+  - path
+  - taxonomy
+  - user

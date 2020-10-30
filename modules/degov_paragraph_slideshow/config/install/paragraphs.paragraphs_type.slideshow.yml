@@ -1,0 +1,11 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_paragraph_slideshow
+id: slideshow
+label: Slideshow
+icon_uuid: null
+description: null
+behavior_plugins: {  }

@@ -1,0 +1,11 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - degov_paragraph_media_reference
+id: media_reference
+label: Medienreferenz
+icon_uuid: null
+description: null
+behavior_plugins: {  }

@@ -1,0 +1,50 @@
+display:
+  default:
+    display_options:
+      exposed_form:
+        options:
+          submit_button: 'Anwenden'
+          reset_button_label: 'Zurücksetzen'
+          exposed_sorts_label: 'Sortieren nach'
+          sort_asc_label: 'Aufst.'
+          sort_desc_label: 'Abst.'
+      pager:
+        options:
+          tags:
+            first: '« Anfang'
+            last: 'Ende »'
+          expose:
+            items_per_page_label: 'Einträge pro Seite'
+            items_per_page_options_all_label: '- Alle -'
+      fields:
+        nothing:
+          alter:
+            text: 'Bearbeiten'
+        nothing_1:
+          alter:
+            text: 'Löschen'
+        title:
+          label: 'Titel'
+        field_internal_title:
+          label: 'Interner Titel'
+        sp_dynamic:
+          label: 'Zeitpunkt'
+        sp_dynamic_1:
+          label: 'Zukünftiger Moderationsstatus'
+        dropbutton:
+          label: 'Aktionen'
+      filters:
+        title:
+          expose:
+            label: 'Titel'
+        field_internal_title_value:
+          expose:
+            label: 'Interner Titel'
+        sp_dynamic_moderation_state:
+          expose:
+            label: 'Zukünftiger Moderationsstatus'
+      title: 'Zeitgesteuerte Veröffentlichung'
+      header:
+        area:
+          content:
+            value: "<p class=\"action-links\"><a href=\"[site:url]admin/content/scheduled-publish/add\" class=\"button button-action button--primary button--small\">Mehrere zeitgesteuerte Veröffentlichungen hinzufügen</a></p>"

@@ -1,0 +1,90 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.email_html
+    - field.field.node.press.field_content_paragraphs
+    - field.field.node.press.field_content_type
+    - field.field.node.press.field_header_paragraphs
+    - field.field.node.press.field_internal_title
+    - field.field.node.press.field_metatags
+    - field.field.node.press.field_press_date
+    - field.field.node.press.field_section
+    - field.field.node.press.field_sidebar_right_paragraphs
+    - field.field.node.press.field_social_media
+    - field.field.node.press.field_tags
+    - field.field.node.press.field_teaser_image
+    - field.field.node.press.field_teaser_sub_title
+    - field.field.node.press.field_teaser_text
+    - field.field.node.press.field_teaser_title
+    - field.field.node.press.field_topic
+    - field.field.node.press.field_view_control
+    - node.type.press
+  enforced:
+    module:
+      - degov_node_press
+  module:
+    - datetime
+    - text
+    - user
+id: node.press.email_html
+targetEntityType: node
+bundle: press
+mode: email_html
+content:
+  field_press_date:
+    weight: 0
+    label: hidden
+    settings:
+      timezone_override: Europe/Berlin
+      date_format: d.m.Y
+    third_party_settings: {  }
+    type: datetime_custom
+    region: content
+  field_teaser_image:
+    type: entity_reference_entity_view
+    weight: 3
+    region: content
+    label: above
+    settings:
+      view_mode: email
+      link: false
+    third_party_settings: {  }
+  field_teaser_text:
+    type: text_default
+    weight: 2
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_teaser_title:
+    type: string
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_topic:
+    type: entity_reference_label
+    weight: 4
+    region: content
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+hidden:
+  field_content_paragraphs: true
+  field_content_type: true
+  field_header_paragraphs: true
+  field_internal_title: true
+  field_metatags: true
+  field_section: true
+  field_sidebar_right_paragraphs: true
+  field_social_media: true
+  field_tags: true
+  field_teaser_sub_title: true
+  field_view_control: true
+  langcode: true
+  links: true
+  shariff_field: true

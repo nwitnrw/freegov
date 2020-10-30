@@ -1,0 +1,6 @@
+degov_multilingual.routing.yml:
+  title: 'Instagram feed settings'
+  route_name: 'degov_social_media_instagram.admin_settings'
+  parent: 'degov.default'
+  description: 'Administer deGov Instagram feed.'
+  weight: -9

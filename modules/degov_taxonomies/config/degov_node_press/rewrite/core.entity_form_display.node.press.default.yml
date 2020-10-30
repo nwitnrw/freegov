@@ -1,0 +1,26 @@
+third_party_settings:
+  field_group:
+    group_common:
+      children:
+        - field_content_type
+        - field_topic
+        - field_view_control
+content:
+  field_content_type:
+    weight: 11
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_topic:
+    weight: 12
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_view_control:
+    weight: 13
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content

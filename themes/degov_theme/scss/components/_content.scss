@@ -1,0 +1,48 @@
+// Styles for content region
+body {
+  -webkit-font-smoothing: antialiased;
+  font-family: "Roboto", "Franklin Gothic Medium", Tahoma, sans-serif;
+  color: $gray-dark;
+}
+
+// Node styles
+article.node.full {
+  h1 {
+    font-weight: 600;
+    line-height: 1.14;
+    margin-bottom: .1rem;
+  }
+  .date {
+    font-size: 1.2rem;
+    &:after {
+      content: '';
+      display: block;
+      width: 50px;
+      height: 2px;
+      background-color: $alto;
+      margin-top: 20px;
+    }
+  }
+  .user-info {
+    .user-avatar {
+      overflow: hidden;
+      border-radius: 50%;
+      min-height: 50px;
+      min-width: 50px;
+      background-color: $alto;
+      line-height: 50px;
+      i {
+        color: $regent-grey;
+        margin-left: 18px;
+      }
+      img {
+        width: auto;
+        height: 50px;
+      }
+    }
+    .title {
+      font-size: .8rem;
+    }
+  }
+
+}

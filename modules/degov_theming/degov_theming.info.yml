@@ -1,0 +1,5 @@
+name: 'deGov - Theming'
+description: "Extends theming functionality."
+package: deGov
+type: module
+core: 8.x

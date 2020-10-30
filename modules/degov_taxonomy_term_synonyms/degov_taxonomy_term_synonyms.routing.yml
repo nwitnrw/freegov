@@ -1,0 +1,6 @@
+degov_taxonomy_term_synonyms.autocomplete:
+  path: '/tags-synonyms-autocomplete/{target_type}/{selection_handler}/{selection_settings_key}'
+  defaults:
+    _controller: '\Drupal\degov_taxonomy_term_synonyms\Controller\TagSynonymAutocompleteController::handleAutocomplete'
+  requirements:
+    _permission: 'access content'
